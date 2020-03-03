@@ -1,1 +1,23 @@
-/* You can add global styles to this file, and also import other style files */
+@import "theme";
+
+@include angular-material-theme($theme);
+
+html, body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    border: 2px solid mat-color($primary);
+    box-sizing: border-box;
+    border-radius: 4px;
+}
+
+main {
+    height: calc(100% - 40px);
+    overflow-y: auto;
+    position: relative;
+    padding: 32px;
+    box-sizing: border-box;
+}

@@ -1,0 +1,3 @@
+<div class="rs-sprites">
+    <img *ngFor="let base64 of images$ | async" [src]="'data:image/png;base64,' + base64" />
+</div>

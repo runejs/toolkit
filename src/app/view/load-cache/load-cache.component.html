@@ -1,0 +1,9 @@
+<div class="rs-load-cache">
+    <div class="rs-inner">
+        <mat-progress-bar color="primary" mode="indeterminate" *ngIf="loading"></mat-progress-bar>
+
+        <button mat-raised-button color="primary" (click)="fileInput.click()" [disabled]="loading">Load Game Cache</button>
+
+        <input hidden (change)="onFileSelected()" #fileInput type="file" directory webkitdirectory />
+    </div>
+</div>
