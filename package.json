@@ -1,5 +1,5 @@
 {
-    "name": "runejs-cache-editor",
+    "name": "runejs-cache-viewer",
     "version": "0.0.0",
     "scripts": {
         "ng": "ng",
@@ -28,7 +28,7 @@
         "@angular/platform-browser": "~9.0.3",
         "@angular/platform-browser-dynamic": "~9.0.3",
         "@angular/router": "~9.0.3",
-        "@runejs/cache-parser": "^0.4.0",
+        "@runejs/cache-parser": "0.4.4",
         "ngx-electron": "^2.2.0",
         "rxjs": "~6.5.4",
         "tslib": "^1.10.0",

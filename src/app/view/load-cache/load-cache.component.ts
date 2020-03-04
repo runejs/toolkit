@@ -21,16 +21,23 @@ export class LoadCacheComponent implements OnInit {
     }
 
     public ngOnInit(): void {
+        this.rsCache.reset();
     }
 
     public onFileSelected(): void {
         this._loading = true;
 
+        const files = (this.fileInput.nativeElement as HTMLInputElement).files;
+
+        if(!files || files.length === 0) {
+            this.snaccboi.open(`Please select a game cache.`, null, {duration: 5000});
+            return;
+        }
+
         setTimeout(() => {
             new Promise(resolve => {
-                const files = (this.fileInput.nativeElement as HTMLInputElement).files;
-
                 if(!this.validCache(files)) {
+                    (this.fileInput.nativeElement as HTMLInputElement).value = '';
                     this.snaccboi.open(`Please select a valid game cache.`, null, {duration: 5000});
                     resolve();
                     return;
@@ -40,7 +47,11 @@ export class LoadCacheComponent implements OnInit {
                 path = path.substring(0, path.indexOf('main_file_cache.') - 1);
 
                 this.rsCache.loadGameCache(path);
+                (this.fileInput.nativeElement as HTMLInputElement).value = '';
                 this.router.navigate(['cache-tools']).finally(() => resolve());
+            }).catch(error => {
+                console.error(error);
+                this.snaccboi.open(`Error loading game cache.`, null, {duration: 5000});
             }).finally(() => this._loading = false);
         }, 0);
     }

@@ -3,6 +3,10 @@ import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
     {
+        path: 'widgets',
+        loadChildren: () => import('./view/widget-list/widget-list.module').then(m => m.WidgetListModule)
+    },
+    {
         path: 'sprites',
         loadChildren: () => import('./view/sprites/sprites.module').then(m => m.SpritesModule)
     },

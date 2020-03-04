@@ -1,0 +1,15 @@
+.mat-card {
+    display: flex;
+
+    .rs-id {
+        width: 60px;
+    }
+
+    .rs-version {
+        width: 80px;
+    }
+
+    + .mat-card {
+        margin-top: 16px;
+    }
+}

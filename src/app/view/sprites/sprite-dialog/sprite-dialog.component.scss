@@ -1,0 +1,18 @@
+img {
+    margin: 0 auto;
+    display: block;
+}
+
+.rs-details {
+    margin-top: 16px;
+
+    table {
+        margin: 0 auto;
+
+        tr {
+            td:first-child {
+                padding-right: 16px;
+            }
+        }
+    }
+}

@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { SpritesService } from './sprites.service';
-import { Observable } from 'rxjs';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { Sprite, SpritesService } from './sprites.service';
+import { Subscription } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { SpriteDialogComponent } from './sprite-dialog/sprite-dialog.component';
 
 @Component({
     selector: 'rs-sprites',
@@ -8,15 +10,46 @@ import { Observable } from 'rxjs';
     styleUrls: ['./sprites.component.scss'],
     providers: [SpritesService]
 })
-export class SpritesComponent implements OnInit {
+export class SpritesComponent implements OnInit, OnDestroy {
 
-    public images$: Observable<string[]>;
+    public sprites: Sprite[] = [];
+    public show: 'VALID' | 'MISSING' = 'VALID';
+    public loading = true;
 
-    constructor(private service: SpritesService) {
+    private sub: Subscription;
+
+    public constructor(private service: SpritesService,
+                       private changeDetector: ChangeDetectorRef,
+                       private dialog: MatDialog) {
     }
 
-    ngOnInit(): void {
-        this.images$ = this.service.fetchSprites();
+    public ngOnInit(): void {
+        this.sub = this.service.fetchSprites().subscribe(sprite => this.addSprite(sprite),
+            () => {}, () => {
+            this.sprites.sort((a, b) => {
+                if(a.id === b.id) {
+                    return a.frame - b.frame;
+                }
+
+                return a.id - b.id;
+            });
+            this.loading = false;
+            this.changeDetector.detectChanges();
+        });
+    }
+
+    private addSprite(sprite: Sprite): void {
+        this.sprites.push(sprite);
+    }
+
+    public openSprite(sprite: Sprite): void {
+        this.dialog.open(SpriteDialogComponent, {
+            data: { sprite }
+        });
+    }
+
+    public ngOnDestroy(): void {
+        this.sub.unsubscribe();
     }
 
 }

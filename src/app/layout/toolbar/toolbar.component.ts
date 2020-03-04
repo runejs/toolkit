@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ElectronService } from 'ngx-electron';
+import { RsCacheService } from '../../rs-cache/rs-cache.service';
 
 @Component({
     selector: 'rs-toolbar',
@@ -8,7 +9,8 @@ import { ElectronService } from 'ngx-electron';
 })
 export class ToolbarComponent implements OnInit {
 
-    public constructor(private electron: ElectronService) {
+    public constructor(private electron: ElectronService,
+                       private cacheService: RsCacheService) {
     }
 
     public ngOnInit(): void {
@@ -24,6 +26,10 @@ export class ToolbarComponent implements OnInit {
 
     public closeApp(): void {
         this.electron.remote.BrowserWindow.getFocusedWindow().close();
+    }
+
+    public get cacheLoaded(): boolean {
+        return this.cacheService.cacheLoaded;
     }
 
 }

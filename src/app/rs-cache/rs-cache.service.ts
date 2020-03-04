@@ -13,14 +13,17 @@ export class RsCacheService {
     public constructor() {
     }
 
+    public reset(): void {
+        this._cacheLoaded = false;
+        this._cache = null;
+    }
+
     public loadGameCache(path: string): void {
         this._cache = new NewFormatGameCache(path);
         this._cacheLoaded = true;
-
-        this.test = JSON.stringify(this._cache.npcDefinitions.get(0), null, 4);
     }
 
-    public get cacheLoader() {
+    public get cacheLoaded() {
         return this._cacheLoaded;
     }
 
