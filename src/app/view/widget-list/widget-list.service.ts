@@ -1,6 +1,11 @@
 import { Injectable } from '@angular/core';
 import { RsCacheService } from '../../rs-cache/rs-cache.service';
-import { WidgetDefinition } from '@runejs/cache-parser';
+import { WidgetChild, WidgetDefinition } from '@runejs/cache-parser';
+
+export class WidgetContainerChild extends WidgetChild {
+    children?: WidgetChild[] = [];
+    erase?: boolean;
+}
 
 @Injectable()
 export class WidgetListService {

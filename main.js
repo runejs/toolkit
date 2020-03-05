@@ -1,8 +1,12 @@
 const { app, BrowserWindow } = require('electron');
 const url = require("url");
-const path = require("path");
+const path = require('path');
+const contextMenu = require('electron-context-menu');
 
 let mainWindow;
+
+// Add an item to the context menu that appears only when you click on an image
+contextMenu({});
 
 function createWindow() {
     mainWindow = new BrowserWindow({

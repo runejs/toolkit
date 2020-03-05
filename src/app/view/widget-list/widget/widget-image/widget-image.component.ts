@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { WidgetChild, WidgetDefinition } from '@runejs/cache-parser';
 import { Sprite, SpritesService } from '../../../sprites/sprites.service';
-import { WidgetListService } from '../../widget-list.service';
+import { WidgetContainerChild, WidgetListService } from '../../widget-list.service';
 
 @Component({
     selector: 'rs-widget-image',
@@ -10,7 +10,6 @@ import { WidgetListService } from '../../widget-list.service';
 })
 export class WidgetImageComponent implements OnInit {
 
-    @Input() public widget: WidgetDefinition;
     @Input() public widgetChild: WidgetChild;
     public sprite: Sprite = null;
 
@@ -24,33 +23,22 @@ export class WidgetImageComponent implements OnInit {
     }
 
     public get x() {
-        if(!this.widgetChild) {
-            return 0;
-        }
-
-        if(this.widgetChild.parentId === -1) {
-            return this.widgetChild.x;
-        }
-
-        return this.widgetChild.x + this.widget.children[this.widgetChild.parentId].x;
+        return this.widgetChild?.x || 0;
     }
 
     public get y() {
-        if(!this.widgetChild) {
-            return 0;
-        }
-
-        if(this.widgetChild.parentId === -1) {
-            return this.widgetChild.y;
-        }
-
-        return this.widgetChild.y + this.widget.children[this.widgetChild.parentId].y;
+        return this.widgetChild?.y || 0;
     }
 
     public get styles() {
+        const height = this.sprite.height > this.widgetChild.originalHeight ? this.widgetChild.originalHeight : this.sprite.height;
+        const width = this.sprite.width > this.widgetChild.originalWidth ? this.widgetChild.originalWidth : this.sprite.width;
+
         return {
-            top: (this.y + ((this.widgetChild.originalHeight / 2) - (this.sprite.height / 2)) + 'px'),
-            left: (this.x + ((this.widgetChild.originalWidth / 2) - (this.sprite.width / 2)) + 'px')
+            top: (this.y + ((this.widgetChild.originalHeight / 2) - (height / 2)) + 'px'),
+            left: (this.x + ((this.widgetChild.originalWidth / 2) - (width / 2)) + 'px'),
+            maxWidth: width + 'px',
+            maxHeight: height + 'px'
         };
     }
 
