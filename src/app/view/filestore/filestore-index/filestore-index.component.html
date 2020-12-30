@@ -1,7 +1,16 @@
-<div class="rs-filestore-index" *ngIf="index">
+<div class="rs-filestore-index" *ngIf="fileIndex">
     <div class="rs-breadcrumb">
         <a class="rs-prev" routerLink="/filestore">filestore</a>
         &gt;
-        <div class="rs-current">index {{ index.indexId }}</div>
+        <div class="rs-current">index {{ fileIndex.indexId }}</div>
+
+        <mat-divider></mat-divider>
+    </div>
+
+    <div class="rs-folder-container" *ngIf="files">
+        <div class="rs-file" *ngFor="let file of files; index as i">
+            <mat-icon>{{ file.type === 'archive' ? 'folder' : 'insert_drive_file' }}</mat-icon>
+            <strong>{{ fileName(i, file.nameHash) }}</strong>
+        </div>
     </div>
 </div>

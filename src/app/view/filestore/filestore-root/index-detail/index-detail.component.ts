@@ -1,9 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Archive, FileData } from '@runejs/filestore';
 
-const fileNames = require('../../../../../../filestore/file-names.json');
-const mapFileNames = require('../../../../../../filestore/map-file-names.json');
-
 
 export interface FilestoreIndex {
     index: string;
@@ -25,16 +22,6 @@ export class IndexDetailComponent implements OnInit {
     }
 
     ngOnInit(): void {
-    }
-
-    // @TODO convert into an angular pipe
-    public fileName(id: number, nameHash?: number): string | null {
-        if(!nameHash) {
-            return `${id}`;
-        }
-
-        const fileName = fileNames[`${nameHash}`] || mapFileNames[`${nameHash}`] || null;
-        return `${id}` + (fileName ? `: ${fileName}` : '');
     }
 
 }

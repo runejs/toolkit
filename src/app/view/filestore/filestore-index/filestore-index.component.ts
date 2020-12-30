@@ -4,6 +4,10 @@ import { FilestoreService } from '../../../filestore/filestore.service';
 import { Subscription } from 'rxjs';
 import { FileIndex } from '@runejs/filestore';
 
+const fileNames = require('../../../../../filestore/file-names.json');
+const mapFileNames = require('../../../../../filestore/map-file-names.json');
+
+
 @Component({
     selector: 'rs-filestore-index',
     templateUrl: './filestore-index.component.html',
@@ -11,7 +15,7 @@ import { FileIndex } from '@runejs/filestore';
 })
 export class FilestoreIndexComponent implements OnInit, OnDestroy {
 
-    public index: FileIndex;
+    public fileIndex: FileIndex;
     private routeSubscription: Subscription;
 
     public constructor(private route: ActivatedRoute,
@@ -28,11 +32,25 @@ export class FilestoreIndexComponent implements OnInit, OnDestroy {
             return;
         }
 
-        this.index = this.filestoreService.getIndex(indexId);
+        this.fileIndex = this.filestoreService.getIndex(indexId);
     }
 
     public ngOnDestroy() {
         this.routeSubscription.unsubscribe();
+    }
+
+    // @TODO convert into an angular pipe
+    public fileName(id: number, nameHash?: number): string | null {
+        if(!nameHash) {
+            return `${id}`;
+        }
+
+        const fileName = fileNames[`${nameHash}`] || mapFileNames[`${nameHash}`] || null;
+        return `${id}` + (fileName ? `: ${fileName}` : '');
+    }
+
+    public get files() {
+        return this.fileIndex?.files?.values() || null;
     }
 
 }

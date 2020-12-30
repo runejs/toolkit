@@ -1,4 +1,4 @@
-@import "theme";
+@import 'theme';
 
 @include angular-material-theme($theme);
 
@@ -8,16 +8,21 @@ html, body {
 
 body {
     margin: 0;
-    font-family: Roboto, "Helvetica Neue", sans-serif;
+    font-family: Roboto, 'Helvetica Neue', sans-serif;
     box-sizing: border-box;
+    font-size: 14px;
 }
 
 main {
-    height: calc(100% - 40px);
+    height: 100%;
     overflow-y: auto;
-    position: relative;
-    padding: 32px;
+    padding: 0 32px;
     box-sizing: border-box;
+}
+
+a {
+    color: white;
+    cursor: pointer;
 }
 
 .rs-loader {
@@ -29,6 +34,70 @@ main {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.rs-breadcrumb {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    position: sticky;
+    top: 0;
+    background: #303030;
+    z-index: 100;
+    padding-top: 16px;
+
+    a {
+        display: block;
+        margin: 0 8px;
+
+        &:first-of-type {
+            margin-left: 0;
+        }
+    }
+
+    .rs-current {
+        margin: 0 8px;
+    }
+
+    .mat-divider {
+        margin: 16px 0;
+        width: 100%;
+        flex-shrink: 0;
+    }
+}
+
+.rs-folder-container {
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+}
+
+.rs-file {
+    padding: 32px 16px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    cursor: pointer;
+    transition: background 400ms;
+
+    $s: 64px;
+    .mat-icon {
+        width: $s;
+        height: $s;
+        font-size: $s;
+        opacity: 0.8;
+        color: mat-color($primary, 200);
+    }
+
+    strong {
+        font-weight: bold;
+        font-size: 16px;
+        margin-top: 16px;
+    }
+
+    &:hover {
+        background: rgba(0, 0, 0, 0.2);
+    }
 }
 
 .mat-tooltip {
