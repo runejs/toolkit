@@ -36,48 +36,53 @@ a {
     justify-content: center;
 }
 
-.rs-breadcrumb {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
+.rs-breadcrumb-container {
+    height: 54px;
     position: sticky;
     top: 0;
     background: #303030;
     z-index: 100;
-    padding-top: 16px;
+    display: flex;
+    flex-direction: column;
 
-    .mat-icon {
-        color: #b3b3b3;
+    .rs-breadcrumb {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        flex: 1 1 auto;
 
-        &.rs-folder-icon {
-            color: mat-color($primary, 200);
-            $s: 28px;
-            width: $s;
-            height: $s;
-            font-size: $s;
-            margin-right: 12px;
+        .mat-icon {
+            color: #b3b3b3;
+            margin-right: 8px;
+
+            &.rs-folder-icon {
+                color: mat-color($primary, 200);
+                $s: 28px;
+                width: $s;
+                height: $s;
+                font-size: $s;
+                margin-right: 12px;
+            }
         }
-    }
 
-    a {
-        display: block;
-        margin: 0 6px;
-        color: white;
+        a {
+            display: block;
+            margin: 0 6px;
+            color: white;
 
-        &:first-of-type {
-            margin-left: 0;
+            &:first-of-type {
+                margin-left: 0;
+            }
         }
-    }
 
-    .rs-current {
-        margin: 0 6px;
-        font-weight: bold;
-    }
+        *[rs-current] {
+            font-weight: bold;
+        }
 
-    .mat-divider {
-        margin: 16px 0 0;
-        width: 100%;
-        flex-shrink: 0;
+        ~ .mat-divider {
+            margin: 0;
+            width: 100%;
+        }
     }
 }
 
@@ -93,6 +98,7 @@ a {
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    text-align: center;
     cursor: pointer;
     transition: background 400ms;
     min-width: 100px;

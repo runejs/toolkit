@@ -1,9 +1,11 @@
-<div class="rs-breadcrumb">
-    <mat-icon class="rs-folder-icon">folder</mat-icon>
+<div class="rs-breadcrumb-container">
+    <div class="rs-breadcrumb">
+        <mat-icon class="rs-folder-icon">folder</mat-icon>
 
-    <ng-content></ng-content>
+        <ng-content></ng-content>
 
-    <ng-content select="[rs-current]"></ng-content>
+        <ng-content select="[rs-current]"></ng-content>
+    </div>
 
     <mat-divider></mat-divider>
 </div>
