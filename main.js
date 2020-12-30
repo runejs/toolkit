@@ -16,7 +16,6 @@ function createWindow() {
             nodeIntegration: true,
             enableRemoteModule: true
         },
-        titleBarStyle: 'hidden',
         icon: path.join(__dirname, '/runejs-64.ico')
     });
 

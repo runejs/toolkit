@@ -13,10 +13,6 @@ const routes: Routes = [
     {
         path: 'filestore',
         loadChildren: () => import('./view/filestore/filestore.module').then(m => m.FilestoreModule)
-    },
-    {
-        path: '',
-        loadChildren: () => import('./view/load-filestore/load-filestore.module').then(m => m.LoadFilestoreModule)
     }
 ];
 
