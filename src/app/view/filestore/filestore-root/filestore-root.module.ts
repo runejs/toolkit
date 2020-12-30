@@ -4,6 +4,9 @@ import { FilestoreRootComponent } from './filestore-root.component';
 import { IndexDetailComponent } from './index-detail/index-detail.component';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
+import { IndexNameModule } from '../../../shared/index-name/index-name.module';
+import { MatDividerModule } from '@angular/material/divider';
+import { BreadcrumbModule } from '../../../shared/breadcrumb/breadcrumb.module';
 
 
 @NgModule({
@@ -11,7 +14,10 @@ import { RouterModule } from '@angular/router';
     imports: [
         CommonModule,
         MatIconModule,
-        RouterModule
+        RouterModule,
+        IndexNameModule,
+        MatDividerModule,
+        BreadcrumbModule
     ]
 })
 export class FilestoreRootModule {

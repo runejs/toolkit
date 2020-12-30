@@ -1,11 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Archive, FileData } from '@runejs/filestore';
+import { Archive, FileData, FileIndex } from '@runejs/filestore';
 
 
 export interface FilestoreIndex {
-    index: string;
-    indexId: number;
-    indexName: string;
+    index: FileIndex;
     files: Archive[] | FileData[];
 }
 
@@ -16,7 +14,7 @@ export interface FilestoreIndex {
 })
 export class IndexDetailComponent implements OnInit {
 
-    @Input() public index: FilestoreIndex;
+    @Input() public indexInfo: FilestoreIndex;
 
     constructor() {
     }

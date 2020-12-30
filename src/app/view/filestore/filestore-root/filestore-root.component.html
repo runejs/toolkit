@@ -1,3 +1,7 @@
+<rs-breadcrumb>
+    <div rs-current>filestore</div>
+</rs-breadcrumb>
+
 <div class="rs-filestore-root rs-folder-container">
-    <rs-index-detail *ngFor="let index of indexes" [index]="index"></rs-index-detail>
+    <rs-index-detail *ngFor="let index of indexes" [indexInfo]="index"></rs-index-detail>
 </div>

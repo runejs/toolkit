@@ -2,10 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FilestoreService } from '../../../filestore/filestore.service';
 import { Subscription } from 'rxjs';
-import { FileIndex } from '@runejs/filestore';
-
-const fileNames = require('../../../../../filestore/file-names.json');
-const mapFileNames = require('../../../../../filestore/map-file-names.json');
+import { Archive, FileData, FileIndex } from '@runejs/filestore';
 
 
 @Component({
@@ -16,6 +13,7 @@ const mapFileNames = require('../../../../../filestore/map-file-names.json');
 export class FilestoreIndexComponent implements OnInit, OnDestroy {
 
     public fileIndex: FileIndex;
+    public files: Archive[] | FileData[];
     private routeSubscription: Subscription;
 
     public constructor(private route: ActivatedRoute,
@@ -32,25 +30,14 @@ export class FilestoreIndexComponent implements OnInit, OnDestroy {
             return;
         }
 
-        this.fileIndex = this.filestoreService.getIndex(indexId);
+        setTimeout(() => {
+            this.fileIndex = this.filestoreService.getIndex(indexId);
+            this.files = Array.from(this.fileIndex.files.values());
+        }, 0);
     }
 
     public ngOnDestroy() {
         this.routeSubscription.unsubscribe();
-    }
-
-    // @TODO convert into an angular pipe
-    public fileName(nameHash?: number): string | null {
-        if(!nameHash) {
-            return '';
-        }
-
-        const fileName = fileNames[`${nameHash}`] || mapFileNames[`${nameHash}`] || null;
-        return fileName || '';
-    }
-
-    public get files() {
-        return this.fileIndex?.files?.values() || null;
     }
 
 }

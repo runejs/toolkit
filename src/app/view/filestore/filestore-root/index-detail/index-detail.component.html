@@ -1,6 +1,6 @@
-<div class="rs-filestore-index rs-file" [routerLink]="[ '/', 'filestore', 'index', index.indexId ]">
+<div class="rs-filestore-index rs-file" [routerLink]="[ '/', 'filestore', 'index', indexInfo.index.indexId ]">
     <mat-icon>folder</mat-icon>
-    <strong>{{ index.index }}</strong>
-    <div class="rs-name">{{ index.indexName }}</div>
-    <div class="rs-files">{{ index.files.length | number }} indexed file{{ index.files.length !== 1 ? 's' : '' }}</div>
+    <strong>File Index {{ indexInfo.index.indexId }}</strong>
+    <div class="rs-name">{{ indexInfo.index | indexName }}</div>
+    <div class="rs-files">{{ indexInfo.files.length | number }} indexed file{{ indexInfo.files.length !== 1 ? 's' : '' }}</div>
 </div>

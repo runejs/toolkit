@@ -28,9 +28,7 @@ export class FilestoreRootComponent implements OnInit {
             });
 
             this.indexes.push({
-                index: `File Index ${i}`,
-                indexId: i,
-                indexName,
+                index,
                 files: [ ...index.files.values() ]
             });
         }
