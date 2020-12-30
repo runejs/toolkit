@@ -4,22 +4,21 @@ import { Archive, FileData } from '@runejs/filestore';
 const fileNames = require('../../../../../filestore/file-names.json');
 const mapFileNames = require('../../../../../filestore/map-file-names.json');
 
-export interface FileTree {
+
+export interface FilestoreIndex {
     index: string;
-    folderName: string;
+    indexName: string;
     files: Archive[] | FileData[];
 }
 
 @Component({
-    selector: 'rs-file-tree',
-    templateUrl: './file-tree.component.html',
-    styleUrls: ['./file-tree.component.scss']
+    selector: 'rs-filestore-index',
+    templateUrl: './filestore-index.component.html',
+    styleUrls: ['./filestore-index.component.scss']
 })
-export class FileTreeComponent implements OnInit {
+export class FilestoreIndexComponent implements OnInit {
 
-    @Input() public fileTree: FileTree;
-
-    public expanded = false;
+    @Input() public index: FilestoreIndex;
 
     constructor() {
     }

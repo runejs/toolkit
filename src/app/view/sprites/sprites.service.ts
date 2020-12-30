@@ -20,7 +20,7 @@ export class SpritesService {
 
     public fetchSprite(id: number): Promise<Sprite> {
         return new Promise<Sprite>(resolve => {
-            const sprite = this.cacheService.filestore.sprites.get(`${id}:0`);
+            const sprite = this.cacheService.cache.sprites.get(`${id}:0`);
 
             if(!sprite.pixels || sprite.pixels.length === 0) {
                 resolve({ id: sprite.id, frame: sprite.frame, crc: sprite.crc, version: sprite.version,
@@ -54,7 +54,7 @@ export class SpritesService {
         return new Observable<Sprite>(subscriber => {
             const promises = [];
 
-            this.cacheService.filestore.sprites.forEach((sprite, index) => promises.push(new Promise(resolve => {
+            this.cacheService.cache.sprites.forEach((sprite, index) => promises.push(new Promise(resolve => {
                 if(!sprite.pixels || sprite.pixels.length === 0) {
                     subscriber.next({ id: sprite.id, frame: sprite.frame, crc: sprite.crc, version: sprite.version,
                         width: 0, height: 0, base64: null });

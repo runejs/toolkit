@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { FilestoreToolsComponent } from './filestore-tools.component';
+import { FilestoreComponent } from './filestore.component';
+
 
 const routes: Routes = [
     {
         path: '',
-        component: FilestoreToolsComponent
+        component: FilestoreComponent
     }
 ];
 
@@ -13,5 +14,5 @@ const routes: Routes = [
     imports: [RouterModule.forChild(routes)],
     exports: [RouterModule]
 })
-export class FilestoreToolsRoutingModule {
+export class FilestoreRoutingModule {
 }

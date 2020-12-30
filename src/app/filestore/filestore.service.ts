@@ -9,20 +9,20 @@ export class FilestoreService {
 
     public test: string;
     private _filestoreLoaded = false;
-    private _filestore: NewFormatGameCache;
-    public newfilestore: Filestore;
+    private _cache: NewFormatGameCache;
+    public filestore: Filestore;
 
     public constructor() {
     }
 
     public reset(): void {
         this._filestoreLoaded = false;
-        this._filestore = null;
+        this._cache = null;
     }
 
     public loadFilestore(path: string): void {
-        this.newfilestore = new Filestore(path);
-        this._filestore = new NewFormatGameCache(path);
+        this.filestore = new Filestore(path);
+        this._cache = new NewFormatGameCache(path);
         this._filestoreLoaded = true;
     }
 
@@ -30,7 +30,7 @@ export class FilestoreService {
         return this._filestoreLoaded;
     }
 
-    public get filestore(): NewFormatGameCache {
-        return this._filestore;
+    public get cache(): NewFormatGameCache {
+        return this._cache;
     }
 }

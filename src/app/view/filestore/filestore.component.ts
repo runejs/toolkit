@@ -1,24 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 import { FilestoreService } from '../../filestore/filestore.service';
-import { FileTree } from './file-tree/file-tree.component';
+import { FilestoreIndex } from './filestore-index/filestore-index.component';
 import { indexIdMap } from '@runejs/filestore';
 
 @Component({
-    selector: 'rs-file-viewer',
-    templateUrl: './file-viewer.component.html',
-    styleUrls: ['./file-viewer.component.scss']
+    selector: 'rs-filestore',
+    templateUrl: './filestore.component.html',
+    styleUrls: ['./filestore.component.scss']
 })
-export class FileViewerComponent implements OnInit {
+export class FilestoreComponent implements OnInit {
 
-    public fileTrees: FileTree[] = [];
+    public indexes: FilestoreIndex[] = [];
 
     public constructor(private filestoreService: FilestoreService) {
     }
 
     public ngOnInit(): void {
-        const filestore = this.filestoreService.newfilestore;
-
-        console.log(indexIdMap);
+        const filestore = this.filestoreService.filestore;
 
         for(let i = 0; i <= 12; i++) {
             const index = filestore.getIndex(i);
@@ -30,9 +28,9 @@ export class FileViewerComponent implements OnInit {
                 }
             });
 
-            this.fileTrees.push({
+            this.indexes.push({
                 index: `File Index ${i}`,
-                folderName: indexName,
+                indexName,
                 files: [ ...index.files.values() ]
             });
         }

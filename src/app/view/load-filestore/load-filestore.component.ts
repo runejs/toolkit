@@ -46,7 +46,7 @@ export class LoadFilestoreComponent implements OnInit {
 
                     this.filestoreService.loadFilestore(path);
                     fileInput.value = '';
-                    await this.router.navigate(['file-viewer']);
+                    await this.router.navigate(['filestore']);
                 }
             } catch(error) {
                 console.error(error);

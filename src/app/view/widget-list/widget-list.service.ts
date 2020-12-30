@@ -14,7 +14,7 @@ export class WidgetListService {
     }
 
     public fetchWidgets(): WidgetDefinition[] {
-        return Array.from(this.cacheService.filestore.widgetDefinitions.values());
+        return Array.from(this.cacheService.cache.widgetDefinitions.values());
     }
 
 }

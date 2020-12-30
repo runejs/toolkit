@@ -1,4 +1,6 @@
-.rs-file-tree {
+@import '../../../../theme';
+
+.rs-filestore-index {
     padding: 32px 16px;
     display: flex;
     align-items: center;
@@ -13,6 +15,7 @@
         height: $s;
         font-size: $s;
         opacity: 0.8;
+        color: mat-color($primary, 200);
     }
 
     .rs-index {

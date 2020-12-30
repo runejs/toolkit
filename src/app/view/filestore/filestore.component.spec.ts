@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FileViewerComponent } from './file-viewer.component';
+import { FilestoreComponent } from './filestore.component';
 
 describe('FileViewerComponent', () => {
-    let component: FileViewerComponent;
-    let fixture: ComponentFixture<FileViewerComponent>;
+    let component: FilestoreComponent;
+    let fixture: ComponentFixture<FilestoreComponent>;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [FileViewerComponent]
+            declarations: [FilestoreComponent]
         })
             .compileComponents();
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(FileViewerComponent);
+        fixture = TestBed.createComponent(FilestoreComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });

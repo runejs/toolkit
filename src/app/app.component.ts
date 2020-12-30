@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { FilestoreService } from './filestore/filestore.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'rs-root',
@@ -7,10 +9,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AppComponent implements OnInit{
 
-    public constructor() {
+    public loading = true;
+
+    public constructor(private router: Router,
+                       private filestoreService: FilestoreService) {
     }
 
-    public ngOnInit(): void {
+    public async ngOnInit(): Promise<void> {
+        this.loading = true;
+        this.filestoreService.loadFilestore('./filestore');
+        await this.router.navigate(['filestore']);
+        this.loading = false;
     }
 
 }

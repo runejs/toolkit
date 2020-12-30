@@ -11,12 +11,8 @@ const routes: Routes = [
         loadChildren: () => import('./view/sprites/sprites.module').then(m => m.SpritesModule)
     },
     {
-        path: 'filestore-tools',
-        loadChildren: () => import('./view/filestore-tools/filestore-tools.module').then(m => m.FilestoreToolsModule)
-    },
-    {
-        path: 'file-viewer',
-        loadChildren: () => import('./view/file-viewer/file-viewer.module').then(m => m.FileViewerModule)
+        path: 'filestore',
+        loadChildren: () => import('./view/filestore/filestore.module').then(m => m.FilestoreModule)
     },
     {
         path: '',
