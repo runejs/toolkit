@@ -9,6 +9,8 @@ import { FilestoreService } from '../../filestore/filestore.service';
 })
 export class ToolbarComponent implements OnInit {
 
+    private maximixed = false;
+
     public constructor(private electron: ElectronService,
                        private filestoreService: FilestoreService) {
     }
@@ -17,15 +19,21 @@ export class ToolbarComponent implements OnInit {
     }
 
     public minimizeApp(): void {
-        this.electron.remote.BrowserWindow.getFocusedWindow().minimize();
+        this.electron.remote.getCurrentWindow().minimize();
     }
 
     public maximizeApp(): void {
-        this.electron.remote.BrowserWindow.getFocusedWindow().maximize();
+        if(!this.maximixed) {
+            this.electron.remote.getCurrentWindow().setSimpleFullScreen(true);
+        } else {
+            this.electron.remote.getCurrentWindow().setSimpleFullScreen(false);
+        }
+
+        this.maximixed = !this.maximixed;
     }
 
     public closeApp(): void {
-        this.electron.remote.BrowserWindow.getFocusedWindow().close();
+        this.electron.remote.getCurrentWindow().close();
     }
 
     public get cacheLoaded(): boolean {

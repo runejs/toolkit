@@ -13,20 +13,23 @@
         font-weight: 400;
     }
 
-    .mat-icon {
+    .rs-window-option {
         cursor: pointer;
         -webkit-app-region: no-drag;
-        width: 16px;
-        height: 16px;
-        font-size: 16px;
 
-        &.rs-menu {
-            width: 20px;
-            height: 20px;
-            font-size: 20px;
+        .mat-icon {
+            width: 16px;
+            height: 16px;
+            font-size: 16px;
+
+            &.rs-menu {
+                width: 20px;
+                height: 20px;
+                font-size: 20px;
+            }
         }
 
-        + .mat-icon {
+        ~ .rs-window-option {
             margin-left: 8px;
         }
     }
