@@ -1,0 +1,37 @@
+.rs-load-filestore {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .rs-inner {
+        .mat-progress-bar, button {
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .mat-progress-bar {
+            margin-bottom: 24px;
+        }
+    }
+
+    .rs-load {
+        padding: 32px 64px;
+        align-items: center;
+
+        $s: 32px;
+
+        font-size: 24px;
+
+        .mat-icon {
+            margin-left: 16px;
+            width: $s;
+            height: $s;
+            font-size: $s;
+        }
+    }
+}

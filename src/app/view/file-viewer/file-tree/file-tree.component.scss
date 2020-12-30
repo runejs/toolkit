@@ -1,0 +1,35 @@
+.rs-file-tree {
+    padding: 32px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    cursor: pointer;
+    transition: background 400ms;
+
+    $s: 64px;
+    .mat-icon {
+        width: $s;
+        height: $s;
+        font-size: $s;
+        opacity: 0.8;
+    }
+
+    .rs-index {
+        font-weight: bold;
+        font-size: 16px;
+        margin-top: 16px;
+    }
+
+    .rs-name {
+        font-size: 16px;
+    }
+
+    .rs-files, .rs-name {
+        margin-top: 4px;
+    }
+
+    &:hover {
+        background: rgba(0, 0, 0, 0.2);
+    }
+}

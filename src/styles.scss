@@ -9,9 +9,7 @@ html, body {
 body {
     margin: 0;
     font-family: Roboto, "Helvetica Neue", sans-serif;
-    border: 2px solid mat-color($primary);
     box-sizing: border-box;
-    border-radius: 4px;
 }
 
 main {
@@ -20,6 +18,8 @@ main {
     position: relative;
     padding: 32px;
     box-sizing: border-box;
+    border: 1px solid #262626;
+    border-top-width: 0;
 }
 
 .rs-loader {
@@ -31,4 +31,9 @@ main {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.mat-tooltip {
+    font-size: 14px;
+    padding: 4px;
 }

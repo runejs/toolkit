@@ -1,6 +1,6 @@
 {
-    "name": "runejs-cache-viewer",
-    "version": "0.0.0",
+    "name": "@runejs/toolkit",
+    "version": "0.1.0",
     "scripts": {
         "ng": "ng",
         "start:web": "ng serve",
@@ -29,6 +29,7 @@
         "@angular/platform-browser-dynamic": "~9.0.3",
         "@angular/router": "~9.0.3",
         "@runejs/cache-parser": "0.4.4",
+        "@runejs/filestore": "^0.3.0",
         "electron-context-menu": "^0.16.0",
         "ngx-electron": "^2.2.0",
         "rxjs": "~6.5.4",
@@ -36,7 +37,7 @@
         "zone.js": "~0.10.2"
     },
     "devDependencies": {
-        "@angular-devkit/build-angular": "~0.900.4",
+        "@angular-devkit/build-angular": "^0.1100.5",
         "@angular-guru/electron-builder": "^8.0.0",
         "@angular/cli": "~9.0.4",
         "@angular/compiler-cli": "~9.0.3",

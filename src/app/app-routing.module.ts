@@ -11,12 +11,16 @@ const routes: Routes = [
         loadChildren: () => import('./view/sprites/sprites.module').then(m => m.SpritesModule)
     },
     {
-        path: 'cache-tools',
-        loadChildren: () => import('./view/cache-tools/cache-tools.module').then(m => m.CacheToolsModule)
+        path: 'filestore-tools',
+        loadChildren: () => import('./view/filestore-tools/filestore-tools.module').then(m => m.FilestoreToolsModule)
+    },
+    {
+        path: 'file-viewer',
+        loadChildren: () => import('./view/file-viewer/file-viewer.module').then(m => m.FileViewerModule)
     },
     {
         path: '',
-        loadChildren: () => import('./view/load-cache/load-cache.module').then(m => m.LoadCacheModule)
+        loadChildren: () => import('./view/load-filestore/load-filestore.module').then(m => m.LoadFilestoreModule)
     }
 ];
 

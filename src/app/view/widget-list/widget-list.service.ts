@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { RsCacheService } from '../../rs-cache/rs-cache.service';
+import { FilestoreService } from '../../filestore/filestore.service';
 import { WidgetChild, WidgetDefinition } from '@runejs/cache-parser';
 
 export class WidgetContainerChild extends WidgetChild {
@@ -10,11 +10,11 @@ export class WidgetContainerChild extends WidgetChild {
 @Injectable()
 export class WidgetListService {
 
-    public constructor(private cacheService: RsCacheService) {
+    public constructor(private cacheService: FilestoreService) {
     }
 
     public fetchWidgets(): WidgetDefinition[] {
-        return Array.from(this.cacheService.cache.widgetDefinitions.values());
+        return Array.from(this.cacheService.filestore.widgetDefinitions.values());
     }
 
 }

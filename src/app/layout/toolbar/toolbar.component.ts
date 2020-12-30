@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ElectronService } from 'ngx-electron';
-import { RsCacheService } from '../../rs-cache/rs-cache.service';
+import { FilestoreService } from '../../filestore/filestore.service';
 
 @Component({
     selector: 'rs-toolbar',
@@ -10,7 +10,7 @@ import { RsCacheService } from '../../rs-cache/rs-cache.service';
 export class ToolbarComponent implements OnInit {
 
     public constructor(private electron: ElectronService,
-                       private cacheService: RsCacheService) {
+                       private filestoreService: FilestoreService) {
     }
 
     public ngOnInit(): void {
@@ -29,7 +29,7 @@ export class ToolbarComponent implements OnInit {
     }
 
     public get cacheLoaded(): boolean {
-        return this.cacheService.cacheLoaded;
+        return this.filestoreService.filestoreLoaded;
     }
 
 }
