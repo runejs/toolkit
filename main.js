@@ -16,7 +16,7 @@ function createWindow() {
             nodeIntegration: true,
             enableRemoteModule: true
         },
-        frame: false
+        titleBarStyle: 'hidden'
     });
 
     mainWindow.loadURL(url.format({

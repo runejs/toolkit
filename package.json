@@ -30,6 +30,7 @@
         "@angular/router": "~11.0.5",
         "@runejs/cache-parser": "0.4.4",
         "@runejs/filestore": "^0.3.0",
+        "custom-electron-titlebar": "^3.2.5",
         "electron-context-menu": "^0.16.0",
         "ngx-electron": "^2.2.0",
         "rxjs": "~6.5.4",
