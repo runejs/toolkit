@@ -10,8 +10,7 @@ if(environment.production) {
 }
 
 new Titlebar({
-    backgroundColor: Color.fromHex('#262626'),
-    icon: 'assets/runejs-logo-square.png'
+    backgroundColor: Color.fromHex('#262626')
 });
 
 platformBrowserDynamic().bootstrapModule(AppModule)

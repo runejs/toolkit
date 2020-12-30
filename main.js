@@ -1,5 +1,5 @@
 const { app, BrowserWindow } = require('electron');
-const url = require("url");
+const url = require('url');
 const path = require('path');
 const contextMenu = require('electron-context-menu');
 
@@ -16,7 +16,8 @@ function createWindow() {
             nodeIntegration: true,
             enableRemoteModule: true
         },
-        titleBarStyle: 'hidden'
+        titleBarStyle: 'hidden',
+        icon: path.join(__dirname, '/runejs-64.ico')
     });
 
     mainWindow.loadURL(url.format({

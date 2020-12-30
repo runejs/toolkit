@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FilestoreRoutingModule } from './filestore-routing.module';
 import { FilestoreComponent } from './filestore.component';
 import { FilestoreRootModule } from './filestore-root/filestore-root.module';
+import { FilestoreIndexModule } from './filestore-index/filestore-index.module';
 
 
 @NgModule({
@@ -11,7 +12,8 @@ import { FilestoreRootModule } from './filestore-root/filestore-root.module';
     imports: [
         CommonModule,
         FilestoreRoutingModule,
-        FilestoreRootModule
+        FilestoreRootModule,
+        FilestoreIndexModule
     ]
 })
 export class FilestoreModule {

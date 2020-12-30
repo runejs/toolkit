@@ -7,6 +7,7 @@ const mapFileNames = require('../../../../../../filestore/map-file-names.json');
 
 export interface FilestoreIndex {
     index: string;
+    indexId: number;
     indexName: string;
     files: Archive[] | FileData[];
 }

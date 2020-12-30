@@ -17,10 +17,8 @@ export class FilestoreRootComponent implements OnInit {
     }
 
     public ngOnInit(): void {
-        const filestore = this.filestoreService.filestore;
-
         for(let i = 0; i <= 12; i++) {
-            const index = filestore.getIndex(i);
+            const index = this.filestoreService.getIndex(i);
 
             let indexName = '?';
             Object.keys(indexIdMap).forEach(name => {
@@ -31,6 +29,7 @@ export class FilestoreRootComponent implements OnInit {
 
             this.indexes.push({
                 index: `File Index ${i}`,
+                indexId: i,
                 indexName,
                 files: [ ...index.files.values() ]
             });

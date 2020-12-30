@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { NewFormatGameCache } from '@runejs/cache-parser';
-import { Filestore } from '@runejs/filestore';
+import { FileIndex, Filestore } from '@runejs/filestore';
 
 @Injectable({
     providedIn: 'root'
@@ -11,8 +11,20 @@ export class FilestoreService {
     private _filestoreLoaded = false;
     private _cache: NewFormatGameCache;
     public filestore: Filestore;
+    public indexes: FileIndex[] = [];
 
     public constructor() {
+    }
+
+    public getIndex(indexId: number | string): FileIndex {
+        let index = this.indexes.find(i => i.indexId === indexId) || null;
+
+        if(!index) {
+            index = this.filestore.getIndex(parseInt(`${indexId}`, 10));
+            this.indexes.push(index);
+        }
+
+        return index;
     }
 
     public reset(): void {
