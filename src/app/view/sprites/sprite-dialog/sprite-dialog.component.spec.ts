@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { SpriteDialogComponent } from './sprite-dialog.component';
 
@@ -6,7 +6,7 @@ describe('SpriteDialogComponent', () => {
     let component: SpriteDialogComponent;
     let fixture: ComponentFixture<SpriteDialogComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             declarations: [SpriteDialogComponent]
         })

@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { LoadFilestoreComponent } from './load-filestore.component';
 
@@ -6,7 +6,7 @@ describe('LoadCacheComponent', () => {
     let component: LoadFilestoreComponent;
     let fixture: ComponentFixture<LoadFilestoreComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             declarations: [LoadFilestoreComponent]
         })
