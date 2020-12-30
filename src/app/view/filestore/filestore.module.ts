@@ -3,18 +3,15 @@ import { CommonModule } from '@angular/common';
 
 import { FilestoreRoutingModule } from './filestore-routing.module';
 import { FilestoreComponent } from './filestore.component';
-import { FilestoreIndexComponent } from './filestore-index/filestore-index.component';
-import { MatIconModule } from '@angular/material/icon';
-import { MatTooltipModule } from '@angular/material/tooltip';
+import { FilestoreRootModule } from './filestore-root/filestore-root.module';
 
 
 @NgModule({
-    declarations: [FilestoreComponent, FilestoreIndexComponent],
+    declarations: [ FilestoreComponent ],
     imports: [
         CommonModule,
         FilestoreRoutingModule,
-        MatIconModule,
-        MatTooltipModule
+        FilestoreRootModule
     ]
 })
 export class FilestoreModule {

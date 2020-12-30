@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Archive, FileData } from '@runejs/filestore';
 
-const fileNames = require('../../../../../filestore/file-names.json');
-const mapFileNames = require('../../../../../filestore/map-file-names.json');
+const fileNames = require('../../../../../../filestore/file-names.json');
+const mapFileNames = require('../../../../../../filestore/map-file-names.json');
 
 
 export interface FilestoreIndex {
@@ -12,11 +12,11 @@ export interface FilestoreIndex {
 }
 
 @Component({
-    selector: 'rs-filestore-index',
-    templateUrl: './filestore-index.component.html',
-    styleUrls: ['./filestore-index.component.scss']
+    selector: 'rs-index-detail',
+    templateUrl: './index-detail.component.html',
+    styleUrls: ['./index-detail.component.scss']
 })
-export class FilestoreIndexComponent implements OnInit {
+export class IndexDetailComponent implements OnInit {
 
     @Input() public index: FilestoreIndex;
 

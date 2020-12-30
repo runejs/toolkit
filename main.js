@@ -10,7 +10,7 @@ contextMenu({});
 
 function createWindow() {
     mainWindow = new BrowserWindow({
-        width: 1500,
+        width: 1000,
         height: 600,
         webPreferences: {
             nodeIntegration: true,
@@ -26,7 +26,9 @@ function createWindow() {
     }));
 
     // Open the DevTools.
-    mainWindow.webContents.openDevTools();
+    mainWindow.webContents.openDevTools({
+        mode: 'undocked'
+    });
 
     mainWindow.on('closed', function () {
         mainWindow = null

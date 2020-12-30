@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
-import { FilestoreIndexComponent } from './filestore-index.component';
+import { IndexDetailComponent } from './index-detail.component';
 
 describe('FileTreeComponent', () => {
-    let component: FilestoreIndexComponent;
-    let fixture: ComponentFixture<FilestoreIndexComponent>;
+    let component: IndexDetailComponent;
+    let fixture: ComponentFixture<IndexDetailComponent>;
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
-            declarations: [FilestoreIndexComponent]
+            declarations: [IndexDetailComponent]
         })
             .compileComponents();
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(FilestoreIndexComponent);
+        fixture = TestBed.createComponent(IndexDetailComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });
