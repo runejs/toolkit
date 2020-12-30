@@ -69,10 +69,11 @@ a {
 .rs-folder-container {
     display: grid;
     grid-template-columns: auto auto auto auto;
+    padding: 32px 0;
 }
 
 .rs-file {
-    padding: 32px 16px 0;
+    padding: 32px 16px;
     display: flex;
     align-items: center;
     justify-content: center;

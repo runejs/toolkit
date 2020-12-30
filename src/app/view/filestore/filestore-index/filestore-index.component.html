@@ -10,7 +10,8 @@
     <div class="rs-folder-container" *ngIf="files">
         <div class="rs-file" *ngFor="let file of files; index as i">
             <mat-icon>{{ file.type === 'archive' ? 'folder' : 'insert_drive_file' }}</mat-icon>
-            <strong>{{ fileName(i, file.nameHash) }}</strong>
+            <strong>Index {{ i }}</strong>
+            <div>{{ fileName(file.nameHash) }}</div>
         </div>
     </div>
 </div>

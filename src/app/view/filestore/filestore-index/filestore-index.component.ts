@@ -40,13 +40,13 @@ export class FilestoreIndexComponent implements OnInit, OnDestroy {
     }
 
     // @TODO convert into an angular pipe
-    public fileName(id: number, nameHash?: number): string | null {
+    public fileName(nameHash?: number): string | null {
         if(!nameHash) {
-            return `${id}`;
+            return '';
         }
 
         const fileName = fileNames[`${nameHash}`] || mapFileNames[`${nameHash}`] || null;
-        return `${id}` + (fileName ? `: ${fileName}` : '');
+        return fileName || '';
     }
 
     public get files() {
