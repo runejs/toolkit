@@ -106,7 +106,9 @@ a {
     text-align: center;
     cursor: pointer;
     transition: background 400ms;
-    min-width: 100px;
+    min-width: 80px;
+    border-radius: 8px;
+    outline: none;
 
     $s: 64px;
     .mat-icon {
@@ -127,6 +129,24 @@ a {
         background: rgba(0, 0, 0, 0.2);
     }
 }
+
+
+*::-webkit-scrollbar {
+    width: 16px;
+}
+*::-webkit-scrollbar-thumb {
+    background: mat-color($primary, 300);
+    background-clip: padding-box;
+    border-radius: 8px;
+    border: 4px solid rgba(0, 0, 0, 0);
+    box-shadow: inset 0 0 1px #302f31;
+    min-height: 28px;
+}
+*::-webkit-scrollbar-track,
+*::-webkit-scrollbar-corner {
+    background: rgba(0, 0, 0, 0.2);
+}
+
 
 .mat-tooltip {
     font-size: 14px;
