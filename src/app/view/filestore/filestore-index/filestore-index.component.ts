@@ -6,6 +6,7 @@ import { Archive, FileData, FileIndex } from '@runejs/filestore';
 
 
 import * as MIDI from 'midicube';
+import { IndexNamePipe } from '../../../shared/index-name/index-name.pipe';
 
 let player;
 MIDI.loadPlugin({
@@ -33,7 +34,8 @@ export class FilestoreIndexComponent implements OnInit, OnDestroy {
     private routeSubscription: Subscription;
 
     public constructor(private route: ActivatedRoute,
-                       private filestoreService: FilestoreService) {
+                       private filestoreService: FilestoreService,
+                       private indexNamePipe: IndexNamePipe) {
     }
 
     public ngOnInit(): void {
@@ -64,6 +66,10 @@ export class FilestoreIndexComponent implements OnInit, OnDestroy {
         setTimeout(() => {
             this.fileIndex = this.filestoreService.getIndex(indexId);
             this.files = Array.from(this.fileIndex.files.values());
+
+            this.filestoreService.breadcrumb = [
+                this.indexNamePipe.transform(this.fileIndex)
+            ];
         }, 0);
     }
 

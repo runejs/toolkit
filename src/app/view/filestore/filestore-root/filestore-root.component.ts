@@ -14,6 +14,7 @@ export class FilestoreRootComponent implements OnInit {
     public indexes: FilestoreIndex[] = [];
 
     public constructor(private filestoreService: FilestoreService) {
+        this.filestoreService.breadcrumb = [];
     }
 
     public ngOnInit(): void {

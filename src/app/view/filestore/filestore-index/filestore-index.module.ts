@@ -6,8 +6,8 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { FileNameModule } from '../../../shared/file-name/file-name.module';
 import { IndexNameModule } from '../../../shared/index-name/index-name.module';
-import { BreadcrumbModule } from '../../../shared/breadcrumb/breadcrumb.module';
 import { FileModule } from '../../../shared/file/file.module';
+import { IndexNamePipe } from '../../../shared/index-name/index-name.pipe';
 
 
 @NgModule({
@@ -19,8 +19,10 @@ import { FileModule } from '../../../shared/file/file.module';
         MatIconModule,
         FileNameModule,
         IndexNameModule,
-        BreadcrumbModule,
         FileModule
+    ],
+    providers: [
+        IndexNamePipe
     ]
 })
 export class FilestoreIndexModule {

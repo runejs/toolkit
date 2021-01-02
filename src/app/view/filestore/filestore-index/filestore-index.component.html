@@ -1,10 +1,4 @@
 <div class="rs-filestore-index" *ngIf="fileIndex">
-    <rs-breadcrumb>
-        <a routerLink="/filestore">filestore</a>
-        <mat-icon>chevron_right</mat-icon>
-        <div rs-current>{{ fileIndex | indexName }}</div>
-    </rs-breadcrumb>
-
     <div class="rs-folder-container" *ngIf="files">
         <rs-file [index]="fileIndex" *ngFor="let file of files" [file]="file"></rs-file>
     </div>

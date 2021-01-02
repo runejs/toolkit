@@ -8,10 +8,12 @@ import { FileIndex, Filestore } from '@runejs/filestore';
 export class FilestoreService {
 
     public test: string;
-    private _filestoreLoaded = false;
-    private _cache: NewFormatGameCache;
     public filestore: Filestore;
     public indexes: FileIndex[] = [];
+    public breadcrumb: ([ string, string ] | string)[] = [];
+
+    private _filestoreLoaded = false;
+    private _cache: NewFormatGameCache;
 
     public constructor() {
     }

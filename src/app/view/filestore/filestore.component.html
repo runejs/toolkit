@@ -1,3 +1,25 @@
 <div class="rs-filestore">
+    <rs-breadcrumb>
+        <ng-container *ngIf="breadcrumb.length === 0; else listTemplate">
+            <div rs-current>filestore</div>
+        </ng-container>
+
+        <ng-template #listTemplate>
+            <a routerLink="/filestore">filestore</a>
+            <mat-icon>chevron_right</mat-icon>
+
+            <ng-container *ngFor="let link of breadcrumb; index as i">
+                <ng-container *ngIf="i === breadcrumb.length - 1; else linkTemplate">
+                    <div rs-current>{{ link }}</div>
+                </ng-container>
+
+                <ng-template #linkTemplate>
+                    <a [routerLink]="link[1]">{{ link[0] }}</a>
+                    <mat-icon>chevron_right</mat-icon>
+                </ng-template>
+            </ng-container>
+        </ng-template>
+    </rs-breadcrumb>
+
     <router-outlet></router-outlet>
 </div>
