@@ -10,11 +10,11 @@
 
             <ng-container *ngFor="let link of breadcrumb; index as i">
                 <ng-container *ngIf="i === breadcrumb.length - 1; else linkTemplate">
-                    <div rs-current>{{ link }}</div>
+                    <div rs-current [innerHTML]="link"></div>
                 </ng-container>
 
                 <ng-template #linkTemplate>
-                    <a [routerLink]="link[1]">{{ link[0] }}</a>
+                    <a [routerLink]="link[1]" [innerHTML]="link[0]"></a>
                     <mat-icon>chevron_right</mat-icon>
                 </ng-template>
             </ng-container>

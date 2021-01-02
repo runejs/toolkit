@@ -15,4 +15,29 @@
             cursor: pointer;
         }
     }
+
+    h3 {
+        font-size: 28px;
+        text-align: center;
+        margin: 16px 0 0;
+        visibility: hidden;
+        opacity: 0.8;
+
+        &.rs-playing {
+            visibility: visible;
+            animation: playing 3s linear infinite;
+        }
+    }
+}
+
+@keyframes playing {
+    0% {
+        opacity: 0.9;
+    }
+    50% {
+        opacity: 0.2;
+    }
+    100% {
+        opacity: 0.9;
+    }
 }

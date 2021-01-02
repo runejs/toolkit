@@ -11,6 +11,7 @@ export class MidiFilePreviewComponent implements OnInit, OnChanges, OnDestroy {
 
     @Input() public midiFile: FileData;
     public playing: boolean = false;
+    public paused: boolean = false;
 
     public constructor() {
     }
@@ -30,12 +31,27 @@ export class MidiFilePreviewComponent implements OnInit, OnChanges, OnDestroy {
 
     public stopPlaying(): void {
         this.playing = false;
+        this.paused = false;
         MIDIjs.stop();
+    }
+
+    public pause(): void {
+        this.paused = true;
+        MIDIjs.pause();
+    }
+
+    public resume(): void {
+        this.paused = false;
+        MIDIjs.resume();
     }
 
     public playMidi(): void {
         if(this.playing) {
-            this.stopPlaying();
+            if(this.paused) {
+                this.resume();
+            } else {
+                this.pause();
+            }
         } else {
             if(!this.midiFile.content || this.midiFile.content.length === 0) {
                 this.midiFile.decompress();
@@ -51,6 +67,14 @@ export class MidiFilePreviewComponent implements OnInit, OnChanges, OnDestroy {
                 console.error(`Cannot play MIDI ${this.midiFile.fileId}`, err);
             }
         }
+    }
+
+    public get buttonIcon(): string {
+        if(!this.playing) {
+            return 'play_circle';
+        }
+
+        return !this.paused ? 'pause_circle_outline' : 'play_circle_outline';
     }
 
 }

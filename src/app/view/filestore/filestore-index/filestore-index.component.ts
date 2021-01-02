@@ -37,7 +37,7 @@ export class FilestoreIndexComponent implements OnInit, OnDestroy {
             this.files = Array.from(this.fileIndex.files.values());
 
             this.filestoreService.breadcrumb = [
-                this.indexNamePipe.transform(this.fileIndex)
+                this.indexNamePipe.transform(this.fileIndex) + ` <span>[index ${this.fileIndex.indexId}]</span>`
             ];
         }, 0);
     }

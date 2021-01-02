@@ -1,6 +1,8 @@
 <div class="rs-midi-file-preview">
     <div class="rs-play">
         <mat-icon color="accent" (click)="playMidi()">
-            {{ playing ? 'stop_circle' : 'play_circle' }}</mat-icon>
+            {{ buttonIcon }}</mat-icon>
+
+        <h3 class="mat-h3" [ngClass]="{ 'rs-playing': playing && !paused }">Playing...</h3>
     </div>
 </div>
