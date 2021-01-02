@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { NewFormatGameCache } from '@runejs/cache-parser';
-import { FileIndex, Filestore } from '@runejs/filestore';
+import { FileData, FileIndex, Filestore } from '@runejs/filestore';
+import { Subject } from 'rxjs';
+
 
 @Injectable({
     providedIn: 'root'
@@ -11,6 +13,11 @@ export class FilestoreService {
     public filestore: Filestore;
     public indexes: FileIndex[] = [];
     public breadcrumb: ([ string, string ] | string)[] = [];
+
+    public readonly previewFileEvent = new Subject<{
+        file: FileData;
+        index: FileIndex;
+    }>();
 
     private _filestoreLoaded = false;
     private _cache: NewFormatGameCache;

@@ -1,0 +1,51 @@
+<div class="rs-file-preview" *ngIf="file && index">
+    <header class="rs-file-header">
+        <h1 class="mat-headline">{{ fileName || 'unnamed' }}</h1>
+
+        <div class="rs-file-info">
+            <div>
+                <strong>File ID</strong>
+                <div>{{ file.fileId }}</div>
+            </div>
+
+            <div>
+                <strong>File Version</strong>
+                <div>{{ file.version }}</div>
+            </div>
+
+            <div>
+                <strong>File Index</strong>
+                <div>{{ file.index.indexId }}: {{ file.index | indexName }}</div>
+            </div>
+
+            <div>
+                <strong>CRC</strong>
+                <div>{{ file.crc }}</div>
+            </div>
+
+            <div>
+                <strong>Name Hash</strong>
+                <div>{{ file.nameHash }}</div>
+            </div>
+        </div>
+    </header>
+
+    <mat-divider></mat-divider>
+
+    <div class="rs-preview-container">
+        <ng-container *ngIf="file.content && file.content.length !== 0; else emptyFileTemplate">
+            <ng-container *ngIf="isMidi">
+                <rs-midi-file-preview [midiFile]="file"></rs-midi-file-preview>
+            </ng-container>
+
+            <!-- @TODO other file previews -->
+        </ng-container>
+
+        <ng-template #emptyFileTemplate>
+            <div class="rs-empty-file">
+                <h2 class="mat-title">File Empty</h2>
+                <p>No data was found within the main filestore for this indexed file.</p>
+            </div>
+        </ng-template>
+    </div>
+</div>

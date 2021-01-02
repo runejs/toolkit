@@ -1,0 +1,41 @@
+.rs-file-preview {
+    width: 500px;
+    max-width: 800px;
+    min-width: 300px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    .rs-preview-container {
+        flex: 1 1 auto;
+
+        .rs-empty-file {
+            height: 100%;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 0 16px;
+        }
+    }
+}
+
+.rs-file-header {
+    padding: 16px;
+
+    h1 {
+        text-align: center;
+        margin: 0;
+    }
+
+    .rs-file-info {
+        display: grid;
+        grid-template-columns: auto auto auto auto auto;
+        margin: 16px 0 0;
+    }
+}
+
+.mat-divider {
+    margin: 16px 0;
+}

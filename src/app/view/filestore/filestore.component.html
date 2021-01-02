@@ -21,5 +21,15 @@
         </ng-template>
     </rs-breadcrumb>
 
-    <router-outlet></router-outlet>
+    <mat-sidenav-container autosize>
+        <mat-sidenav mode="side" [opened]="filePreview !== null" position="end" fixedInViewport fixedTopGap="42">
+            <rs-file-preview *ngIf="filePreview !== null"
+                             [index]="filePreview.index"
+                             [file]="filePreview.file"></rs-file-preview>
+        </mat-sidenav>
+
+        <mat-sidenav-content>
+            <router-outlet></router-outlet>
+        </mat-sidenav-content>
+    </mat-sidenav-container>
 </div>

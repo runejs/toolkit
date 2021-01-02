@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Archive, FileData, FileIndex, indexIdMap } from '@runejs/filestore';
 import { FileNamePipe } from '../file-name/file-name.pipe';
+import { FilestoreService } from '../../filestore/filestore.service';
+
 
 @Component({
     selector: 'rs-file',
@@ -13,7 +15,8 @@ export class FileComponent implements OnInit {
     @Input() public index: FileIndex;
     private name: string = '';
 
-    public constructor(private fileName: FileNamePipe) {
+    public constructor(private fileName: FileNamePipe,
+                       private filestoreService: FilestoreService) {
     }
 
     public ngOnInit(): void {
@@ -21,7 +24,8 @@ export class FileComponent implements OnInit {
     }
 
     public openPreview(): void {
-        console.log('hello world');
+        const { file, index } = this;
+        this.filestoreService.previewFileEvent.next({ file, index });
     }
 
     public get fileIcon(): string {

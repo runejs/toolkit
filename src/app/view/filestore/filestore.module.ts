@@ -7,6 +7,8 @@ import { FilestoreRootModule } from './filestore-root/filestore-root.module';
 import { FilestoreIndexModule } from './filestore-index/filestore-index.module';
 import { BreadcrumbModule } from '../../shared/breadcrumb/breadcrumb.module';
 import { MatIconModule } from '@angular/material/icon';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { FilePreviewModule } from '../../shared/file-preview/file-preview.module';
 
 
 @NgModule({
@@ -17,7 +19,9 @@ import { MatIconModule } from '@angular/material/icon';
         FilestoreRootModule,
         FilestoreIndexModule,
         BreadcrumbModule,
-        MatIconModule
+        MatIconModule,
+        MatSidenavModule,
+        FilePreviewModule
     ]
 })
 export class FilestoreModule {
