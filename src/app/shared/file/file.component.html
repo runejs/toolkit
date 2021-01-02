@@ -1,0 +1,5 @@
+<div class="rs-file" (click)="openPreview()">
+    <mat-icon>{{ fileIcon }}</mat-icon>
+    <strong>File {{ file.fileId }}</strong>
+    <div>{{ file | fileName:index }}</div>
+</div>

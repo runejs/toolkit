@@ -6,10 +6,6 @@
     </rs-breadcrumb>
 
     <div class="rs-folder-container" *ngIf="files">
-        <div class="rs-file" *ngFor="let file of files; index as i">
-            <mat-icon>{{ file.type === 'archive' ? 'folder' : 'insert_drive_file' }}</mat-icon>
-            <strong>File {{ i }}</strong>
-            <div>{{ file | fileName }}</div>
-        </div>
+        <rs-file [index]="fileIndex" *ngFor="let file of files" [file]="file"></rs-file>
     </div>
 </div>

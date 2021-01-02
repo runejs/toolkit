@@ -7,6 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { FileNameModule } from '../../../shared/file-name/file-name.module';
 import { IndexNameModule } from '../../../shared/index-name/index-name.module';
 import { BreadcrumbModule } from '../../../shared/breadcrumb/breadcrumb.module';
+import { FileModule } from '../../../shared/file/file.module';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { BreadcrumbModule } from '../../../shared/breadcrumb/breadcrumb.module';
         MatIconModule,
         FileNameModule,
         IndexNameModule,
-        BreadcrumbModule
+        BreadcrumbModule,
+        FileModule
     ]
 })
 export class FilestoreIndexModule {

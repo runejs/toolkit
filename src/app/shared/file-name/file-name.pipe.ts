@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Archive, FileData } from '@runejs/filestore';
+import { Archive, FileData, FileIndex, indexIdMap } from '@runejs/filestore';
 
 const fileNames = require('../../../../filestore/file-names.json');
 const mapFileNames = require('../../../../filestore/map-file-names.json');
@@ -10,13 +10,21 @@ const mapFileNames = require('../../../../filestore/map-file-names.json');
 })
 export class FileNamePipe implements PipeTransform {
 
-    transform(value: Archive | FileData): string {
+    transform(value: Archive | FileData, index?: FileIndex): string {
         if(!value || !value.nameHash) {
             return '';
         }
 
-        const fileName = fileNames[`${value.nameHash}`] || mapFileNames[`${value.nameHash}`] || null;
-        return fileName || '';
+        let fileName: string = fileNames[`${value.nameHash}`] || mapFileNames[`${value.nameHash}`] || '';
+
+        if(index && fileName) {
+            if(index.indexId === indexIdMap.music) {
+                fileName = fileName.replace(/ /g, '_');
+                fileName += '.mid';
+            }
+        }
+
+        return fileName;
     }
 
 }
