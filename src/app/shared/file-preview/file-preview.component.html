@@ -1,6 +1,9 @@
 <div class="rs-file-preview" *ngIf="file && index">
     <header class="rs-file-header">
-        <h1 class="mat-headline">{{ fileName || 'unnamed' }}</h1>
+        <div class="rs-top">
+            <h1 class="mat-headline">{{ fileName || 'unnamed' }}</h1>
+            <mat-icon (click)="close()" matTooltip="Close Preview" matTooltipShowDelay="300">close</mat-icon>
+        </div>
 
         <div class="rs-file-info">
             <div>

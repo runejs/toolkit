@@ -24,9 +24,19 @@
 .rs-file-header {
     padding: 16px;
 
-    h1 {
-        text-align: center;
-        margin: 0;
+    .rs-top {
+        display: flex;
+        align-items: flex-start;
+
+        h1 {
+            text-align: center;
+            margin: 0;
+            flex: 1 1 auto;
+        }
+
+        .mat-icon {
+            cursor: pointer;
+        }
     }
 
     .rs-file-info {

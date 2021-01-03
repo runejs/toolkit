@@ -7,6 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { IndexNameModule } from '../index-name/index-name.module';
 import { MatDividerModule } from '@angular/material/divider';
 import { ImageFilePreviewComponent } from './image-file-preview/image-file-preview.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { ImageFilePreviewComponent } from './image-file-preview/image-file-previ
         CommonModule,
         MatIconModule,
         IndexNameModule,
-        MatDividerModule
+        MatDividerModule,
+        MatTooltipModule
     ],
     providers: [
         FileNamePipe

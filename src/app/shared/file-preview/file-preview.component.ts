@@ -1,6 +1,7 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Archive, FileData, FileIndex, indexIdMap } from '@runejs/filestore';
 import { FileNamePipe } from '../file-name/file-name.pipe';
+import { FilestoreService } from '../../filestore/filestore.service';
 
 
 @Component({
@@ -14,7 +15,8 @@ export class FilePreviewComponent implements OnInit, OnChanges {
     @Input() public index: FileIndex;
     public fileName: string = '';
 
-    public constructor(private fileNamePipe: FileNamePipe) {
+    public constructor(private fileNamePipe: FileNamePipe,
+                       private filestoreService: FilestoreService) {
     }
 
     public ngOnInit(): void {
@@ -31,6 +33,10 @@ export class FilePreviewComponent implements OnInit, OnChanges {
                 this.file.decompress();
             }
         }
+    }
+
+    public close(): void {
+        this.filestoreService.previewFileEvent.next(null);
     }
 
     public get isMidi(): boolean {
