@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FilestoreService } from '../../filestore/filestore.service';
 import { FileData, FileIndex } from '@runejs/filestore';
 import { Subscription } from 'rxjs';
+import { NavigationStart, Router } from '@angular/router';
 
 
 @Component({
@@ -18,12 +19,18 @@ export class FilestoreComponent implements OnInit, OnDestroy {
 
     private sub: Subscription;
 
-    public constructor(private filestoreService: FilestoreService) {
-        this.sub = this.filestoreService.previewFileEvent.subscribe(event =>
-            this.filePreview = event);
+    public constructor(private router: Router,
+                       private filestoreService: FilestoreService) {
     }
 
     public ngOnInit(): void {
+        this.sub = this.filestoreService.previewFileEvent.subscribe(event =>
+            this.filePreview = event);
+        this.sub.add(this.router.events.subscribe(routerEvent => {
+            if(routerEvent instanceof NavigationStart) {
+                setTimeout(() => this.filePreview = null, 0);
+            }
+        }));
     }
 
     public ngOnDestroy(): void {
