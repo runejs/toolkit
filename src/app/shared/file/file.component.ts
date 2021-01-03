@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Archive, FileData, FileIndex, indexIdMap } from '@runejs/filestore';
 import { FileNamePipe } from '../file-name/file-name.pipe';
 import { FilestoreService } from '../../filestore/filestore.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -15,7 +16,8 @@ export class FileComponent implements OnInit {
     @Input() public index: FileIndex;
     private name: string = '';
 
-    public constructor(private fileName: FileNamePipe,
+    public constructor(private router: Router,
+                       private fileName: FileNamePipe,
                        private filestoreService: FilestoreService) {
     }
 
@@ -23,9 +25,13 @@ export class FileComponent implements OnInit {
         this.name = this.fileName.transform(this.file, this.index);
     }
 
-    public openPreview(): void {
-        const { file, index } = this;
-        this.filestoreService.previewFileEvent.next({ file, index });
+    public fileClicked(): void {
+        if(this.file.type === 'file') {
+            const { file, index } = this;
+            this.filestoreService.previewFileEvent.next({file, index});
+        } else if(this.file.type === 'archive') {
+            this.router.navigate([ '/', 'filestore', 'index', `${this.index.indexId}`, 'archive', `${this.file.fileId}` ]);
+        }
     }
 
     public get fileIcon(): string {
@@ -42,6 +48,10 @@ export class FileComponent implements OnInit {
         }
 
         return 'insert_drive_file';
+    }
+
+    public get archive(): Archive {
+        return this.file.type === 'archive' ? this.file as Archive : null;
     }
 
 }

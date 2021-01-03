@@ -2,7 +2,8 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { FilestoreComponent } from './filestore.component';
 import { FilestoreRootComponent } from './filestore-root/filestore-root.component';
-import { FilestoreIndexComponent } from './filestore-index/filestore-index.component';
+import { FileIndexComponent } from './file-index/file-index.component';
+import { ArchiveComponent } from './archive/archive.component';
 
 
 const routes: Routes = [
@@ -16,7 +17,11 @@ const routes: Routes = [
             },
             {
                 path: 'index/:indexId',
-                component: FilestoreIndexComponent
+                component: FileIndexComponent
+            },
+            {
+                path: 'index/:indexId/archive/:archiveId',
+                component: ArchiveComponent
             }
         ]
     }

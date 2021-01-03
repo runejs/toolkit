@@ -1,0 +1,5 @@
+<div class="rs-archive" *ngIf="archive">
+    <div class="rs-folder-container" *ngIf="files">
+        <rs-file [index]="fileIndex" *ngFor="let file of files" [file]="file"></rs-file>
+    </div>
+</div>

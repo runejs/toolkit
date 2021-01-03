@@ -6,10 +6,11 @@ import { MidiFilePreviewComponent } from './midi-file-preview/midi-file-preview.
 import { MatIconModule } from '@angular/material/icon';
 import { IndexNameModule } from '../index-name/index-name.module';
 import { MatDividerModule } from '@angular/material/divider';
+import { ImageFilePreviewComponent } from './image-file-preview/image-file-preview.component';
 
 
 @NgModule({
-    declarations: [ FilePreviewComponent, MidiFilePreviewComponent ],
+    declarations: [ FilePreviewComponent, MidiFilePreviewComponent, ImageFilePreviewComponent ],
     exports: [
         FilePreviewComponent
     ],

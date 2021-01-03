@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FilestoreIndexComponent } from './filestore-index.component';
+import { FileIndexComponent } from './file-index.component';
 import { RouterModule } from '@angular/router';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
@@ -11,7 +11,7 @@ import { IndexNamePipe } from '../../../shared/index-name/index-name.pipe';
 
 
 @NgModule({
-    declarations: [ FilestoreIndexComponent ],
+    declarations: [ FileIndexComponent ],
     imports: [
         CommonModule,
         RouterModule,
@@ -25,5 +25,5 @@ import { IndexNamePipe } from '../../../shared/index-name/index-name.pipe';
         IndexNamePipe
     ]
 })
-export class FilestoreIndexModule {
+export class FileIndexModule {
 }

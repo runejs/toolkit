@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FilestoreIndexComponent } from './filestore-index.component';
+import { ArchiveComponent } from './archive.component';
 
-describe('FilestoreIndexComponent', () => {
-    let component: FilestoreIndexComponent;
-    let fixture: ComponentFixture<FilestoreIndexComponent>;
+describe('ArchiveComponent', () => {
+    let component: ArchiveComponent;
+    let fixture: ComponentFixture<ArchiveComponent>;
 
     beforeEach(async() => {
         await TestBed.configureTestingModule({
-            declarations: [ FilestoreIndexComponent ]
+            declarations: [ ArchiveComponent ]
         })
             .compileComponents();
     });
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(FilestoreIndexComponent);
+        fixture = TestBed.createComponent(ArchiveComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });

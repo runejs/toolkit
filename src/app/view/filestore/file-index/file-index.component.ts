@@ -7,11 +7,11 @@ import { IndexNamePipe } from '../../../shared/index-name/index-name.pipe';
 
 
 @Component({
-    selector: 'rs-filestore-index',
-    templateUrl: './filestore-index.component.html',
-    styleUrls: [ './filestore-index.component.scss' ]
+    selector: 'rs-file-index',
+    templateUrl: './file-index.component.html',
+    styleUrls: [ './file-index.component.scss' ]
 })
-export class FilestoreIndexComponent implements OnInit, OnDestroy {
+export class FileIndexComponent implements OnInit, OnDestroy {
 
     public fileIndex: FileIndex;
     public files: Archive[] | FileData[];

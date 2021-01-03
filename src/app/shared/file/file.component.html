@@ -1,5 +1,6 @@
-<div class="rs-file" (click)="openPreview()">
+<div class="rs-file" (click)="fileClicked()">
     <mat-icon>{{ fileIcon }}</mat-icon>
-    <strong>File {{ file.fileId }}</strong>
+    <strong>{{ archive ? 'Archive' : 'File' }} {{ file.fileId }}</strong>
     <div>{{ file | fileName:index }}</div>
+    <div *ngIf="archive">{{ archive.files?.size || 0 }} file{{ (archive.files?.size || 0) === 1 ? '' : 's' }}</div>
 </div>
