@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { Archive, FileData, FileIndex, indexIdMap } from '@runejs/filestore';
 import { FileNamePipe } from '../file-name/file-name.pipe';
 import { FilestoreService } from '../../filestore/filestore.service';
@@ -8,7 +8,8 @@ import { Router } from '@angular/router';
 @Component({
     selector: 'rs-file',
     templateUrl: './file.component.html',
-    styleUrls: [ './file.component.scss' ]
+    styleUrls: [ './file.component.scss' ],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FileComponent implements OnInit {
 

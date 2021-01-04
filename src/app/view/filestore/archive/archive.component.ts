@@ -54,4 +54,8 @@ export class ArchiveComponent implements OnInit, OnDestroy {
         }, 0);
     }
 
+    public get fileDisplay() {
+        return this.filestoreService.fileDisplay;
+    }
+
 }

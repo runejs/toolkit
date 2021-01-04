@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FilestoreService } from '../../../filestore/filestore.service';
 import { Subscription } from 'rxjs';
@@ -9,7 +9,8 @@ import { IndexNamePipe } from '../../../shared/index-name/index-name.pipe';
 @Component({
     selector: 'rs-file-index',
     templateUrl: './file-index.component.html',
-    styleUrls: [ './file-index.component.scss' ]
+    styleUrls: [ './file-index.component.scss' ],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FileIndexComponent implements OnInit, OnDestroy {
 
@@ -19,7 +20,8 @@ export class FileIndexComponent implements OnInit, OnDestroy {
 
     public constructor(private route: ActivatedRoute,
                        private filestoreService: FilestoreService,
-                       private indexNamePipe: IndexNamePipe) {
+                       private indexNamePipe: IndexNamePipe,
+                       private changeDetector: ChangeDetectorRef) {
     }
 
     public ngOnInit(): void {
@@ -39,11 +41,17 @@ export class FileIndexComponent implements OnInit, OnDestroy {
             this.filestoreService.breadcrumb = [
                 this.indexNamePipe.transform(this.fileIndex) + ` <span>[index ${this.fileIndex.indexId}]</span>`
             ];
+
+            this.changeDetector.detectChanges();
         }, 0);
     }
 
     public ngOnDestroy() {
         this.routeSubscription.unsubscribe();
+    }
+
+    public get fileDisplay() {
+        return this.filestoreService.fileDisplay;
     }
 
 }

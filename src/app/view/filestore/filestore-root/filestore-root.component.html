@@ -1,3 +1,3 @@
-<div class="rs-filestore-root rs-folder-container">
+<div class="rs-filestore-root rs-folder-container" [ngClass]="{ 'rs-list': fileDisplay === 'list' }">
     <rs-index-detail *ngFor="let index of indexes" [indexInfo]="index"></rs-index-detail>
 </div>
