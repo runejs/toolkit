@@ -6,6 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
 import { IndexNameModule } from '../../../shared/index-name/index-name.module';
 import { MatDividerModule } from '@angular/material/divider';
+import { FolderModule } from '../../../shared/folder/folder.module';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { MatDividerModule } from '@angular/material/divider';
         MatIconModule,
         RouterModule,
         IndexNameModule,
-        MatDividerModule
+        MatDividerModule,
+        FolderModule
     ]
 })
 export class FilestoreRootModule {

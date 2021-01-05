@@ -1,0 +1,35 @@
+<div class="rs-folder">
+    <rs-breadcrumb>
+        <ng-container *ngIf="breadcrumb.length === 0; else listTemplate">
+            <div rs-current>filestore</div>
+        </ng-container>
+
+        <ng-template #listTemplate>
+            <a routerLink="/filestore">filestore</a>
+            <mat-icon>chevron_right</mat-icon>
+
+            <ng-container *ngFor="let link of breadcrumb; index as i">
+                <ng-container *ngIf="i === breadcrumb.length - 1; else linkTemplate">
+                    <div rs-current [innerHTML]="link"></div>
+                </ng-container>
+
+                <ng-template #linkTemplate>
+                    <a [routerLink]="link[1]" [innerHTML]="link[0]"></a>
+                    <mat-icon>chevron_right</mat-icon>
+                </ng-template>
+            </ng-container>
+        </ng-template>
+    </rs-breadcrumb>
+
+    <mat-sidenav-container autosize>
+        <mat-sidenav mode="side" [opened]="filePreview !== null" position="end" fixedInViewport fixedTopGap="42">
+            <rs-file-preview *ngIf="filePreview !== null"
+                             [index]="filePreview.index"
+                             [file]="filePreview.file"></rs-file-preview>
+        </mat-sidenav>
+
+        <mat-sidenav-content>
+            <ng-content></ng-content>
+        </mat-sidenav-content>
+    </mat-sidenav-container>
+</div>

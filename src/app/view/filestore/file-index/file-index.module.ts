@@ -8,6 +8,7 @@ import { FileNameModule } from '../../../shared/file-name/file-name.module';
 import { IndexNameModule } from '../../../shared/index-name/index-name.module';
 import { FileModule } from '../../../shared/file/file.module';
 import { IndexNamePipe } from '../../../shared/index-name/index-name.pipe';
+import { FolderModule } from '../../../shared/folder/folder.module';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { IndexNamePipe } from '../../../shared/index-name/index-name.pipe';
         MatIconModule,
         FileNameModule,
         IndexNameModule,
-        FileModule
+        FileModule,
+        FolderModule
     ],
     providers: [
         IndexNamePipe
