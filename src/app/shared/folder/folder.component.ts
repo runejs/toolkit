@@ -15,7 +15,6 @@ export class FolderComponent implements OnInit, OnDestroy {
         file: FileData;
         index: FileIndex;
     } | null = null;
-    public fileDisplay: 'grid' | 'list';
 
     private sub: Subscription;
 
@@ -39,6 +38,10 @@ export class FolderComponent implements OnInit, OnDestroy {
 
     public get breadcrumb() {
         return this.filestoreService.breadcrumb;
+    }
+
+    public get fileDisplay() {
+        return this.filestoreService.fileDisplay;
     }
 
 }

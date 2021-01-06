@@ -1,5 +1,5 @@
-<div class="rs-folder" [ngClass]="{ 'rs-list': fileDisplay === 'list' }">
-    <rs-breadcrumb [(fileDisplay)]="fileDisplay">
+<div class="rs-folder" [ngClass]="{ 'rs-list': fileDisplay === 'list' }" *ngIf="fileDisplay">
+    <rs-breadcrumb>
         <ng-container *ngIf="breadcrumb.length === 0; else listTemplate">
             <div rs-current>filestore</div>
         </ng-container>

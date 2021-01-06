@@ -13,7 +13,7 @@ export class FilestoreService {
     public filestore: Filestore;
     public indexes: FileIndex[] = [];
     public breadcrumb: ([ string, string ] | string)[] = [];
-    public fileDisplay: 'grid' | 'list' = 'list';
+    public fileDisplay: 'grid' | 'list' = 'grid';
 
     public readonly previewFileEvent = new Subject<{
         file: FileData;
