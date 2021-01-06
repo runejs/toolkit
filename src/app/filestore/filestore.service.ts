@@ -43,7 +43,10 @@ export class FilestoreService {
     }
 
     public loadFilestore(path: string): void {
-        this.filestore = new Filestore(path);
+        if(!path) {
+            return;
+        }
+        this.filestore = new Filestore(path, path);
         this._cache = new NewFormatGameCache(path);
         this._filestoreLoaded = true;
     }
