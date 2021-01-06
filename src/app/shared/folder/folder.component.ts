@@ -15,6 +15,7 @@ export class FolderComponent implements OnInit, OnDestroy {
         file: FileData;
         index: FileIndex;
     } | null = null;
+    public fileDisplay: 'grid' | 'list';
 
     private sub: Subscription;
 

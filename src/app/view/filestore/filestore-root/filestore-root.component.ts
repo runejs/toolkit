@@ -35,8 +35,4 @@ export class FilestoreRootComponent implements OnInit {
         }
     }
 
-    public get fileDisplay() {
-        return this.filestoreService.fileDisplay;
-    }
-
 }

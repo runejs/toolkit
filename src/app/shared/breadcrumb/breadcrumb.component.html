@@ -5,6 +5,13 @@
         <ng-content></ng-content>
 
         <ng-content select="[rs-current]"></ng-content>
+
+        <div class="rs-folder-actions">
+            <mat-icon color="primary" matTooltip="Grid View" (click)="setFileDisplay('grid')"
+                      *ngIf="fileDisplay === 'list'">view_module</mat-icon>
+            <mat-icon color="primary" matTooltip="List View" (click)="setFileDisplay('list')"
+                      *ngIf="fileDisplay === 'grid'">view_list</mat-icon>
+        </div>
     </div>
 
     <mat-divider></mat-divider>

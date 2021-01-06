@@ -132,8 +132,10 @@ a {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
     padding: 0 0 32px;
+}
 
-    &.rs-list {
+.rs-list {
+    .rs-folder-container {
         display: flex;
         flex-direction: column;
         padding: 0;
@@ -147,6 +149,7 @@ a {
             max-width: none;
 
             $s: 18px;
+
             .mat-icon {
                 width: $s;
                 height: $s;
