@@ -45,6 +45,10 @@
                 <rs-sound-file-preview [extension]="'wav'" [fileData]="file.content"></rs-sound-file-preview>
             </ng-container>
 
+            <ng-container *ngIf="isImage">
+                <rs-image-file-preview extension="jpeg" [imageData]="file.content"></rs-image-file-preview>
+            </ng-container>
+
             <!-- @TODO other file previews -->
         </ng-container>
 

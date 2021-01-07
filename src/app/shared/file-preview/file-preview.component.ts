@@ -51,4 +51,8 @@ export class FilePreviewComponent implements OnInit, OnChanges {
         return this.index.indexId === indexIdMap.jingles;
     }
 
+    public get isImage(): boolean {
+        return this.fileName.endsWith('.jpg') || this.fileName.endsWith('.jpeg');
+    }
+
 }
