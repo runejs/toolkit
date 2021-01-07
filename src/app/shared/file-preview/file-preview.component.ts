@@ -43,4 +43,12 @@ export class FilePreviewComponent implements OnInit, OnChanges {
         return this.index.indexId === indexIdMap.music;
     }
 
+    public get isSound(): boolean {
+        return this.index.indexId === indexIdMap.sounds;
+    }
+
+    public get isJingle(): boolean {
+        return this.index.indexId === indexIdMap.jingles;
+    }
+
 }

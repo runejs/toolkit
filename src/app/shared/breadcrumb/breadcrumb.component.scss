@@ -9,3 +9,20 @@
         cursor: pointer;
     }
 }
+
+.rs-search {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid rgba(179, 179, 179, 0.4);
+
+    input {
+        background: transparent;
+        border-width: 0;
+        outline: none;
+        color: #b3b3b3;
+
+        &:focus {
+            color: #fff;
+        }
+    }
+}

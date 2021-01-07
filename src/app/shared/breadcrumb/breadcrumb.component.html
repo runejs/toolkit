@@ -11,6 +11,11 @@
                       *ngIf="fileDisplay === 'list'">view_module</mat-icon>
             <mat-icon color="primary" matTooltip="List View" (click)="setFileDisplay('list')"
                       *ngIf="fileDisplay === 'grid'">view_list</mat-icon>
+
+            <div class="rs-search">
+                <mat-icon>search</mat-icon>
+                <input type="text" placeholder="Search..." [ngModel]="searchInput" (ngModelChange)="search.emit($event)" />
+            </div>
         </div>
     </div>
 

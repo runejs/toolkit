@@ -37,8 +37,12 @@
 
     <div class="rs-preview-container">
         <ng-container *ngIf="file.content && file.content.length !== 0; else emptyFileTemplate">
-            <ng-container *ngIf="isMidi">
+            <ng-container *ngIf="isMidi || isJingle">
                 <rs-midi-file-preview [midiFile]="file"></rs-midi-file-preview>
+            </ng-container>
+
+            <ng-container *ngIf="isSound">
+                <rs-sound-file-preview [extension]="'wav'" [fileData]="file.content"></rs-sound-file-preview>
             </ng-container>
 
             <!-- @TODO other file previews -->

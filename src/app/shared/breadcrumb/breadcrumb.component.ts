@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FilestoreService } from '../../filestore/filestore.service';
 
 @Component({
@@ -7,6 +7,9 @@ import { FilestoreService } from '../../filestore/filestore.service';
     styleUrls: [ './breadcrumb.component.scss' ]
 })
 export class BreadcrumbComponent implements OnInit {
+
+    public searchInput: string = '';
+    @Output() search = new EventEmitter<string>();
 
     public constructor(private filestoreService: FilestoreService) {
     }

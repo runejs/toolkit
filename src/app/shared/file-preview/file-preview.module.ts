@@ -8,10 +8,11 @@ import { IndexNameModule } from '../index-name/index-name.module';
 import { MatDividerModule } from '@angular/material/divider';
 import { ImageFilePreviewComponent } from './image-file-preview/image-file-preview.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { SoundFilePreviewComponent } from './sound-file-preview/sound-file-preview.component';
 
 
 @NgModule({
-    declarations: [ FilePreviewComponent, MidiFilePreviewComponent, ImageFilePreviewComponent ],
+    declarations: [ FilePreviewComponent, MidiFilePreviewComponent, ImageFilePreviewComponent, SoundFilePreviewComponent ],
     exports: [
         FilePreviewComponent
     ],
