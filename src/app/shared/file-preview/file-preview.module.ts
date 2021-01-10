@@ -9,10 +9,12 @@ import { MatDividerModule } from '@angular/material/divider';
 import { ImageFilePreviewComponent } from './image-file-preview/image-file-preview.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { SoundFilePreviewComponent } from './sound-file-preview/sound-file-preview.component';
+import { SpriteFilePreviewComponent } from './sprite-file-preview/sprite-file-preview.component';
+import { SpriteComponent } from './sprite-file-preview/sprite/sprite.component';
 
 
 @NgModule({
-    declarations: [ FilePreviewComponent, MidiFilePreviewComponent, ImageFilePreviewComponent, SoundFilePreviewComponent ],
+    declarations: [ FilePreviewComponent, MidiFilePreviewComponent, ImageFilePreviewComponent, SoundFilePreviewComponent, SpriteFilePreviewComponent, SpriteComponent ],
     exports: [
         FilePreviewComponent
     ],

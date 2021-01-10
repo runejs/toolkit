@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
 })
 export class FileComponent implements OnInit {
 
+    @Input() public icon: string | null = null;
     @Input() public file: Archive | FileData;
     @Input() public index: FileIndex;
     private name: string = '';
@@ -36,6 +37,10 @@ export class FileComponent implements OnInit {
     }
 
     public get fileIcon(): string {
+        if(this.icon) {
+            return this.icon;
+        }
+
         if(this.file.type === 'archive') {
             return 'folder';
         }

@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { Archive, FileData, FileIndex, indexIdMap } from '@runejs/filestore';
+import { Archive, FileData, FileIndex, indexIdMap, SpritePack } from '@runejs/filestore';
 import { FileNamePipe } from '../file-name/file-name.pipe';
 import { FilestoreService } from '../../filestore/filestore.service';
 
@@ -39,6 +39,14 @@ export class FilePreviewComponent implements OnInit, OnChanges {
         this.filestoreService.previewFileEvent.next(null);
     }
 
+    public get spritePack(): SpritePack | null {
+        if(!this.isSprite) {
+            return null;
+        }
+
+        return new SpritePack(this.file);
+    }
+
     public get isMidi(): boolean {
         return this.index.indexId === indexIdMap.music;
     }
@@ -49,6 +57,10 @@ export class FilePreviewComponent implements OnInit, OnChanges {
 
     public get isJingle(): boolean {
         return this.index.indexId === indexIdMap.jingles;
+    }
+
+    public get isSprite(): boolean {
+        return this.index.indexId === indexIdMap.sprites;
     }
 
     public get isImage(): boolean {

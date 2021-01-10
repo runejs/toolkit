@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FilestoreIndex } from './index-detail/index-detail.component';
 import { FilestoreService } from '../../../filestore/filestore.service';
-import { indexIdMap } from '@runejs/filestore';
+import { IndexId, indexIdMap } from '@runejs/filestore';
 
 
 @Component({

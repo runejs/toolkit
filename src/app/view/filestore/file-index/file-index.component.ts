@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnIni
 import { ActivatedRoute } from '@angular/router';
 import { FilestoreService } from '../../../filestore/filestore.service';
 import { Subscription } from 'rxjs';
-import { Archive, FileData, FileIndex } from '@runejs/filestore';
+import { Archive, FileData, FileIndex, IndexId, indexIdMap } from '@runejs/filestore';
 import { IndexNamePipe } from '../../../shared/index-name/index-name.pipe';
 
 
@@ -29,7 +29,11 @@ export class FileIndexComponent implements OnInit, OnDestroy {
             this.loadIndex(params?.indexId || -1));
     }
 
-    private loadIndex(indexId: number): void {
+    private loadIndex(indexId: number | string): void {
+        if(indexId === undefined || indexId === null) {
+            return;
+        }
+
         if(indexId < 0 || indexId > 12) {
             return;
         }
@@ -39,7 +43,7 @@ export class FileIndexComponent implements OnInit, OnDestroy {
             this.files = Array.from(this.fileIndex.files.values());
 
             this.filestoreService.breadcrumb = [
-                this.indexNamePipe.transform(this.fileIndex) + ` <span>[index ${this.fileIndex.indexId}]</span>`
+                this.indexNamePipe.transform(this.fileIndex) + ` <span>[index ${ this.fileIndex.indexId }]</span>`
             ];
 
             this.changeDetector.detectChanges();

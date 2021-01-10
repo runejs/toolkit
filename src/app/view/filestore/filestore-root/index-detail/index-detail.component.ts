@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Archive, FileData, FileIndex } from '@runejs/filestore';
+import { Archive, FileData, FileIndex, indexIdMap } from '@runejs/filestore';
 
 
 export interface FilestoreIndex {
@@ -16,10 +16,14 @@ export class IndexDetailComponent implements OnInit {
 
     @Input() public indexInfo: FilestoreIndex;
 
-    constructor() {
+    public constructor() {
     }
 
-    ngOnInit(): void {
+    public ngOnInit(): void {
+    }
+
+    public get routePath() {
+        return [ '/', 'filestore', 'index', this.indexInfo.index.indexId ];
     }
 
 }

@@ -49,6 +49,10 @@
                 <rs-image-file-preview extension="jpeg" [imageData]="file.content"></rs-image-file-preview>
             </ng-container>
 
+            <ng-container *ngIf="isSprite">
+                <rs-sprite-file-preview [spritePackId]="file.fileId"></rs-sprite-file-preview>
+            </ng-container>
+
             <!-- @TODO other file previews -->
         </ng-container>
 
