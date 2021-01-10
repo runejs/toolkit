@@ -12,6 +12,7 @@ export class SpriteFilePreviewComponent implements OnInit, OnChanges {
     @Input() public spritePackId: number;
     public spritePack: SpritePack;
     public decoded: boolean = false;
+    public zoom: number = 100;
 
     public constructor(private fileService: FilestoreService) {
     }

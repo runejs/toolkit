@@ -20,6 +20,10 @@ export class SpriteComponent implements OnInit, AfterViewInit, OnChanges {
     @ViewChild('canvas') public canvasRef: ElementRef;
 
     @Input() public sprite: Sprite;
+    @Input() public zoom: number = 100;
+
+    public width: number = 0;
+    public height: number = 0;
 
     public constructor() {
     }
@@ -42,7 +46,12 @@ export class SpriteComponent implements OnInit, AfterViewInit, OnChanges {
             return;
         }
 
+        this.height = this.sprite.height;
+        this.width = this.sprite.width;
+
         const canvas = this.canvasRef.nativeElement as HTMLCanvasElement;
+        canvas.width = this.width;
+        canvas.height = this.height;
         const context = canvas.getContext('2d');
         const pixels = this.sprite.getPixels();
         const imageData = new ImageData(pixels, this.sprite.width, this.sprite.height);

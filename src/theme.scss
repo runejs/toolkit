@@ -5,4 +5,6 @@
 $primary: mat-palette($mat-blue);
 $accent:  mat-palette($mat-green);
 
+$gray: #b3b3b3;
+
 $theme: mat-dark-theme($primary, $accent);
