@@ -1,6 +1,8 @@
 <div class="rs-sprite-file-preview" *ngIf="decoded && spritePack">
-    <div class="rs-sprite" *ngFor="let sprite of spritePack.sprites">
-        <rs-sprite [sprite]="sprite" [zoom]="zoom"></rs-sprite>
+    <div class="rs-sprite-container">
+        <div class="rs-sprite" *ngFor="let sprite of spritePack.sprites">
+            <rs-sprite *ngIf="sprite && sprite.height && sprite.width" [sprite]="sprite" [zoom]="zoom"></rs-sprite>
+        </div>
     </div>
 
     <div class="rs-controls">

@@ -49,6 +49,10 @@ export class SpriteComponent implements OnInit, AfterViewInit, OnChanges {
         this.height = this.sprite.height;
         this.width = this.sprite.width;
 
+        if(this.sprite.height < 1 || this.sprite.width < 1) {
+            return;
+        }
+
         const canvas = this.canvasRef.nativeElement as HTMLCanvasElement;
         canvas.width = this.width;
         canvas.height = this.height;
