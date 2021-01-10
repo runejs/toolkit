@@ -14,7 +14,8 @@
 
             <div class="rs-search">
                 <mat-icon>search</mat-icon>
-                <input type="text" placeholder="Search..." [ngModel]="searchInput" (ngModelChange)="search.emit($event)" />
+                <input type="text" placeholder="Search..." [(ngModel)]="filestoreService.searchText"
+                       (ngModelChange)="filestoreService.filtered.next($event)" />
             </div>
         </div>
     </div>

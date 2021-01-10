@@ -8,10 +8,7 @@ import { FilestoreService } from '../../filestore/filestore.service';
 })
 export class BreadcrumbComponent implements OnInit {
 
-    public searchInput: string = '';
-    @Output() search = new EventEmitter<string>();
-
-    public constructor(private filestoreService: FilestoreService) {
+    public constructor(public filestoreService: FilestoreService) {
     }
 
     public ngOnInit(): void {

@@ -38,6 +38,10 @@ export class SpriteComponent implements OnInit, AfterViewInit, OnChanges {
     }
 
     public render(): void {
+        if(!this.sprite) {
+            return;
+        }
+
         const canvas = this.canvasRef.nativeElement as HTMLCanvasElement;
         const context = canvas.getContext('2d');
         const pixels = this.sprite.getPixels();

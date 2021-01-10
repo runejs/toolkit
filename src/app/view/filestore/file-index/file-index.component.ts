@@ -17,6 +17,7 @@ export class FileIndexComponent implements OnInit, OnDestroy {
     public fileIndex: FileIndex;
     public files: Archive[] | FileData[];
     private routeSubscription: Subscription;
+    private filterSubscription: Subscription;
 
     public constructor(private route: ActivatedRoute,
                        private filestoreService: FilestoreService,
@@ -38,9 +39,13 @@ export class FileIndexComponent implements OnInit, OnDestroy {
             return;
         }
 
+        this.filterSubscription = this.filestoreService.filtered.subscribe(() => {
+            this.files = this.filestoreService.filterFiles(Array.from(this.fileIndex.files.values()));
+        });
+
         setTimeout(() => {
             this.fileIndex = this.filestoreService.getIndex(indexId);
-            this.files = Array.from(this.fileIndex.files.values());
+            this.files = this.filestoreService.filterFiles(Array.from(this.fileIndex.files.values()));
 
             this.filestoreService.breadcrumb = [
                 this.indexNamePipe.transform(this.fileIndex) + ` <span>[index ${ this.fileIndex.indexId }]</span>`
@@ -52,6 +57,7 @@ export class FileIndexComponent implements OnInit, OnDestroy {
 
     public ngOnDestroy() {
         this.routeSubscription.unsubscribe();
+        this.filterSubscription.unsubscribe();
     }
 
     public get fileDisplay() {

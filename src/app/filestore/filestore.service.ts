@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { NewFormatGameCache } from '@runejs/cache-parser';
-import { FileData, FileIndex, Filestore } from '@runejs/filestore';
+import { FileData, FileIndex, Filestore, getFileName, hash } from '@runejs/filestore';
 import { Subject } from 'rxjs';
 
 
@@ -14,6 +14,8 @@ export class FilestoreService {
     public indexes: FileIndex[] = [];
     public breadcrumb: ([ string, string ] | string)[] = [];
     public fileDisplay: 'grid' | 'list' = 'grid';
+    public searchText: string = '';
+    public filtered: Subject<string> = new Subject<string>();
 
     public readonly previewFileEvent = new Subject<{
         file: FileData;
@@ -24,6 +26,17 @@ export class FilestoreService {
     private _cache: NewFormatGameCache;
 
     public constructor() {
+    }
+
+    public filterFiles(files: FileData[]): FileData[] {
+        if(!this.searchText) {
+            return files;
+        }
+
+        return files.filter(file => {
+            const fileName = getFileName(file.nameHash);
+            return fileName.includes(this.searchText) || hash(this.searchText) === file.nameHash;
+        });
     }
 
     public getIndex(indexId: number | string): FileIndex {
