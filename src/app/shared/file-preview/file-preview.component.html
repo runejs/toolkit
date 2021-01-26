@@ -53,6 +53,10 @@
                 <rs-sprite-file-preview [spritePackId]="file.fileId"></rs-sprite-file-preview>
             </ng-container>
 
+            <ng-container *ngIf="isModel">
+                <rs-model-file-preview [modelId]="file.fileId"></rs-model-file-preview>
+            </ng-container>
+
             <!-- @TODO other file previews -->
         </ng-container>
 

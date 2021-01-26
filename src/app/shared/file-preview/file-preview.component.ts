@@ -63,6 +63,10 @@ export class FilePreviewComponent implements OnInit, OnChanges {
         return this.index.indexId === indexIdMap.sprites;
     }
 
+    public get isModel(): boolean {
+        return this.index.indexId === indexIdMap.models;
+    }
+
     public get isImage(): boolean {
         return this.fileName.endsWith('.jpg') || this.fileName.endsWith('.jpeg');
     }
