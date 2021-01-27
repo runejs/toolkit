@@ -47,7 +47,7 @@ export class ModelFilePreviewComponent implements OnInit, OnChanges, OnDestroy {
 
     public decode(): void {
         try {
-            // this.rsModel = this.fileService.filestore.modelStore.getModel(this.modelId);
+            this.rsModel = this.fileService.filestore.modelStore.getModel(this.modelId);
         } catch(e) {
             console.error(e);
         }
