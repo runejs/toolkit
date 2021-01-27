@@ -12,6 +12,7 @@ import { SoundFilePreviewComponent } from './sound-file-preview/sound-file-previ
 import { SpriteFilePreviewComponent } from './sprite-file-preview/sprite-file-preview.component';
 import { SpriteComponent } from './sprite-file-preview/sprite/sprite.component';
 import { MatSliderModule } from '@angular/material/slider';
+import { ModelFilePreviewComponent } from './model-file-preview/model-file-preview.component';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { MatSliderModule } from '@angular/material/slider';
         ImageFilePreviewComponent,
         SoundFilePreviewComponent,
         SpriteFilePreviewComponent,
-        SpriteComponent
+        SpriteComponent,
+        ModelFilePreviewComponent,
     ],
     exports: [
         FilePreviewComponent
