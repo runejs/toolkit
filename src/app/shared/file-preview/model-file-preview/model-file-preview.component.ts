@@ -41,6 +41,9 @@ export class ModelFilePreviewComponent implements OnInit, OnChanges, OnDestroy {
 
     public renderModel() {
         this.decode();
+        if (this.rsModel == null) {
+            return;
+        }
         this.modelFilePreviewService.removeRsModelMesh();
         this.modelFilePreviewService.createRsModelMesh(this.rsModel);
     }

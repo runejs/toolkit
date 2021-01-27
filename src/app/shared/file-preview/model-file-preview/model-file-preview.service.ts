@@ -9,6 +9,8 @@ import { ColorUtils, RsModel } from '@runejs/filestore';
 })
 export class ModelFilePreviewService implements OnDestroy {
 
+    private static MODEL_SCALE = 0.025;
+
     private canvas: HTMLCanvasElement;
     private canvasWrapper: HTMLElement;
 
@@ -116,9 +118,9 @@ export class ModelFilePreviewService implements OnDestroy {
 
             // vertices and normals
             for (const vertex of [faceA, faceB, faceC]) {
-                vertices.push(model.verticesX[vertex] / 15.0);
-                vertices.push(-model.verticesY[vertex] / 15.0);
-                vertices.push(model.verticesZ[vertex] / 15.0);
+                vertices.push(model.verticesX[vertex]);
+                vertices.push(-model.verticesY[vertex]);
+                vertices.push(model.verticesZ[vertex]);
 
                 const vertexNormal = model.vertexNormals[vertex];
                 normals.push(vertexNormal.x);
@@ -166,6 +168,9 @@ export class ModelFilePreviewService implements OnDestroy {
 
         const mesh = new THREE.Mesh(geometry, materials[0]);
         mesh.rotateY(Math.PI);
+        const scale = ModelFilePreviewService.MODEL_SCALE;
+        mesh.scale.set(scale, scale, scale);
+
         this.rsModelMesh = mesh;
         this.scene.add(mesh);
     }
