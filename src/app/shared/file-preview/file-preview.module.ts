@@ -15,7 +15,6 @@ import { ModelFilePreviewComponent } from './model-file-preview/model-file-previ
 import { WidgetModule } from '../widget/widget.module';
 import { SpriteModule } from './sprite-file-preview/sprite/sprite.module';
 import { WidgetFilePreviewComponent } from './widget-file-preview/widget-file-preview.component';
-import { SpriteComponent } from './sprite-file-preview/sprite/sprite.component';
 
 
 @NgModule({
@@ -25,7 +24,6 @@ import { SpriteComponent } from './sprite-file-preview/sprite/sprite.component';
         ImageFilePreviewComponent,
         SoundFilePreviewComponent,
         SpriteFilePreviewComponent,
-        SpriteComponent,
         ModelFilePreviewComponent,
         WidgetFilePreviewComponent
     ],
