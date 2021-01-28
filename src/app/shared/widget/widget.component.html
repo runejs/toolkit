@@ -1,0 +1,11 @@
+<div class="rs-widget" [style]="styles">
+    <ng-container [ngSwitch]="widget.type">
+        <ng-container *ngSwitchCase="0">
+            <ng-container *ngFor="let child of widget['children']">
+                <rs-widget [parentWidget]="parentWidget" [widget]="child"></rs-widget>
+            </ng-container>
+        </ng-container>
+
+        <rs-sprite *ngSwitchCase="5" [spriteId]="widget['spriteId']"></rs-sprite>
+    </ng-container>
+</div>

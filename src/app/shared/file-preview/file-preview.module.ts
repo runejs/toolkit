@@ -10,9 +10,11 @@ import { ImageFilePreviewComponent } from './image-file-preview/image-file-previ
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { SoundFilePreviewComponent } from './sound-file-preview/sound-file-preview.component';
 import { SpriteFilePreviewComponent } from './sprite-file-preview/sprite-file-preview.component';
-import { SpriteComponent } from './sprite-file-preview/sprite/sprite.component';
 import { MatSliderModule } from '@angular/material/slider';
 import { ModelFilePreviewComponent } from './model-file-preview/model-file-preview.component';
+import { WidgetModule } from '../widget/widget.module';
+import { SpriteModule } from './sprite-file-preview/sprite/sprite.module';
+import { WidgetFilePreviewComponent } from './widget-file-preview/widget-file-preview.component';
 
 
 @NgModule({
@@ -24,6 +26,7 @@ import { ModelFilePreviewComponent } from './model-file-preview/model-file-previ
         SpriteFilePreviewComponent,
         SpriteComponent,
         ModelFilePreviewComponent,
+        WidgetFilePreviewComponent
     ],
     exports: [
         FilePreviewComponent
@@ -34,7 +37,9 @@ import { ModelFilePreviewComponent } from './model-file-preview/model-file-previ
         IndexNameModule,
         MatDividerModule,
         MatTooltipModule,
-        MatSliderModule
+        MatSliderModule,
+        WidgetModule,
+        SpriteModule
     ],
     providers: [
         FileNamePipe

@@ -20,18 +20,22 @@ export class FilePreviewComponent implements OnInit, OnChanges {
     }
 
     public ngOnInit(): void {
-        this.fileName = this.fileNamePipe.transform(this.file, this.index);
-        if(!this.file.content) {
-            this.file.decompress();
-        }
+        this.setFileName();
+        this.file.decompress();
     }
 
     public ngOnChanges(changes: SimpleChanges): void {
         if(changes.file && !changes.file.firstChange) {
+            this.setFileName();
+            this.file.decompress();
+        }
+    }
+
+    public setFileName(): void {
+        if(this.index.indexId === indexIdMap.widgets) {
+            this.fileName = `Widget Archive ${this.file.fileId}`;
+        } else {
             this.fileName = this.fileNamePipe.transform(this.file, this.index);
-            if(!this.file.content) {
-                this.file.decompress();
-            }
         }
     }
 
@@ -65,6 +69,10 @@ export class FilePreviewComponent implements OnInit, OnChanges {
 
     public get isModel(): boolean {
         return this.index.indexId === indexIdMap.models;
+    }
+
+    public get isWidget(): boolean {
+        return this.index.indexId === indexIdMap.widgets;
     }
 
     public get isImage(): boolean {

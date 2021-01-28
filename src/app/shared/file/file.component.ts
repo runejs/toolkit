@@ -28,9 +28,9 @@ export class FileComponent implements OnInit {
     }
 
     public fileClicked(): void {
-        if(this.file.type === 'file') {
+        if(this.file.type === 'file' || this.index.indexId === indexIdMap.widgets) {
             const { file, index } = this;
-            this.filestoreService.previewFileEvent.next({file, index});
+            this.filestoreService.previewFileEvent.next({ file, index });
         } else if(this.file.type === 'archive') {
             this.router.navigate([ '/', 'filestore', 'index', `${this.index.indexId}`, 'archive', `${this.file.fileId}` ]);
         }
@@ -42,7 +42,7 @@ export class FileComponent implements OnInit {
         }
 
         if(this.file.type === 'archive') {
-            return 'folder';
+            return this.index.indexId === indexIdMap.widgets ? 'widgets' : 'folder';
         }
 
         if(this.index.indexId === indexIdMap.music) {

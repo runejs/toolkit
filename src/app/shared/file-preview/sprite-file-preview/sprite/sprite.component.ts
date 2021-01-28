@@ -9,6 +9,7 @@ import {
     ViewChild
 } from '@angular/core';
 import { Sprite } from '@runejs/filestore';
+import { FilestoreService } from '../../../../filestore/filestore.service';
 
 @Component({
     selector: 'rs-sprite',
@@ -19,13 +20,14 @@ export class SpriteComponent implements OnInit, AfterViewInit, OnChanges {
 
     @ViewChild('canvas') public canvasRef: ElementRef;
 
+    @Input() public spriteId: number;
     @Input() public sprite: Sprite;
     @Input() public zoom: number = 100;
 
     public width: number = 0;
     public height: number = 0;
 
-    public constructor() {
+    public constructor(private filestoreService: FilestoreService) {
     }
 
     public ngOnInit(): void {
@@ -36,12 +38,20 @@ export class SpriteComponent implements OnInit, AfterViewInit, OnChanges {
     }
 
     public ngOnChanges(changes: SimpleChanges): void {
-        if(changes.sprite && !changes.sprite.firstChange) {
+        if((changes.sprite && !changes.sprite.firstChange) || (changes.spriteId && !changes.spriteId.firstChange)) {
             this.render();
         }
     }
 
     public render(): void {
+        if(!this.sprite && !this.spriteId) {
+            return;
+        }
+
+        if(this.spriteId) {
+            this.sprite = this.filestoreService.filestore.spriteStore.getSpritePack(this.spriteId).decode().sprites[0];
+        }
+
         if(!this.sprite) {
             return;
         }
