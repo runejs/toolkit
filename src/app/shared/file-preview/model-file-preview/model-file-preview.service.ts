@@ -2,7 +2,8 @@ import { ElementRef, Injectable, NgZone, OnDestroy } from '@angular/core';
 
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-import { ColorUtils, RsModel } from '@runejs/filestore';
+import { ColorUtils, Filestore, RsModel, SpriteStore, Texture, TextureStore } from '@runejs/filestore';
+import { DoubleSide, Material, MeshBasicMaterial, TextureLoader } from 'three';
 
 @Injectable({
     providedIn: 'root'
@@ -10,6 +11,8 @@ import { ColorUtils, RsModel } from '@runejs/filestore';
 export class ModelFilePreviewService implements OnDestroy {
 
     private static MODEL_SCALE = 0.025;
+    private static FACE_SHADED = 0;
+    private static FACE_DEFAULT = 1;
 
     private canvas: HTMLCanvasElement;
     private canvasWrapper: HTMLElement;
@@ -77,11 +80,13 @@ export class ModelFilePreviewService implements OnDestroy {
         this.scene.remove(this.rsModelMesh);
     }
 
-    public createRsModelMesh(model: RsModel): void {
-        model.applyLighting(64, 850, -30, -50, -30, true);
+    public createRsModelMesh(model: RsModel, textureStore: TextureStore, fileStore: Filestore): void {
+        model.applyLighting(64, 768, -50, -10, -50, true);
+        model.computeTextureUVs();
 
         const geometry = new THREE.BufferGeometry();
         const materials = new Array<THREE.Material>();
+
         // the default material
         materials.push(new THREE.MeshBasicMaterial({
             side: THREE.DoubleSide,
@@ -92,6 +97,13 @@ export class ModelFilePreviewService implements OnDestroy {
         const vertices = [];
         const normals = [];
         const colors = [];
+        const uvs = [];
+
+        // temporary
+        let faceIndex = 0;
+        const materialIndices = [];
+        let lastMaterialIndex = -1;
+        let lastGroup: any = null;
 
         for (let i = 0; i < model.faceCount; i++) {
             const faceType = model.faceTypes == null ? 0 : (model.faceTypes[i] & 0x3);
@@ -99,21 +111,14 @@ export class ModelFilePreviewService implements OnDestroy {
             let faceB: number;
             let faceC: number;
             switch (faceType) {
-                case 0:
-                case 1:
+                case ModelFilePreviewService.FACE_SHADED:
+                case ModelFilePreviewService.FACE_DEFAULT:
                     faceA = model.faceIndicesA[i];
                     faceB = model.faceIndicesB[i];
                     faceC = model.faceIndicesC[i];
                     break;
-                case 2:
-                case 3:
-                    const texturedFaceIndex = model.faceTypes[i] >> 2;
-                    faceA = model.texturedFaceIndicesA[texturedFaceIndex];
-                    faceB = model.texturedFaceIndicesB[texturedFaceIndex];
-                    faceC = model.texturedFaceIndicesC[texturedFaceIndex];
-                    break;
                 default:
-                    continue;
+                    throw new Error('Unhandled face type: ' + faceType);
             }
 
             // vertices and normals
@@ -128,51 +133,97 @@ export class ModelFilePreviewService implements OnDestroy {
                 normals.push(vertexNormal.z);
             }
 
-            // face colors
+            // colors
+            let materialIndex = 0;
+            const faceColor = model.faceColors[i];
             switch (faceType) {
-                case 0: // shaded face
-                case 2: // textured shaded face
-                    // TODO Apply texture color
-                    // TODO Apply shadow
-                    const hsbColor = model.faceColors[i];
-                    const shadowedColorX = hsbColor; // ColorUtils.method709(hsbColor, model.faceColorsX[i]);
-                    const shadowedColorY = hsbColor; // ColorUtils.method709(hsbColor, model.faceColorsY[i]);
-                    const shadowedColorZ = hsbColor; // ColorUtils.method709(hsbColor, model.faceColorsZ[i]);
-                    const colorX = new THREE.Color(ColorUtils.hsbToRgb(shadowedColorX));
-                    const colorY = new THREE.Color(ColorUtils.hsbToRgb(shadowedColorY));
-                    const colorZ = new THREE.Color(ColorUtils.hsbToRgb(shadowedColorZ));
-
-                    for(const rgb of [colorX, colorY, colorZ]) {
-                        colors.push(rgb.r);
-                        colors.push(rgb.g);
-                        colors.push(rgb.b);
+                case ModelFilePreviewService.FACE_SHADED:
+                    const rgb = ColorUtils.hsbToRgb(faceColor);
+                    const shadowedColorX = new THREE.Color(ColorUtils.shade(rgb, ColorUtils.hsbToRgb(model.faceColorsX[i])));
+                    const shadowedColorY = new THREE.Color(ColorUtils.shade(rgb, ColorUtils.hsbToRgb(model.faceColorsY[i])));
+                    const shadowedColorZ = new THREE.Color(ColorUtils.shade(rgb, ColorUtils.hsbToRgb(model.faceColorsZ[i])));
+                    for(const color of [shadowedColorX, shadowedColorY, shadowedColorZ]) {
+                        colors.push(color.r);
+                        colors.push(color.g);
+                        colors.push(color.b);
                     }
                     break;
-                case 1: // flat face
-                case 3: // textured flat face
-                    // TODO Apply texture color
-                    const color = new THREE.Color(ColorUtils.hsbToRgb(model.faceColorsX[i]));
-                    for(const rgb of [color, color, color]) {
-                        colors.push(rgb.r);
-                        colors.push(rgb.g);
-                        colors.push(rgb.b);
+                case ModelFilePreviewService.FACE_DEFAULT:
+                    const colorXYZ = new THREE.Color(ColorUtils.hsbToRgb(model.faceColorsX[i]));
+                    for(const color of [colorXYZ, colorXYZ, colorXYZ]) {
+                        colors.push(color.r);
+                        colors.push(color.g);
+                        colors.push(color.b);
                     }
                     break;
             }
 
-            // TODO Multi materials (textures)
+            // uvs
+            if (model.faceTextures) {
+                const u = model.faceTextureU[i];
+                const v = model.faceTextureV[i];
+                for (let l = 0; l < 3; l++) {
+                    uvs.push(u[l]);
+                    uvs.push(v[l]);
+                }
+
+                // materials
+                const textureId = model.faceTextures[i];
+                if (textureId !== -1) {
+                    materialIndex = materialIndices[textureId];
+                    if (materialIndex === undefined) {
+                        const texture = textureStore.getTexture(textureId);
+                        if (texture) {
+                            materialIndices[textureId] = materialIndex = materials.length;
+                            texture.generatePixels(fileStore.spriteStore);
+                            materials.push(this.createTextureMaterial(texture));
+                        } else {
+                            materialIndex = 0;
+                        }
+                    }
+                }
+            }
+
+            if (materialIndex !== lastMaterialIndex) {
+                lastMaterialIndex = materialIndex;
+                if (lastGroup != null) {
+                    lastGroup.count = (faceIndex * 3) - lastGroup.start;
+                    geometry.addGroup(lastGroup.start, lastGroup.count, lastGroup.materialIndex);
+                }
+                lastGroup = { start: faceIndex * 3, count: 0, materialIndex: lastMaterialIndex };
+            }
+            faceIndex++;
         }
+
+        if (lastGroup != null) {
+            lastGroup.count = (faceIndex * 3) - lastGroup.start;
+            geometry.addGroup(lastGroup.start, lastGroup.count, lastGroup.materialIndex);
+        }
+
         geometry.setAttribute('position', new THREE.BufferAttribute(new Float32Array(vertices), 3));
         geometry.setAttribute('normal', new THREE.BufferAttribute(new Float32Array(normals), 3));
         geometry.setAttribute('color', new THREE.BufferAttribute(new Float32Array(colors), 3));
+        geometry.setAttribute('uv', new THREE.BufferAttribute(new Float32Array(uvs), 2));
 
-        const mesh = new THREE.Mesh(geometry, materials[0]);
+        const mesh = new THREE.Mesh(geometry, materials);
         mesh.rotateY(Math.PI);
         const scale = ModelFilePreviewService.MODEL_SCALE;
         mesh.scale.set(scale, scale, scale);
 
         this.rsModelMesh = mesh;
         this.scene.add(mesh);
+    }
+
+    private createTextureMaterial(texture: Texture): Material {
+        const material = new MeshBasicMaterial({
+            side: THREE.DoubleSide,
+            vertexColors: true
+        });
+        texture.toBase64().then(value => {
+            material.map = new THREE.TextureLoader().load('data:image/png;base64,' + value);
+            material.needsUpdate = true;
+        });
+        return material;
     }
 
     public animate(): void {

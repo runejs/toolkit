@@ -45,7 +45,11 @@ export class ModelFilePreviewComponent implements OnInit, OnChanges, OnDestroy {
             return;
         }
         this.modelFilePreviewService.removeRsModelMesh();
-        this.modelFilePreviewService.createRsModelMesh(this.rsModel);
+        this.modelFilePreviewService.createRsModelMesh(
+            this.rsModel,
+            this.fileService.filestore.textureStore,
+            this.fileService.filestore
+        );
     }
 
     public decode(): void {
