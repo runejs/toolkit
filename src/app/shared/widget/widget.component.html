@@ -15,11 +15,22 @@
         </ng-container>
 
         <ng-container *ngSwitchCase="4">
-            <!-- Text Shadow TODO shadow on hover -->
-            <img class="text-shadow" *ngIf="this.widget['textShadowed']" [src]="getBase64Text(widget['fontId'], widget['text'], widget['alternateTextColor'])" [alt]="widget['text']" />
+            <div class="text-container" [style]="getTextAlignmentStyle(this.widget['textAlignmentX'], this.widget['textAlignmentY'])">
+                <div *ngFor="let text of splitTextLines(widget['text'])" style="position: relative; display: flex" [style.height.px]="this.widget['lineHeight'] !== 0 ? this.widget['lineHeight'] : null">
+                    <!-- Text Shadow -->
+                    <img
+                        class="text-shadow"
+                        *ngIf="this.widget['textShadowed']" [src]="getBase64Text(widget['fontId'], text, 0)"
+                        [alt]="text"
+                    />
 
-            <!-- Text -->
-            <img class="text" [src]="getBase64Text(widget['fontId'], widget['text'], widget['textColor'], widget['hoveredTextColor'])" [alt]="widget['text']" />
+                    <!-- Text -->
+                    <img class="text"
+                         [src]="getBase64Text(widget['fontId'], text, widget['textColor'], widget['hoveredTextColor'])"
+                         [alt]="text"
+                    />
+                </div>
+            </div>
         </ng-container>
 
         <rs-sprite *ngSwitchCase="5" [spriteId]="widget['spriteId']"></rs-sprite>

@@ -56,43 +56,71 @@ export class WidgetComponent implements OnInit, AfterViewInit {
         return this.filestoreService.filestore.fontStore.getFontById(fontId).drawString(text, color);
     }
 
+    public splitTextLines(text: string): string[] {
+        return text.split(/\\n/);
+    }
+
     public get styles() {
         if (this.widget instanceof ParentWidget) {
             // Container styles
-            // TODO calculate parent widget width from the children widths and their X positioning
-            // TODO calculate parent widget height from the children widths and their Y positioning
             return {
                 width: '600px',
                 height: '1024px'
             }
         } else {
             // Everything else
-            const style: any = {
+            let style: any = {
                 top: this.widget.y + 'px',
                 left: this.widget.x + 'px',
                 width: this.widget.width + 'px',
                 height: this.widget.height + 'px'
             }
 
-            // if (this.widget instanceof SpriteWidget) {
-            //     style.display = 'flex';
-            //     style['align-items'] = 'center';
-            //     style['justify-content'] = 'center';
-            // }
-
-            // Remove constraints from text widgets
-            // TODO center text when the alignment is 1
-            if (this.widget instanceof LinkWidget) {
-                style.height = undefined;
-                style.width = undefined;
-            }
-
             if (this.widget['scrollHeight'] && this.widget['scrollHeight'] > this.widget.height) {
                 style.overflowY = 'auto';
+            } else {
+                style.overflowY = 'hidden';
+            }
+
+            if (this.widget['scrollWidth'] && this.widget['scrollWidth'] > this.widget.width) {
+                style.overflowX = 'auto';
+            } else {
+                style.overflowX = 'hidden';
+            }
+
+            // Remove div constraints from text widgets
+            if (this.widget instanceof LinkWidget) {
+                style.overflowX = 'visible';
+                style.overflowY = 'visible';
             }
 
             return style;
         }
     }
 
+    /* Gets the transform CSS value
+    *  0 = align start (normal)
+    *  1 = align center
+    *  2 = align end
+    */
+    getTextAlignmentStyle(alignmentX: number, alignmentY: number) {
+        const alignmentStyle: Partial<CSSStyleDeclaration> = {
+            alignItems: null,
+            justifyContent: null
+        };
+
+        if (alignmentX === 1) {
+            alignmentStyle.alignItems = 'center';
+        } else if (alignmentX === 2) {
+            alignmentStyle.alignItems = 'flex-end';
+        }
+
+        if (alignmentY === 1) {
+            alignmentStyle.justifyContent = 'center';
+        } else if (alignmentY === 2) {
+            alignmentStyle.justifyContent = 'flex-end';
+        }
+
+        return alignmentStyle;
+    }
 }

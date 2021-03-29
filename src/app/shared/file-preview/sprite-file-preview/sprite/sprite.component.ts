@@ -48,7 +48,7 @@ export class SpriteComponent implements OnInit, AfterViewInit, OnChanges {
             return;
         }
 
-        if(this.spriteId) {
+        if(this.spriteId && this.spriteId !== -1) {
             this.sprite = this.filestoreService.filestore.spriteStore.getSpritePack(this.spriteId).decode().sprites[0];
         }
 

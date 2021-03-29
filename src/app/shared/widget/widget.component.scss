@@ -1,23 +1,30 @@
 .rs-widget {
     font-size: 12px;
     position: absolute;
-    // overflow: hidden;
-    // border: 1px solid white;
 }
 
 .debug-info {
     white-space: pre-line;
 }
 
-.text {
-    position: absolute;
-    top: 0;
-    left: 0;
+.text-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
 }
 
 .text-shadow {
     position: absolute;
     top: 1px;
     left: 1px;
-    // z-index: -1;
+}
+
+.text {
+    position: relative;
+    align-self: start;
+}
+
+img {
+    image-rendering: pixelated;
 }
