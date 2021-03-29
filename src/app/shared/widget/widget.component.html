@@ -1,9 +1,25 @@
-<div class="rs-widget" [style]="styles">
+<div class="rs-widget" [style]="styles" (mouseenter)="hovering = true" (mouseleave)="hovering = false">
     <ng-container [ngSwitch]="widget.type">
+        <ng-container *ngSwitchCase="-1">
+            <ng-container *ngFor="let child of widget['children']">
+                <ng-container *ngIf="child.parentId === -1">
+                    <rs-widget [parentWidget]="parentWidget" [widget]="child"></rs-widget>
+                </ng-container>
+            </ng-container>
+        </ng-container>
+
         <ng-container *ngSwitchCase="0">
             <ng-container *ngFor="let child of widget['children']">
-                <rs-widget [parentWidget]="parentWidget" [widget]="child"></rs-widget>
+                <rs-widget [parentWidget]="widget" [widget]="child"></rs-widget>
             </ng-container>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="4">
+            <!-- Text Shadow TODO shadow on hover -->
+            <img class="text-shadow" *ngIf="this.widget['textShadowed']" [src]="getBase64Text(widget['fontId'], widget['text'], widget['alternateTextColor'])" [alt]="widget['text']" />
+
+            <!-- Text -->
+            <img class="text" [src]="getBase64Text(widget['fontId'], widget['text'], widget['textColor'], widget['hoveredTextColor'])" [alt]="widget['text']" />
         </ng-container>
 
         <rs-sprite *ngSwitchCase="5" [spriteId]="widget['spriteId']"></rs-sprite>

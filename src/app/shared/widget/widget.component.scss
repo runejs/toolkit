@@ -1,5 +1,23 @@
 .rs-widget {
+    font-size: 12px;
     position: absolute;
-    overflow: hidden;
-    border: 1px solid white;
+    // overflow: hidden;
+    // border: 1px solid white;
+}
+
+.debug-info {
+    white-space: pre-line;
+}
+
+.text {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.text-shadow {
+    position: absolute;
+    top: 1px;
+    left: 1px;
+    // z-index: -1;
 }
