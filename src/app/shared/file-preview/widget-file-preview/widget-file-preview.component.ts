@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { FilestoreService } from '../../../filestore/filestore.service';
 import { ParentWidget } from '@runejs/filestore';
 
@@ -7,17 +7,30 @@ import { ParentWidget } from '@runejs/filestore';
     templateUrl: './widget-file-preview.component.html',
     styleUrls: [ './widget-file-preview.component.scss' ]
 })
-export class WidgetFilePreviewComponent implements OnInit {
+export class WidgetFilePreviewComponent implements OnInit, OnChanges {
+    @Input() widgetId: number;
+    widget: ParentWidget;
+    decoded = false;
 
-    @Input() public widgetId: number;
+    constructor(private filestoreService: FilestoreService) { }
 
-    public widget: ParentWidget;
-
-    public constructor(private filestoreService: FilestoreService) {
+    ngOnInit(): void {
+        this.decode();
     }
 
-    public ngOnInit(): void {
-        this.widget = this.filestoreService.filestore.widgetStore.decodeWidget(this.widgetId) as ParentWidget;
+    ngOnChanges(changes: SimpleChanges): void {
+        if (changes?.widgetId && !changes.widgetId.firstChange) {
+            this.decoded = false;
+            this.decode();
+        }
     }
 
+    decode() {
+        try {
+            this.widget = this.filestoreService.filestore.widgetStore.decodeWidget(this.widgetId) as ParentWidget;
+            this.decoded = true;
+        } catch (e) {
+            console.error(e);
+        }
+    }
 }

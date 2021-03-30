@@ -1,4 +1,12 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import {
+    AfterViewInit,
+    ChangeDetectionStrategy,
+    Component,
+    Input,
+    OnChanges,
+    OnInit,
+    SimpleChanges
+} from '@angular/core';
 import { ContainerWidget, LinkWidget, ParentWidget, WidgetBase } from '@runejs/filestore';
 import { FilestoreService } from '../../filestore/filestore.service';
 
@@ -9,7 +17,7 @@ import { FilestoreService } from '../../filestore/filestore.service';
     styleUrls: [ './widget.component.scss' ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class WidgetComponent implements OnInit, AfterViewInit {
+export class WidgetComponent implements OnInit, OnChanges {
     // TODO fix widget 200 showing error
     @Input() public parentWidget: ParentWidget;
     @Input() public widget: WidgetBase;
@@ -18,6 +26,10 @@ export class WidgetComponent implements OnInit, AfterViewInit {
     public constructor(private filestoreService: FilestoreService) { }
 
     public ngOnInit(): void {
+        this.initialize();
+    }
+
+    initialize() {
         if(!(this.widget instanceof ContainerWidget) && !(this.widget instanceof ParentWidget)) {
             return;
         }
@@ -46,7 +58,11 @@ export class WidgetComponent implements OnInit, AfterViewInit {
         });
     }
 
-    public ngAfterViewInit(): void { }
+    ngOnChanges(changes: SimpleChanges): void {
+        if (changes?.widget && !changes.widget.firstChange) {
+            this.initialize();
+        }
+    }
 
     public getBase64Text(fontId: number, text: string, color?: number, hoverColor?: number) {
         if (this.hovering && hoverColor) {
