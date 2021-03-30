@@ -11,6 +11,8 @@ export class WidgetFilePreviewComponent implements OnInit, OnChanges {
     @Input() widgetId: number;
     widget: ParentWidget;
     decoded = false;
+    showGrid = true;
+    highlightWidgetsOnHover = false;
 
     constructor(private filestoreService: FilestoreService) { }
 

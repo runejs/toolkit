@@ -21,6 +21,7 @@ export class WidgetComponent implements OnInit, OnChanges {
     @Input() public parentWidget: ParentWidget;
     @Input() public widget: WidgetBase;
     @Input() public hovering = false;
+    @Input() public highlightWidgetsOnHover = false;
 
     public constructor(private filestoreService: FilestoreService) { }
 
@@ -84,7 +85,7 @@ export class WidgetComponent implements OnInit, OnChanges {
             }
         } else {
             // Everything else
-            let style: any = {
+            let style: Partial<CSSStyleDeclaration> = {
                 top: this.widget.y + 'px',
                 left: this.widget.x + 'px',
                 width: this.widget.width + 'px',
@@ -107,6 +108,10 @@ export class WidgetComponent implements OnInit, OnChanges {
             if (this.widget instanceof LinkWidget) {
                 style.overflowX = 'visible';
                 style.overflowY = 'visible';
+            }
+
+            if (this.highlightWidgetsOnHover && this.hovering) {
+                style.outline = '1px solid red';
             }
 
             return style;
