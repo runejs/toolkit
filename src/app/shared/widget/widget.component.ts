@@ -18,7 +18,6 @@ import { FilestoreService } from '../../filestore/filestore.service';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class WidgetComponent implements OnInit, OnChanges {
-    // TODO fix widget 200 showing error
     @Input() public parentWidget: ParentWidget;
     @Input() public widget: WidgetBase;
     @Input() public hovering = false;
@@ -76,12 +75,12 @@ export class WidgetComponent implements OnInit, OnChanges {
         return text.split(/\\n/);
     }
 
-    public get styles() {
+    public get styles(): Partial<CSSStyleDeclaration> {
         if (this.widget instanceof ParentWidget) {
             // Container styles
             return {
-                width: '600px',
-                height: '1024px'
+                width: '100%',
+                height: '100%'
             }
         } else {
             // Everything else
