@@ -10,7 +10,8 @@
 
         <ng-container *ngSwitchCase="0">
             <ng-container *ngFor="let child of widget['children']">
-                <rs-widget [parentWidget]="widget" [widget]="child" [highlightWidgetsOnHover]="highlightWidgetsOnHover"></rs-widget>
+                <!-- Parent widgets can be hidden, which are later shown depending on some action -->
+                <rs-widget *ngIf="!widget['hidden']" [parentWidget]="widget" [widget]="child" [highlightWidgetsOnHover]="highlightWidgetsOnHover"></rs-widget>
             </ng-container>
         </ng-container>
 
