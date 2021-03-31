@@ -35,6 +35,7 @@
         "jimp": "^0.16.1",
         "midicube": "^0.6.1",
         "ngx-electron": "^2.2.0",
+        "ngx-json-viewer": "^3.0.2",
         "rxjs": "~6.5.4",
         "three": "^0.126.0",
         "tslib": "^2.0.0",

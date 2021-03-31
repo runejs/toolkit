@@ -19,25 +19,33 @@
             </rs-container-widget>
         </ng-container>
 
-        <ng-container *ngSwitchCase="4">
-            <div class="text-container" [style]="getTextAlignmentStyle(widget['textAlignmentX'], widget['textAlignmentY'])">
-                <div *ngFor="let text of splitTextLines(widget['text'])" style="position: relative; display: flex" [style.height.px]="widget['lineHeight'] !== 0 ? this.widget['lineHeight'] : null">
-                    <!-- Text Shadow -->
-                    <img
-                        class="text-shadow"
-                        *ngIf="widget['textShadowed']"
-                        [src]="getBase64Text(widget['fontId'], text, 0)"
-                        [alt]="text"
-                    />
+        <div
+            *ngSwitchCase="3"
+            class="rectangle"
+            [ngStyle]="{
+                 'background-color': widget['filled'] ? decimalToHex(widget['textColor']) : 'transparent',
+                 'border': '1px solid ' + decimalToHex(widget['textColor']),
+                 'opacity': alphaToOpacity(widget.opacity)
+             }"
+        ></div>
 
-                    <!-- Text -->
-                    <img class="text"
-                         [src]="getBase64Text(widget['fontId'], text, widget['textColor'], widget['hoveredTextColor'])"
-                         [alt]="text"
-                    />
-                </div>
+        <div *ngSwitchCase="4" class="text-container" [style]="getTextAlignmentStyle(widget['textAlignmentX'], widget['textAlignmentY'])">
+            <div *ngFor="let text of splitTextLines(widget['text'])" style="position: relative; display: flex" [style.height.px]="widget['lineHeight'] !== 0 ? this.widget['lineHeight'] : null">
+                <!-- Text Shadow -->
+                <img
+                    class="text-shadow"
+                    *ngIf="widget['textShadowed']"
+                    [src]="getBase64Text(widget['fontId'], text, 0)"
+                    [alt]="text"
+                />
+
+                <!-- Text -->
+                <img class="text"
+                     [src]="getBase64Text(widget['fontId'], text, widget['textColor'], widget['hoveredTextColor'])"
+                     [alt]="text"
+                />
             </div>
-        </ng-container>
+        </div>
 
         <rs-sprite *ngSwitchCase="5" [spritePackId]="widget['spriteId']"></rs-sprite>
     </ng-container>
