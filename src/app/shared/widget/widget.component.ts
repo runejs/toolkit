@@ -7,7 +7,7 @@ import {
     OnInit,
     SimpleChanges
 } from '@angular/core';
-import { ContainerWidget, LinkWidget, ParentWidget, WidgetBase } from '@runejs/filestore';
+import { ContainerWidget, LinkWidget, ParentWidget, SpritePack, WidgetBase } from '@runejs/filestore';
 import { FilestoreService } from '../../filestore/filestore.service';
 
 
@@ -22,19 +22,26 @@ export class WidgetComponent implements OnInit, OnChanges {
     @Input() public widget: WidgetBase;
     @Input() public hovering = false;
     @Input() public highlightWidgetsOnHover = false;
+    public isRoot = false;
+    public isContainer = false;
 
     public constructor(private filestoreService: FilestoreService) { }
 
     public ngOnInit(): void {
-        this.initialize();
+        this.initializeChildren();
     }
 
-    initialize() {
-        if(!(this.widget instanceof ContainerWidget) && !(this.widget instanceof ParentWidget)) {
+    initializeChildren() {
+        this.isRoot = this.widget instanceof ParentWidget && this.widget.type == null;
+        this.isContainer = this.widget instanceof ContainerWidget;
+
+        // Only root and container needs initialization, since they might have children
+        if (!this.isRoot && !this.isContainer) {
             return;
         }
 
-        if (this.widget instanceof ParentWidget) {
+        // Root component is not actually a widget, so set the type to -1
+        if (this.isRoot) {
             this.widget.type = -1;
         }
 
@@ -60,7 +67,7 @@ export class WidgetComponent implements OnInit, OnChanges {
 
     ngOnChanges(changes: SimpleChanges): void {
         if (changes?.widget && !changes.widget.firstChange) {
-            this.initialize();
+            this.initializeChildren();
         }
     }
 
@@ -94,12 +101,14 @@ export class WidgetComponent implements OnInit, OnChanges {
 
             if (this.widget['scrollHeight'] && this.widget['scrollHeight'] > this.widget.height) {
                 style.overflowY = 'auto';
+                style.paddingRight = '16px';
             } else {
                 style.overflowY = 'hidden';
             }
 
             if (this.widget['scrollWidth'] && this.widget['scrollWidth'] > this.widget.width) {
                 style.overflowX = 'auto';
+                style.paddingBottom = '16px';
             } else {
                 style.overflowX = 'hidden';
             }
@@ -115,6 +124,14 @@ export class WidgetComponent implements OnInit, OnChanges {
             }
 
             return style;
+        }
+    }
+
+    public get scrollbarStyles(): Partial<CSSStyleDeclaration> {
+        return {
+            top: `${this.widget.y}px`,
+            left: `${this.widget.x + this.widget.width}px`,
+            height: `${this.widget.height}px`
         }
     }
 

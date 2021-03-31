@@ -9,19 +9,24 @@
         </ng-container>
 
         <ng-container *ngSwitchCase="0">
-            <ng-container *ngFor="let child of widget['children']">
-                <!-- Parent widgets can be hidden, which are later shown depending on some action -->
-                <rs-widget *ngIf="!widget['hidden']" [parentWidget]="widget" [widget]="child" [highlightWidgetsOnHover]="highlightWidgetsOnHover"></rs-widget>
-            </ng-container>
+            <rs-container-widget *ngIf="!widget['hidden']" [container]="widget">
+                <rs-widget
+                    *ngFor="let child of widget['children']"
+                    [parentWidget]="widget"
+                    [widget]="child"
+                    [highlightWidgetsOnHover]="highlightWidgetsOnHover"
+                ></rs-widget>
+            </rs-container-widget>
         </ng-container>
 
         <ng-container *ngSwitchCase="4">
-            <div class="text-container" [style]="getTextAlignmentStyle(this.widget['textAlignmentX'], this.widget['textAlignmentY'])">
-                <div *ngFor="let text of splitTextLines(widget['text'])" style="position: relative; display: flex" [style.height.px]="this.widget['lineHeight'] !== 0 ? this.widget['lineHeight'] : null">
+            <div class="text-container" [style]="getTextAlignmentStyle(widget['textAlignmentX'], widget['textAlignmentY'])">
+                <div *ngFor="let text of splitTextLines(widget['text'])" style="position: relative; display: flex" [style.height.px]="widget['lineHeight'] !== 0 ? this.widget['lineHeight'] : null">
                     <!-- Text Shadow -->
                     <img
                         class="text-shadow"
-                        *ngIf="this.widget['textShadowed']" [src]="getBase64Text(widget['fontId'], text, 0)"
+                        *ngIf="widget['textShadowed']"
+                        [src]="getBase64Text(widget['fontId'], text, 0)"
                         [alt]="text"
                     />
 
@@ -34,6 +39,17 @@
             </div>
         </ng-container>
 
-        <rs-sprite *ngSwitchCase="5" [spriteId]="widget['spriteId']"></rs-sprite>
+        <rs-sprite *ngSwitchCase="5" [spritePackId]="widget['spriteId']"></rs-sprite>
     </ng-container>
 </div>
+
+<!-- Draw the scrollbar if needed -->
+<!--<div class="scrollbar-container" [style]="scrollbarStyles" *ngIf="widget.type === 0 && widget['scrollHeight'] > widget.height && scrollbarSpriteGroupId">-->
+<!--    <div class="scrollbar-top">-->
+<!--        <rs-sprite [spritePackId]="scrollbarSpriteGroupId" [spriteChildId]="0"></rs-sprite>-->
+<!--    </div>-->
+<!--    <div class="scrollbar-spacer"></div>-->
+<!--    <div class="scrollbar-bottom">-->
+<!--        <rs-sprite [spritePackId]="scrollbarSpriteGroupId" [spriteChildId]="1"></rs-sprite>-->
+<!--    </div>-->
+<!--</div>-->

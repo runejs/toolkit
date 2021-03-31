@@ -10,3 +10,11 @@
 <div class="rs-widget-file-preview" [ngClass]="{ grid: showGrid }" *ngIf="decoded && widget">
     <rs-widget [widget]="widget" [parentWidget]="widget" [highlightWidgetsOnHover]="highlightWidgetsOnHover"></rs-widget>
 </div>
+
+<mat-card class="rs-widget-raw">
+    <mat-card-content>
+        <div class="raw">
+            <ngx-json-viewer [json]="widget" [depth]="1"></ngx-json-viewer>
+        </div>
+    </mat-card-content>
+</mat-card>

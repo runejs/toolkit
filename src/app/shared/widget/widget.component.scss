@@ -25,6 +25,25 @@
     align-self: start;
 }
 
+.scrollbar-container {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    background-color: #23201b;
+
+    .scrollbar-top {
+        //
+    }
+
+    .scrollbar-spacer {
+        flex-grow: 1;
+    }
+
+    .scrollbar-bottom {
+        //
+    }
+}
+
 img {
     image-rendering: pixelated;
 }

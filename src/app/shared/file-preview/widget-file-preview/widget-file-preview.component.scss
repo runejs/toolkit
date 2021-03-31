@@ -11,6 +11,21 @@
     }
 }
 
+.rs-widget-raw {
+    margin: 16px;
+    max-width: 600px;
+
+    .raw {
+        width: 100%;
+        max-height: 400px;
+        overflow: auto;
+
+        ::ng-deep .segment-key {
+            color: #b55dff !important;
+        }
+    }
+}
+
 .rs-widget-file-preview {
     width: 600px;
     height: 500px;

@@ -18,7 +18,7 @@ import { WidgetFilePreviewComponent } from './widget-file-preview/widget-file-pr
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatCardModule } from '@angular/material/card';
 import { FormsModule } from '@angular/forms';
-
+import { NgxJsonViewerModule } from 'ngx-json-viewer';
 
 @NgModule({
     declarations: [
@@ -35,6 +35,7 @@ import { FormsModule } from '@angular/forms';
     ],
     imports: [
         CommonModule,
+        NgxJsonViewerModule,
         MatIconModule,
         IndexNameModule,
         MatDividerModule,
