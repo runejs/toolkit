@@ -7,8 +7,8 @@
     </mat-card-content>
 </mat-card>
 
-<div class="rs-widget-file-preview" [ngClass]="{ grid: showGrid }" *ngIf="decoded && widget">
-    <rs-widget [widget]="widget" [parentWidget]="widget" [highlightWidgetsOnHover]="highlightWidgetsOnHover"></rs-widget>
+<div class="rs-widget-file-preview" [ngClass]="{ grid: showGrid, 'show-hover': highlightWidgetsOnHover }" *ngIf="decoded && widget">
+    <rs-widget [widget]="widget" [parentWidget]="widget"></rs-widget>
 </div>
 
 <mat-card class="rs-widget-raw">

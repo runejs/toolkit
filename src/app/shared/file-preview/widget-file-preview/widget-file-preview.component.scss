@@ -32,6 +32,20 @@
     position: relative;
     margin: 16px;
 
+    &.show-hover::ng-deep .rs-widget:not(.rs-widget-type--1) {
+        &:hover {
+            outline: 1px solid #ff2d2d;
+        }
+
+        &:hover::after {
+            content: 'ID: ' attr(data-id);
+            color: #ff2d2d;
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+        }
+    }
+
     &.grid {
         background-size: 24px 24px;
         background-image: linear-gradient(to right, #636363 1px, transparent 1px), linear-gradient(to bottom, #636363 1px, transparent 1px);

@@ -21,7 +21,6 @@ export class WidgetComponent implements OnInit, OnChanges {
     @Input() public parentWidget: ParentWidget;
     @Input() public widget: WidgetBase;
     @Input() public hovering = false;
-    @Input() public highlightWidgetsOnHover = false;
     public isRoot = false;
     public isContainer = false;
 
@@ -117,10 +116,6 @@ export class WidgetComponent implements OnInit, OnChanges {
             if (this.widget instanceof LinkWidget) {
                 style.overflowX = 'visible';
                 style.overflowY = 'visible';
-            }
-
-            if (this.highlightWidgetsOnHover && this.hovering) {
-                style.outline = '1px solid red';
             }
 
             return style;
