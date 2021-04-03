@@ -10,7 +10,7 @@ import { DoubleSide, Material, MeshBasicMaterial, TextureLoader } from 'three';
 })
 export class ModelFilePreviewService implements OnDestroy {
 
-    private static MODEL_SCALE = 0.025;
+    public static MODEL_SCALE = 0.025;
     private static FACE_SHADED = 0;
     private static FACE_DEFAULT = 1;
 

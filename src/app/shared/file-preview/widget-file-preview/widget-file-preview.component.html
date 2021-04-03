@@ -9,7 +9,9 @@
 
 <div class="rs-widget-file-preview" [ngClass]="{ grid: showGrid, 'show-hover': highlightWidgetsOnHover }" *ngIf="decoded && widget">
     <rs-widget [widget]="widget" [parentWidget]="widget" [modelRenderer]="modelRenderer"></rs-widget>
-    <canvas class="models" #models></canvas>
+    <div class="model-container">
+        <canvas class="models" #models></canvas>
+    </div>
 </div>
 
 <mat-card class="rs-widget-raw">

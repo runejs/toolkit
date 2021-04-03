@@ -96,18 +96,23 @@ export class WidgetComponent implements OnInit, OnChanges, OnDestroy {
         // TODO get all the sizes for each viewport container. 512 and 334 are only for the 3d container
         // TODO widget.rotationY is actually rotationZ, gotta fix in the filestore
         // TODO handle mesh opacity
-        const viewportSize = new Vector2(512, 334);
-        this.modelRenderer.setSize(viewportSize.width, viewportSize.height);
+        // const viewportSize = new Vector2(512, 334);
+        const viewportSize = this.modelRenderer.getSize(new Vector2());
+        // this.modelRenderer.setSize(viewportSize.width, viewportSize.height);
+        console.log(viewportSize.width, viewportSize.height);
+        console.log('aspect ratio', viewportSize.width / viewportSize.height);
+        const aspectRatio = viewportSize.width / viewportSize.height;
         this.camera = new THREE.PerspectiveCamera(
-            75, viewportSize.width / viewportSize.height, 0.1, 1000
+            75, aspectRatio, 0.1, 1000
         );
 
         const sineTable = this.mathHelperService.getSineTable();
         const cosineTable = this.mathHelperService.getCosineTable();
 
         // Standardize RS model attributes
-        const camHeight = sineTable[modelWidget.rotationX] * modelWidget.modelZoom / 85;
-        const camDistance = cosineTable[modelWidget.rotationX] * modelWidget.modelZoom / 85;
+        // TODO figure out a more exact value to multiply the sin and cos by, because ModelFilePreviewService.MODEL_SCALE / (aspectRatio * aspectRatio) seems to be a few pixels off
+        const camHeight = sineTable[modelWidget.rotationX] * modelWidget.modelZoom * ModelFilePreviewService.MODEL_SCALE / (aspectRatio * aspectRatio);
+        const camDistance = cosineTable[modelWidget.rotationX] * modelWidget.modelZoom * ModelFilePreviewService.MODEL_SCALE / (aspectRatio * aspectRatio);
 
         console.log('cam height: ', sineTable[modelWidget.rotationX] * modelWidget.modelZoom);
         console.log('cam distance: ', cosineTable[modelWidget.rotationX] * modelWidget.modelZoom);
@@ -116,8 +121,10 @@ export class WidgetComponent implements OnInit, OnChanges, OnDestroy {
         this.camera.position.y = camHeight;
         this.camera.lookAt(0, 0, 0);
 
-        const offsetX = viewportSize.width / 2 - modelWidget.x;
-        const offsetY = viewportSize.height / 2 - modelWidget.y;
+        // Find the center point of this widget's X and Y within the screen
+        // TODO if the widget is within a container, calculate x and y from that container's position
+        const offsetX = (viewportSize.width / 2) - (modelWidget.x + (modelWidget.width / 2));
+        const offsetY = (viewportSize.height / 2) - (modelWidget.y + (modelWidget.height / 2));
         this.camera.setViewOffset(viewportSize.width, viewportSize.height, offsetX, offsetY, viewportSize.width, viewportSize.height);
 
         this.scene.add(this.camera);
