@@ -96,11 +96,7 @@ export class WidgetComponent implements OnInit, OnChanges, OnDestroy {
         // TODO get all the sizes for each viewport container. 512 and 334 are only for the 3d container
         // TODO widget.rotationY is actually rotationZ, gotta fix in the filestore
         // TODO handle mesh opacity
-        // const viewportSize = new Vector2(512, 334);
         const viewportSize = this.modelRenderer.getSize(new Vector2());
-        // this.modelRenderer.setSize(viewportSize.width, viewportSize.height);
-        console.log(viewportSize.width, viewportSize.height);
-        console.log('aspect ratio', viewportSize.width / viewportSize.height);
         const aspectRatio = viewportSize.width / viewportSize.height;
         this.camera = new THREE.PerspectiveCamera(
             75, aspectRatio, 0.1, 1000
@@ -114,17 +110,21 @@ export class WidgetComponent implements OnInit, OnChanges, OnDestroy {
         const camHeight = sineTable[modelWidget.rotationX] * modelWidget.modelZoom * ModelFilePreviewService.MODEL_SCALE / (aspectRatio * aspectRatio);
         const camDistance = cosineTable[modelWidget.rotationX] * modelWidget.modelZoom * ModelFilePreviewService.MODEL_SCALE / (aspectRatio * aspectRatio);
 
-        console.log('cam height: ', sineTable[modelWidget.rotationX] * modelWidget.modelZoom);
-        console.log('cam distance: ', cosineTable[modelWidget.rotationX] * modelWidget.modelZoom);
-
         this.camera.position.z = camDistance;
         this.camera.position.y = camHeight;
         this.camera.lookAt(0, 0, 0);
 
         // Find the center point of this widget's X and Y within the screen
         // TODO if the widget is within a container, calculate x and y from that container's position
-        const offsetX = (viewportSize.width / 2) - (modelWidget.x + (modelWidget.width / 2));
-        const offsetY = (viewportSize.height / 2) - (modelWidget.y + (modelWidget.height / 2));
+        let containerOffsetX = 0;
+        let containerOffsetY = 0;
+        if (this.widget.parentId !== -1 && this.widget.parentId === this.parentWidget.id) {
+            containerOffsetX = this.parentWidget.x;
+            containerOffsetY = this.parentWidget.y;
+        }
+
+        const offsetX = (viewportSize.width / 2) - (modelWidget.x + (modelWidget.width / 2)) - containerOffsetX;
+        const offsetY = (viewportSize.height / 2) - (modelWidget.y + (modelWidget.height / 2)) - containerOffsetY;
         this.camera.setViewOffset(viewportSize.width, viewportSize.height, offsetX, offsetY, viewportSize.width, viewportSize.height);
 
         this.scene.add(this.camera);
@@ -142,11 +142,13 @@ export class WidgetComponent implements OnInit, OnChanges, OnDestroy {
         const modelWidget = this.widget as ModelWidget;
         const rsModel = this.filestoreService.filestore.modelStore.getModel(modelWidget.modelId);
         const mesh = this.modelPreview.getMeshFromRsModel(rsModel, this.filestoreService.filestore.textureStore, this.filestoreService.filestore);
-        mesh.rotateY(this.mathHelperService.rotationToRadians(modelWidget.rotationY));
 
         // TODO objects are returned mirrored
         const scale = new THREE.Vector3(-1, 1, 1);
         mesh.scale.multiply(scale);
+
+        // TODO if the top todo has been fixed, probably remove the minus sign from the next statement
+        mesh.rotateY(-this.mathHelperService.rotationToRadians(modelWidget.rotationY));
 
         this.scene.add(mesh);
         this.modelRenderer.autoClear = false;
