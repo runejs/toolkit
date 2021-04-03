@@ -8,7 +8,8 @@
 </mat-card>
 
 <div class="rs-widget-file-preview" [ngClass]="{ grid: showGrid, 'show-hover': highlightWidgetsOnHover }" *ngIf="decoded && widget">
-    <rs-widget [widget]="widget" [parentWidget]="widget"></rs-widget>
+    <rs-widget [widget]="widget" [parentWidget]="widget" [modelRenderer]="modelRenderer"></rs-widget>
+    <canvas class="models" #models></canvas>
 </div>
 
 <mat-card class="rs-widget-raw">

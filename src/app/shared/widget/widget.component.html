@@ -3,7 +3,7 @@
         <ng-container *ngSwitchCase="-1">
             <ng-container *ngFor="let child of widget['children']">
                 <ng-container *ngIf="child.parentId === -1">
-                    <rs-widget [parentWidget]="parentWidget" [widget]="child"></rs-widget>
+                    <rs-widget [parentWidget]="parentWidget" [widget]="child" [modelRenderer]="modelRenderer"></rs-widget>
                 </ng-container>
             </ng-container>
         </ng-container>
@@ -14,6 +14,7 @@
                     *ngFor="let child of widget['children']"
                     [parentWidget]="widget"
                     [widget]="child"
+                    [modelRenderer]="modelRenderer"
                 ></rs-widget>
             </rs-container-widget>
         </ng-container>

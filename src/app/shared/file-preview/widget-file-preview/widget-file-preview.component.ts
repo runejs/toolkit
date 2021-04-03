@@ -1,6 +1,16 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import {
+    ChangeDetectorRef,
+    Component,
+    ElementRef,
+    Input,
+    OnChanges,
+    OnInit,
+    SimpleChanges,
+    ViewChild
+} from '@angular/core';
 import { FilestoreService } from '../../../filestore/filestore.service';
 import { ParentWidget } from '@runejs/filestore';
+import * as THREE from 'three';
 
 @Component({
     selector: 'rs-widget-file-preview',
@@ -13,8 +23,12 @@ export class WidgetFilePreviewComponent implements OnInit, OnChanges {
     decoded = false;
     showGrid = true;
     highlightWidgetsOnHover = false;
+    modelRenderer: THREE.WebGLRenderer;
 
-    constructor(private filestoreService: FilestoreService) { }
+    @ViewChild('models', { static: false })
+    public canvas: ElementRef<HTMLCanvasElement>;
+
+    constructor(private filestoreService: FilestoreService, private ref: ChangeDetectorRef) { }
 
     ngOnInit(): void {
         this.decode();
@@ -31,6 +45,14 @@ export class WidgetFilePreviewComponent implements OnInit, OnChanges {
         try {
             this.widget = this.filestoreService.filestore.widgetStore.decodeWidget(this.widgetId) as ParentWidget;
             this.decoded = true;
+
+            this.ref.detectChanges();
+
+            this.modelRenderer = new THREE.WebGLRenderer({
+                canvas: this.canvas.nativeElement,
+                alpha: true,
+                antialias: true
+            });
         } catch (e) {
             console.error(e);
         }

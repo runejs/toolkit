@@ -53,3 +53,14 @@
         border-bottom: 1px solid #636363;
     }
 }
+
+::ng-deep .rs-widget-type-4 {
+    z-index: 2;
+}
+
+.models {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}

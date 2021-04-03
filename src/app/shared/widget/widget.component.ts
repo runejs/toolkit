@@ -3,12 +3,17 @@ import {
     ChangeDetectionStrategy,
     Component,
     Input,
-    OnChanges,
+    OnChanges, OnDestroy,
     OnInit,
     SimpleChanges
 } from '@angular/core';
-import { ContainerWidget, LinkWidget, ParentWidget, SpritePack, WidgetBase } from '@runejs/filestore';
+import { ContainerWidget, LinkWidget, ModelWidget, ParentWidget, SpritePack, WidgetBase } from '@runejs/filestore';
 import { FilestoreService } from '../../filestore/filestore.service';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+import * as THREE from 'three';
+import { ModelFilePreviewService } from '../file-preview/model-file-preview/model-file-preview.service';
+import { MathHelperService } from './math-helper.service';
+import { Vector2 } from 'three';
 
 
 @Component({
@@ -17,14 +22,22 @@ import { FilestoreService } from '../../filestore/filestore.service';
     styleUrls: [ './widget.component.scss' ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class WidgetComponent implements OnInit, OnChanges {
+export class WidgetComponent implements OnInit, OnChanges, OnDestroy {
     @Input() public parentWidget: ParentWidget;
     @Input() public widget: WidgetBase;
     @Input() public hovering = false;
+    @Input() public modelRenderer: THREE.WebGLRenderer;
     public isRoot = false;
     public isContainer = false;
+    public isModel = false;
+    public scene: THREE.Scene;
+    public camera: THREE.PerspectiveCamera;
 
-    public constructor(private filestoreService: FilestoreService) { }
+    public constructor(
+        private filestoreService: FilestoreService,
+        private modelPreview: ModelFilePreviewService,
+        private mathHelperService: MathHelperService
+    ) { }
 
     public ngOnInit(): void {
         this.initializeChildren();
@@ -33,6 +46,12 @@ export class WidgetComponent implements OnInit, OnChanges {
     initializeChildren() {
         this.isRoot = this.widget instanceof ParentWidget && this.widget.type == null;
         this.isContainer = this.widget instanceof ContainerWidget;
+        this.isModel = this.widget instanceof ModelWidget && this.widget['modelId'] >= 0;
+
+        if (this.isModel && this.modelRenderer) {
+            this.createScene();
+            this.drawModel();
+        }
 
         // Only root and container needs initialization, since they might have children
         if (!this.isRoot && !this.isContainer) {
@@ -64,8 +83,71 @@ export class WidgetComponent implements OnInit, OnChanges {
         });
     }
 
+    ngOnDestroy(): void {
+        if (this.scene) {
+            this.modelRenderer.clear();
+        }
+    }
+
+    createScene() {
+        const modelWidget = this.widget as ModelWidget;
+        this.scene = new THREE.Scene();
+
+        // TODO get all the sizes for each viewport container. 512 and 334 are only for the 3d container
+        // TODO widget.rotationY is actually rotationZ, gotta fix in the filestore
+        // TODO handle mesh opacity
+        const viewportSize = new Vector2(512, 334);
+        this.modelRenderer.setSize(viewportSize.width, viewportSize.height);
+        this.camera = new THREE.PerspectiveCamera(
+            75, viewportSize.width / viewportSize.height, 0.1, 1000
+        );
+
+        const sineTable = this.mathHelperService.getSineTable();
+        const cosineTable = this.mathHelperService.getCosineTable();
+
+        // Standardize RS model attributes
+        const camHeight = sineTable[modelWidget.rotationX] * modelWidget.modelZoom / 85;
+        const camDistance = cosineTable[modelWidget.rotationX] * modelWidget.modelZoom / 85;
+
+        console.log('cam height: ', sineTable[modelWidget.rotationX] * modelWidget.modelZoom);
+        console.log('cam distance: ', cosineTable[modelWidget.rotationX] * modelWidget.modelZoom);
+
+        this.camera.position.z = camDistance;
+        this.camera.position.y = camHeight;
+        this.camera.lookAt(0, 0, 0);
+
+        const offsetX = viewportSize.width / 2 - modelWidget.x;
+        const offsetY = viewportSize.height / 2 - modelWidget.y;
+        this.camera.setViewOffset(viewportSize.width, viewportSize.height, offsetX, offsetY, viewportSize.width, viewportSize.height);
+
+        this.scene.add(this.camera);
+
+        // const axesHelper = new THREE.AxesHelper(5);
+        // this.scene.add( axesHelper );
+        //
+        // const size = 15;
+        // const divisions = 15;
+        // const gridHelper = new THREE.GridHelper(size, divisions);
+        // this.scene.add(gridHelper);
+    }
+
+    drawModel() {
+        const modelWidget = this.widget as ModelWidget;
+        const rsModel = this.filestoreService.filestore.modelStore.getModel(modelWidget.modelId);
+        const mesh = this.modelPreview.getMeshFromRsModel(rsModel, this.filestoreService.filestore.textureStore, this.filestoreService.filestore);
+        mesh.rotateY(this.mathHelperService.rotationToRadians(modelWidget.rotationY));
+
+        // TODO objects are returned mirrored
+        const scale = new THREE.Vector3(-1, 1, 1);
+        mesh.scale.multiply(scale);
+
+        this.scene.add(mesh);
+        this.modelRenderer.autoClear = false;
+        this.modelRenderer.render(this.scene, this.camera);
+    }
+
     ngOnChanges(changes: SimpleChanges): void {
-        if (changes?.widget && !changes.widget.firstChange) {
+        if (changes?.widget && !changes.widget.firstChange || changes?.modelRenderer && !changes?.modelRenderer.firstChange) {
             this.initializeChildren();
         }
     }
