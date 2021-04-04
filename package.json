@@ -1,6 +1,6 @@
 {
     "name": "@runejs/toolkit",
-    "version": "0.1.0",
+    "version": "1.0.0-alpha.0",
     "scripts": {
         "ng": "ng",
         "start:web": "ng serve",
@@ -30,7 +30,7 @@
         "@angular/router": "~11.0.5",
         "@runejs/cache-parser": "0.4.4",
         "@runejs/core": "^1.1.0",
-        "@runejs/filestore": "^0.8.7",
+        "@runejs/filestore": "0.8.8",
         "electron-context-menu": "^0.16.0",
         "jimp": "^0.16.1",
         "midicube": "^0.6.1",
