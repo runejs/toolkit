@@ -222,9 +222,8 @@ export class ModelFilePreviewService implements OnDestroy {
         const materials = new Array<THREE.Material>();
 
         // the default material
-        materials.push(new THREE.MeshBasicMaterial(<any>{
+        materials.push(new THREE.MeshBasicMaterial({
             side: THREE.DoubleSide,
-            flatShading: true,
             vertexColors: true
         }));
 
@@ -338,6 +337,8 @@ export class ModelFilePreviewService implements OnDestroy {
         geometry.setAttribute('normal', new THREE.BufferAttribute(new Float32Array(normals), 3));
         geometry.setAttribute('color', new THREE.BufferAttribute(new Float32Array(colors), 3));
         geometry.setAttribute('uv', new THREE.BufferAttribute(new Float32Array(uvs), 2));
+
+        console.log(model.id, model.verticesZ);
 
         const mesh = new THREE.Mesh(geometry, materials);
         mesh.rotateY(Math.PI);

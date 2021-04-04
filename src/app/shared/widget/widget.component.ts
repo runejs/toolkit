@@ -93,29 +93,25 @@ export class WidgetComponent implements OnInit, OnChanges, OnDestroy {
         const modelWidget = this.widget as ModelWidget;
         this.scene = new THREE.Scene();
 
-        // TODO get all the sizes for each viewport container. 512 and 334 are only for the 3d container
-        // TODO widget.rotationY is actually rotationZ, gotta fix in the filestore
         // TODO handle mesh opacity
         const viewportSize = this.modelRenderer.getSize(new Vector2());
-        const aspectRatio = viewportSize.width / viewportSize.height;
+        // 50-52 FOV seems to be perfect for RS models
         this.camera = new THREE.PerspectiveCamera(
-            75, aspectRatio, 0.1, 1000
+            52, viewportSize.width / viewportSize.height, 0.1, 500
         );
 
         const sineTable = this.mathHelperService.getSineTable();
         const cosineTable = this.mathHelperService.getCosineTable();
 
         // Standardize RS model attributes
-        // TODO figure out a more exact value to multiply the sin and cos by, because ModelFilePreviewService.MODEL_SCALE / (aspectRatio * aspectRatio) seems to be a few pixels off
-        const camHeight = sineTable[modelWidget.rotationX] * modelWidget.modelZoom * ModelFilePreviewService.MODEL_SCALE / (aspectRatio * aspectRatio);
-        const camDistance = cosineTable[modelWidget.rotationX] * modelWidget.modelZoom * ModelFilePreviewService.MODEL_SCALE / (aspectRatio * aspectRatio);
+        const camHeight = sineTable[modelWidget.rotationX] * modelWidget.modelZoom * ModelFilePreviewService.MODEL_SCALE;
+        const camDistance = cosineTable[modelWidget.rotationX] * modelWidget.modelZoom * ModelFilePreviewService.MODEL_SCALE;
 
         this.camera.position.z = camDistance;
         this.camera.position.y = camHeight;
-        this.camera.lookAt(0, 0, 0);
+        this.camera.rotateX(-this.mathHelperService.rotationToRadians(modelWidget.rotationX));
 
-        // Find the center point of this widget's X and Y within the screen
-        // TODO if the widget is within a container, calculate x and y from that container's position
+        // TODO if the widget is scrollable, the models still show
         let containerOffsetX = 0;
         let containerOffsetY = 0;
         if (this.widget.parentId !== -1 && this.widget.parentId === this.parentWidget.id) {
@@ -123,19 +119,12 @@ export class WidgetComponent implements OnInit, OnChanges, OnDestroy {
             containerOffsetY = this.parentWidget.y;
         }
 
+        // Find the center point of this widget's X and Y within the screen
         const offsetX = (viewportSize.width / 2) - (modelWidget.x + (modelWidget.width / 2)) - containerOffsetX;
         const offsetY = (viewportSize.height / 2) - (modelWidget.y + (modelWidget.height / 2)) - containerOffsetY;
         this.camera.setViewOffset(viewportSize.width, viewportSize.height, offsetX, offsetY, viewportSize.width, viewportSize.height);
 
         this.scene.add(this.camera);
-
-        // const axesHelper = new THREE.AxesHelper(5);
-        // this.scene.add( axesHelper );
-        //
-        // const size = 15;
-        // const divisions = 15;
-        // const gridHelper = new THREE.GridHelper(size, divisions);
-        // this.scene.add(gridHelper);
     }
 
     drawModel() {
@@ -153,6 +142,7 @@ export class WidgetComponent implements OnInit, OnChanges, OnDestroy {
         this.scene.add(mesh);
         this.modelRenderer.autoClear = false;
         this.modelRenderer.render(this.scene, this.camera);
+        this.modelRenderer.clearDepth();
     }
 
     ngOnChanges(changes: SimpleChanges): void {

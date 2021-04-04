@@ -51,7 +51,7 @@ export class WidgetFilePreviewComponent implements OnInit, OnChanges {
             this.modelRenderer = new THREE.WebGLRenderer({
                 canvas: this.canvas.nativeElement,
                 alpha: true,
-                antialias: true
+                antialias: false
             });
             this.modelRenderer.setSize(this.canvas.nativeElement.parentElement.clientWidth, this.canvas.nativeElement.parentElement.clientHeight);
         } catch (e) {
