@@ -18,6 +18,7 @@ export class FilestoreRootComponent implements OnInit {
     }
 
     public ngOnInit(): void {
+        this.filestoreService.fileDisplay = 'grid';
         for(let i = 0; i <= 12; i++) {
             const index = this.filestoreService.getIndex(i);
 

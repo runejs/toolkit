@@ -39,6 +39,8 @@ export class FileIndexComponent implements OnInit, OnDestroy {
             return;
         }
 
+        this.filestoreService.fileDisplay = 'list';
+
         this.filterSubscription = this.filestoreService.filtered.subscribe(() => {
             this.files = this.filestoreService.filterFiles(Array.from(this.fileIndex.files.values()));
         });

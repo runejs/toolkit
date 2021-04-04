@@ -4,6 +4,7 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { ColorUtils, Filestore, RsModel, SpriteStore, Texture, TextureStore } from '@runejs/filestore';
 import { DoubleSide, Material, MeshBasicMaterial, TextureLoader } from 'three';
+import { logger } from '@runejs/core';
 
 @Injectable({
     providedIn: 'root'
@@ -123,9 +124,9 @@ export class ModelFilePreviewService implements OnDestroy {
 
             // vertices and normals
             for (const vertex of [faceA, faceB, faceC]) {
-                vertices.push(model.verticesX[vertex]);
-                vertices.push(-model.verticesY[vertex]);
-                vertices.push(model.verticesZ[vertex]);
+                vertices.push(model.verticesX[vertex] || 0);
+                vertices.push(-model.verticesY[vertex] || 0);
+                vertices.push(model.verticesZ[vertex] || 0);
 
                 const vertexNormal = model.vertexNormals[vertex];
                 normals.push(vertexNormal.x);
