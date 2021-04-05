@@ -256,25 +256,23 @@ export class ModelFilePreviewService implements OnDestroy {
 
             // vertices and normals
             for (const vertex of [faceA, faceB, faceC]) {
-                vertices.push(model.verticesX[vertex]);
-                vertices.push(-model.verticesY[vertex]);
-                vertices.push(model.verticesZ[vertex]);
+                vertices.push(model.verticesX[vertex] || 0);
+                vertices.push(-model.verticesY[vertex] || 0);
+                vertices.push(model.verticesZ[vertex] || 0);
 
                 const vertexNormal = model.vertexNormals[vertex];
-                normals.push(vertexNormal.x);
-                normals.push(vertexNormal.y);
-                normals.push(vertexNormal.z);
+                normals.push(vertexNormal.x || 0);
+                normals.push(-vertexNormal.y || 0);
+                normals.push(vertexNormal.z || 0);
             }
 
             // colors
             let materialIndex = 0;
-            const faceColor = model.faceColors[i];
             switch (faceType) {
                 case ModelFilePreviewService.FACE_SHADED:
-                    const rgb = ColorUtils.hsbToRgb(faceColor);
-                    const shadowedColorX = new THREE.Color(ColorUtils.shade(rgb, ColorUtils.hsbToRgb(model.faceColorsX[i])));
-                    const shadowedColorY = new THREE.Color(ColorUtils.shade(rgb, ColorUtils.hsbToRgb(model.faceColorsY[i])));
-                    const shadowedColorZ = new THREE.Color(ColorUtils.shade(rgb, ColorUtils.hsbToRgb(model.faceColorsZ[i])));
+                    const shadowedColorX = new THREE.Color(ColorUtils.hsbToRgb(model.faceColorsX[i]));
+                    const shadowedColorY = new THREE.Color(ColorUtils.hsbToRgb(model.faceColorsY[i]));
+                    const shadowedColorZ = new THREE.Color(ColorUtils.hsbToRgb(model.faceColorsZ[i]));
                     for(const color of [shadowedColorX, shadowedColorY, shadowedColorZ]) {
                         colors.push(color.r);
                         colors.push(color.g);
@@ -337,8 +335,6 @@ export class ModelFilePreviewService implements OnDestroy {
         geometry.setAttribute('normal', new THREE.BufferAttribute(new Float32Array(normals), 3));
         geometry.setAttribute('color', new THREE.BufferAttribute(new Float32Array(colors), 3));
         geometry.setAttribute('uv', new THREE.BufferAttribute(new Float32Array(uvs), 2));
-
-        console.log(model.id, model.verticesZ);
 
         const mesh = new THREE.Mesh(geometry, materials);
         mesh.rotateY(Math.PI);

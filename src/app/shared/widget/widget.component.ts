@@ -9,7 +9,6 @@ import {
 } from '@angular/core';
 import { ContainerWidget, LinkWidget, ModelWidget, ParentWidget, SpritePack, WidgetBase } from '@runejs/filestore';
 import { FilestoreService } from '../../filestore/filestore.service';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import * as THREE from 'three';
 import { ModelFilePreviewService } from '../file-preview/model-file-preview/model-file-preview.service';
 import { MathHelperService } from './math-helper.service';
