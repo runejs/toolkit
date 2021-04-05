@@ -53,6 +53,7 @@ export class WidgetFilePreviewComponent implements OnInit, OnChanges {
                 alpha: true,
                 antialias: false
             });
+            this.modelRenderer.setPixelRatio(window.devicePixelRatio);
             this.modelRenderer.setSize(this.canvas.nativeElement.parentElement.clientWidth, this.canvas.nativeElement.parentElement.clientHeight);
         } catch (e) {
             console.error(e);
