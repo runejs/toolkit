@@ -54,8 +54,14 @@
     }
 }
 
-::ng-deep .rs-widget-type-4 {
-    z-index: 2;
+::ng-deep {
+    .rs-widget-type-4 {
+        z-index: 2;
+    }
+
+    .interaction {
+        z-index: 2;
+    }
 }
 
 .model-container {

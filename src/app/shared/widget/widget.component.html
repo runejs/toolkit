@@ -1,4 +1,4 @@
-<div [attr.data-id]="widget.id" class="rs-widget rs-widget-type-{{widget.type}}" [style]="styles" (mouseenter)="hovering = true" (mouseleave)="hovering = false">
+<div [attr.data-id]="widget.id" class="rs-widget rs-widget-type-{{widget.type}}" [ngClass]="{ interaction: isInteractionSprite }" [style]="styles" (mouseenter)="hovering = true" (mouseleave)="hovering = false">
     <ng-container [ngSwitch]="widget.type">
         <ng-container *ngSwitchCase="-1">
             <ng-container *ngFor="let child of widget['children']">

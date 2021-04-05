@@ -7,7 +7,15 @@ import {
     OnInit,
     SimpleChanges
 } from '@angular/core';
-import { ContainerWidget, LinkWidget, ModelWidget, ParentWidget, SpritePack, WidgetBase } from '@runejs/filestore';
+import {
+    ContainerWidget,
+    LinkWidget,
+    ModelWidget,
+    ParentWidget,
+    SpritePack,
+    SpriteWidget,
+    WidgetBase
+} from '@runejs/filestore';
 import { FilestoreService } from '../../filestore/filestore.service';
 import * as THREE from 'three';
 import { ModelFilePreviewService } from '../file-preview/model-file-preview/model-file-preview.service';
@@ -29,8 +37,12 @@ export class WidgetComponent implements OnInit, OnChanges, OnDestroy {
     public isRoot = false;
     public isContainer = false;
     public isModel = false;
+    public isInteractionSprite = false;
     public scene: THREE.Scene;
     public camera: THREE.PerspectiveCamera;
+
+    // TODO maybe there is a way to find this out through some attribute? For now, hardcode them to show them on top
+    private readonly INTERACTION_SPRITES = [309, 535, 536, 537, 538, 539, 540, 541, 542, 543];
 
     public constructor(
         private filestoreService: FilestoreService,
@@ -46,6 +58,7 @@ export class WidgetComponent implements OnInit, OnChanges, OnDestroy {
         this.isRoot = this.widget instanceof ParentWidget && this.widget.type == null;
         this.isContainer = this.widget instanceof ContainerWidget;
         this.isModel = this.widget instanceof ModelWidget && this.widget['modelId'] >= 0;
+        this.isInteractionSprite = this.widget instanceof SpriteWidget && this.INTERACTION_SPRITES.indexOf(this.widget.spriteId) > -1;
 
         if (this.isModel && this.modelRenderer) {
             this.createScene();
