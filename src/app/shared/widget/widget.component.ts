@@ -215,22 +215,6 @@ export class WidgetComponent implements OnInit, OnChanges, OnDestroy {
         }
     }
 
-    public get scrollbarStyles(): Partial<CSSStyleDeclaration> {
-        return {
-            top: `${this.widget.y}px`,
-            left: `${this.widget.x + this.widget.width}px`,
-            height: `${this.widget.height}px`
-        }
-    }
-
-    decimalToHex(decimal: number) {
-        return `#${('000000' + decimal.toString(16)).slice(-6)}`;
-    }
-
-    alphaToOpacity(alpha: number) {
-        return (255 - alpha) / 255;
-    }
-
     /* Gets the transform CSS value
     *  0 = align start (normal)
     *  1 = align center
