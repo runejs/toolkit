@@ -44,6 +44,7 @@ export class ArchiveComponent implements OnInit, OnDestroy {
             this.archive.decodeArchiveFiles();
             this.files = Array.from(this.archive.files.values());
 
+            this.filestoreService.fileDisplay = 'list';
             this.filestoreService.breadcrumb = [
                 [
                     this.indexNamePipe.transform(this.fileIndex) + ` <span>[index ${ this.fileIndex.indexId }]</span>`,

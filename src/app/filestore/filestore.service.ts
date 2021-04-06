@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { NewFormatGameCache } from '@runejs/cache-parser';
 import { FileData, FileIndex, Filestore, getFileName, hash } from '@runejs/filestore';
 import { Subject } from 'rxjs';
 
@@ -23,7 +22,6 @@ export class FilestoreService {
     }>();
 
     private _filestoreLoaded = false;
-    private _cache: NewFormatGameCache;
 
     public constructor() {
     }
@@ -52,7 +50,6 @@ export class FilestoreService {
 
     public reset(): void {
         this._filestoreLoaded = false;
-        this._cache = null;
     }
 
     public loadFilestore(path: string): void {
@@ -60,15 +57,10 @@ export class FilestoreService {
             return;
         }
         this.filestore = new Filestore(path, path);
-        this._cache = new NewFormatGameCache(path);
         this._filestoreLoaded = true;
     }
 
     public get filestoreLoaded() {
         return this._filestoreLoaded;
-    }
-
-    public get cache(): NewFormatGameCache {
-        return this._cache;
     }
 }
