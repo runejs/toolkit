@@ -1,0 +1,20 @@
+.text-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+}
+
+.text-shadow {
+    position: absolute;
+    top: 1px;
+    left: 1px;
+}
+
+.text {
+    position: relative;
+}
+
+img {
+    image-rendering: pixelated;
+}

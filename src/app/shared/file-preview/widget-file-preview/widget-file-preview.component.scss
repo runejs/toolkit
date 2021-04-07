@@ -55,10 +55,8 @@
 }
 
 ::ng-deep {
-    .rs-widget-type-4 {
-        z-index: 2;
-    }
-
+    .rs-widget-type-4,
+    .rs-widget-type-0,
     .interaction {
         z-index: 2;
     }

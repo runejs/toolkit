@@ -7,7 +7,6 @@ import { ContainerWidgetComponent } from './container-widget/container-widget.co
 import { ScrollbarDirective } from './container-widget/scrollbar.directive';
 import { RectangleWidgetComponent } from './rectangle-widget/rectangle-widget.component';
 import { ModelWidgetComponent } from './model-widget/model-widget.component';
-import { SpriteWidgetComponent } from './sprite-widget/sprite-widget.component';
 import { TextWidgetComponent } from './text-widget/text-widget.component';
 
 
@@ -18,7 +17,6 @@ import { TextWidgetComponent } from './text-widget/text-widget.component';
         ContainerWidgetComponent,
         RectangleWidgetComponent,
         ModelWidgetComponent,
-        SpriteWidgetComponent,
         TextWidgetComponent
     ],
     exports: [

@@ -19,26 +19,9 @@
             </rs-container-widget>
         </ng-container>
 
-        <rs-rectangle-widget *ngSwitchCase="3"></rs-rectangle-widget>
-
-        <div *ngSwitchCase="4" class="text-container" [style]="getTextAlignmentStyle(widget['textAlignmentX'], widget['textAlignmentY'])">
-            <div *ngFor="let text of splitTextLines(widget['text'])" style="position: relative; display: flex" [style.height.px]="widget['lineHeight'] !== 0 ? this.widget['lineHeight'] : null">
-                <!-- Text Shadow -->
-                <img
-                    class="text-shadow"
-                    *ngIf="widget['textShadowed']"
-                    [src]="getBase64Text(widget['fontId'], text, 0)"
-                    [alt]="text"
-                />
-
-                <!-- Text -->
-                <img class="text"
-                     [src]="getBase64Text(widget['fontId'], text, widget['textColor'], widget['hoveredTextColor'])"
-                     [alt]="text"
-                />
-            </div>
-        </div>
-
+        <rs-rectangle-widget *ngSwitchCase="3" [widget]="widget"></rs-rectangle-widget>
+        <rs-text-widget *ngSwitchCase="4" [widget]="widget" [hovering]="hovering"></rs-text-widget>
         <rs-sprite *ngSwitchCase="5" [spritePackId]="widget['spriteId']"></rs-sprite>
+        <rs-model-widget *ngSwitchCase="6" [widget]="widget" [parentWidget]="parentWidget" [modelRenderer]="modelRenderer"></rs-model-widget>
     </ng-container>
 </div>

@@ -1,9 +1,8 @@
 import {
-    AfterViewInit,
     ChangeDetectionStrategy,
     Component,
     Input,
-    OnChanges, OnDestroy,
+    OnChanges,
     OnInit,
     SimpleChanges
 } from '@angular/core';
@@ -12,16 +11,9 @@ import {
     LinkWidget,
     ModelWidget,
     ParentWidget,
-    SpritePack,
     SpriteWidget,
     WidgetBase
 } from '@runejs/filestore';
-import { FilestoreService } from '../../filestore/filestore.service';
-import * as THREE from 'three';
-import { ModelFilePreviewService } from '../file-preview/model-file-preview/model-file-preview.service';
-import { MathHelperService } from './math-helper.service';
-import { Vector2 } from 'three';
-
 
 @Component({
     selector: 'rs-widget',
@@ -29,7 +21,7 @@ import { Vector2 } from 'three';
     styleUrls: [ './widget.component.scss' ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class WidgetComponent implements OnInit, OnChanges, OnDestroy {
+export class WidgetComponent implements OnInit, OnChanges {
     @Input() public parentWidget: ParentWidget;
     @Input() public widget: WidgetBase;
     @Input() public hovering = false;
@@ -38,17 +30,11 @@ export class WidgetComponent implements OnInit, OnChanges, OnDestroy {
     public isContainer = false;
     public isModel = false;
     public isInteractionSprite = false;
-    public scene: THREE.Scene;
-    public camera: THREE.PerspectiveCamera;
 
     // TODO maybe there is a way to find this out through some attribute? For now, hardcode them to show them on top
-    private readonly INTERACTION_SPRITES = [309, 535, 536, 537, 538, 539, 540, 541, 542, 543];
+    private readonly INTERACTION_SPRITES = [308, 309, 535, 536, 537, 538, 539, 540, 541, 542, 543];
 
-    public constructor(
-        private filestoreService: FilestoreService,
-        private modelPreview: ModelFilePreviewService,
-        private mathHelperService: MathHelperService
-    ) { }
+    public constructor() { }
 
     public ngOnInit(): void {
         this.initializeChildren();
@@ -59,11 +45,6 @@ export class WidgetComponent implements OnInit, OnChanges, OnDestroy {
         this.isContainer = this.widget instanceof ContainerWidget;
         this.isModel = this.widget instanceof ModelWidget && this.widget['modelId'] >= 0;
         this.isInteractionSprite = this.widget instanceof SpriteWidget && this.INTERACTION_SPRITES.indexOf(this.widget.spriteId) > -1;
-
-        if (this.isModel && this.modelRenderer) {
-            this.createScene();
-            this.drawModel();
-        }
 
         // Only root and container needs initialization, since they might have children
         if (!this.isRoot && !this.isContainer) {
@@ -95,84 +76,10 @@ export class WidgetComponent implements OnInit, OnChanges, OnDestroy {
         });
     }
 
-    ngOnDestroy(): void {
-        if (this.scene) {
-            this.modelRenderer.clear();
-        }
-    }
-
-    createScene() {
-        const modelWidget = this.widget as ModelWidget;
-        this.scene = new THREE.Scene();
-
-        // TODO handle mesh opacity
-        const viewportSize = this.modelRenderer.getSize(new Vector2());
-        // 50-52 FOV seems to be perfect for RS models
-        this.camera = new THREE.PerspectiveCamera(
-            52, viewportSize.width / viewportSize.height, 0.1, 500
-        );
-
-        const sineTable = this.mathHelperService.getSineTable();
-        const cosineTable = this.mathHelperService.getCosineTable();
-
-        // Standardize RS model attributes
-        const camHeight = sineTable[modelWidget.rotationX] * modelWidget.modelZoom * ModelFilePreviewService.MODEL_SCALE;
-        const camDistance = cosineTable[modelWidget.rotationX] * modelWidget.modelZoom * ModelFilePreviewService.MODEL_SCALE;
-
-        this.camera.position.z = camDistance;
-        this.camera.position.y = camHeight;
-        this.camera.rotateX(-this.mathHelperService.rotationToRadians(modelWidget.rotationX));
-
-        // TODO if the widget is scrollable, the models still show
-        let containerOffsetX = 0;
-        let containerOffsetY = 0;
-        if (this.widget.parentId !== -1 && this.widget.parentId === this.parentWidget.id) {
-            containerOffsetX = this.parentWidget.x;
-            containerOffsetY = this.parentWidget.y;
-        }
-
-        // Find the center point of this widget's X and Y within the screen
-        const offsetX = (viewportSize.width / 2) - (modelWidget.x + (modelWidget.width / 2)) - containerOffsetX;
-        const offsetY = (viewportSize.height / 2) - (modelWidget.y + (modelWidget.height / 2)) - containerOffsetY;
-        this.camera.setViewOffset(viewportSize.width, viewportSize.height, offsetX, offsetY, viewportSize.width, viewportSize.height);
-
-        this.scene.add(this.camera);
-    }
-
-    drawModel() {
-        const modelWidget = this.widget as ModelWidget;
-        const rsModel = this.filestoreService.filestore.modelStore.getModel(modelWidget.modelId);
-        const mesh = this.modelPreview.getMeshFromRsModel(rsModel, this.filestoreService.filestore.textureStore, this.filestoreService.filestore);
-
-        // TODO objects are returned mirrored
-        const scale = new THREE.Vector3(-1, 1, 1);
-        mesh.scale.multiply(scale);
-
-        // TODO if the top todo has been fixed, probably remove the minus sign from the next statement
-        mesh.rotateY(-this.mathHelperService.rotationToRadians(modelWidget.rotationY));
-
-        this.scene.add(mesh);
-        this.modelRenderer.autoClear = false;
-        this.modelRenderer.render(this.scene, this.camera);
-        this.modelRenderer.clearDepth();
-    }
-
     ngOnChanges(changes: SimpleChanges): void {
-        if (changes?.widget && !changes.widget.firstChange || changes?.modelRenderer && !changes?.modelRenderer.firstChange) {
+        if (changes?.widget && !changes.widget.firstChange) {
             this.initializeChildren();
         }
-    }
-
-    public getBase64Text(fontId: number, text: string, color?: number, hoverColor?: number) {
-        if (this.hovering && hoverColor) {
-            return this.filestoreService.filestore.fontStore.getFontById(fontId).drawString(text, hoverColor)
-        }
-
-        return this.filestoreService.filestore.fontStore.getFontById(fontId).drawString(text, color);
-    }
-
-    public splitTextLines(text: string): string[] {
-        return text.split(/\\n/);
     }
 
     public get styles(): Partial<CSSStyleDeclaration> {
@@ -213,31 +120,5 @@ export class WidgetComponent implements OnInit, OnChanges, OnDestroy {
 
             return style;
         }
-    }
-
-    /* Gets the transform CSS value
-    *  0 = align start (normal)
-    *  1 = align center
-    *  2 = align end
-    */
-    getTextAlignmentStyle(alignmentX: number, alignmentY: number) {
-        const alignmentStyle: Partial<CSSStyleDeclaration> = {
-            alignItems: null,
-            justifyContent: null
-        };
-
-        if (alignmentX === 1) {
-            alignmentStyle.alignItems = 'center';
-        } else if (alignmentX === 2) {
-            alignmentStyle.alignItems = 'flex-end';
-        }
-
-        if (alignmentY === 1) {
-            alignmentStyle.justifyContent = 'center';
-        } else if (alignmentY === 2) {
-            alignmentStyle.justifyContent = 'flex-end';
-        }
-
-        return alignmentStyle;
     }
 }
