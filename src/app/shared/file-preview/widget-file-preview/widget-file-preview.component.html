@@ -1,3 +1,23 @@
-<div class="rs-widget-file-preview">
-    <rs-widget [widget]="widget" [parentWidget]="widget"></rs-widget>
+<mat-card class="rs-widget-settings">
+    <mat-card-content>
+        <div class="settings">
+            <mat-checkbox [(ngModel)]="showGrid">Show grid</mat-checkbox>
+            <mat-checkbox [(ngModel)]="highlightWidgetsOnHover">Highlight widgets on hover</mat-checkbox>
+        </div>
+    </mat-card-content>
+</mat-card>
+
+<div class="rs-widget-file-preview" [ngClass]="{ grid: showGrid, 'show-hover': highlightWidgetsOnHover }" *ngIf="decoded && widget">
+    <rs-widget [widget]="widget" [parentWidget]="widget" [modelRenderer]="modelRenderer"></rs-widget>
+    <div class="model-container">
+        <canvas class="models" #models></canvas>
+    </div>
 </div>
+
+<mat-card class="rs-widget-raw">
+    <mat-card-content>
+        <div class="raw">
+            <ngx-json-viewer [json]="widget" [depth]="1"></ngx-json-viewer>
+        </div>
+    </mat-card-content>
+</mat-card>

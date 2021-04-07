@@ -1,0 +1,6 @@
+<div class="rectangle" [ngStyle]="{
+        'background-color': widget.filled ? decimalToHex(widget['textColor']) : 'transparent',
+        'border': '1px solid ' + decimalToHex(widget['textColor']),
+        'opacity': alphaToOpacity(widget.opacity)
+    }"
+></div>

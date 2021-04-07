@@ -1,11 +1,27 @@
-<div class="rs-widget" [style]="styles">
+<div [attr.data-id]="widget.id" class="rs-widget rs-widget-type-{{widget.type}}" [ngClass]="{ interaction: isInteractionSprite }" [style]="styles" (mouseenter)="hovering = true" (mouseleave)="hovering = false">
     <ng-container [ngSwitch]="widget.type">
-        <ng-container *ngSwitchCase="0">
+        <ng-container *ngSwitchCase="-1">
             <ng-container *ngFor="let child of widget['children']">
-                <rs-widget [parentWidget]="parentWidget" [widget]="child"></rs-widget>
+                <ng-container *ngIf="child.parentId === -1">
+                    <rs-widget [parentWidget]="parentWidget" [widget]="child" [modelRenderer]="modelRenderer"></rs-widget>
+                </ng-container>
             </ng-container>
         </ng-container>
 
-        <rs-sprite *ngSwitchCase="5" [spriteId]="widget['spriteId']"></rs-sprite>
+        <ng-container *ngSwitchCase="0">
+            <rs-container-widget *ngIf="!widget['hidden']" [container]="widget">
+                <rs-widget
+                    *ngFor="let child of widget['children']"
+                    [parentWidget]="widget"
+                    [widget]="child"
+                    [modelRenderer]="modelRenderer"
+                ></rs-widget>
+            </rs-container-widget>
+        </ng-container>
+
+        <rs-rectangle-widget *ngSwitchCase="3" [widget]="widget"></rs-rectangle-widget>
+        <rs-text-widget *ngSwitchCase="4" [widget]="widget" [hovering]="hovering"></rs-text-widget>
+        <rs-sprite *ngSwitchCase="5" [spritePackId]="widget['spriteId']"></rs-sprite>
+        <rs-model-widget *ngSwitchCase="6" [widget]="widget" [parentWidget]="parentWidget" [modelRenderer]="modelRenderer"></rs-model-widget>
     </ng-container>
 </div>

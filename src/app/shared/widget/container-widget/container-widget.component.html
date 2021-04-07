@@ -1,0 +1,9 @@
+<div class="container" *ngIf="container" [scrollbar-sprites]="scrollbarSprites">
+    <div
+        class="container-content"
+        [style.height]="container.scrollHeight > container.height ? container.scrollHeight + 'px' : '100%'"
+        [style.width]="container.scrollWidth > container.width ? container.scrollWidth + 'px' : '100%'"
+    >
+        <ng-content></ng-content>
+    </div>
+</div>

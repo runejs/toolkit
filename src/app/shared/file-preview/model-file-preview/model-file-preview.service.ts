@@ -11,7 +11,7 @@ import { logger } from '@runejs/core';
 })
 export class ModelFilePreviewService implements OnDestroy {
 
-    private static MODEL_SCALE = 0.025;
+    public static MODEL_SCALE = 0.025;
     private static FACE_SHADED = 0;
     private static FACE_DEFAULT = 1;
 
@@ -89,7 +89,7 @@ export class ModelFilePreviewService implements OnDestroy {
         const materials = new Array<THREE.Material>();
 
         // the default material
-        materials.push(new THREE.MeshBasicMaterial({
+        materials.push(new THREE.MeshBasicMaterial(<any>{
             side: THREE.DoubleSide,
             flatShading: true,
             vertexColors: true
@@ -213,6 +213,136 @@ export class ModelFilePreviewService implements OnDestroy {
 
         this.rsModelMesh = mesh;
         this.scene.add(mesh);
+    }
+
+    public getMeshFromRsModel(model: RsModel, textureStore: TextureStore, fileStore: Filestore): THREE.Mesh {
+        model.applyLighting(64, 768, -50, -10, -50, true);
+        model.computeTextureUVs();
+
+        const geometry = new THREE.BufferGeometry();
+        const materials = new Array<THREE.Material>();
+
+        // the default material
+        materials.push(new THREE.MeshBasicMaterial({
+            side: THREE.DoubleSide,
+            vertexColors: true
+        }));
+
+        const vertices = [];
+        const normals = [];
+        const colors = [];
+        const uvs = [];
+
+        // temporary
+        let faceIndex = 0;
+        const materialIndices = [];
+        let lastMaterialIndex = -1;
+        let lastGroup: any = null;
+
+        for (let i = 0; i < model.faceCount; i++) {
+            const faceType = model.faceTypes == null ? 0 : (model.faceTypes[i] & 0x3);
+            let faceA: number;
+            let faceB: number;
+            let faceC: number;
+            switch (faceType) {
+                case ModelFilePreviewService.FACE_SHADED:
+                case ModelFilePreviewService.FACE_DEFAULT:
+                    faceA = model.faceIndicesA[i];
+                    faceB = model.faceIndicesB[i];
+                    faceC = model.faceIndicesC[i];
+                    break;
+                default:
+                    throw new Error('Unhandled face type: ' + faceType);
+            }
+
+            // vertices and normals
+            for (const vertex of [faceA, faceB, faceC]) {
+                vertices.push(model.verticesX[vertex] || 0);
+                vertices.push(-model.verticesY[vertex] || 0);
+                vertices.push(model.verticesZ[vertex] || 0);
+
+                const vertexNormal = model.vertexNormals[vertex];
+                normals.push(vertexNormal.x || 0);
+                normals.push(-vertexNormal.y || 0);
+                normals.push(vertexNormal.z || 0);
+            }
+
+            // colors
+            let materialIndex = 0;
+            switch (faceType) {
+                case ModelFilePreviewService.FACE_SHADED:
+                    const shadowedColorX = new THREE.Color(ColorUtils.hsbToRgb(model.faceColorsX[i]));
+                    const shadowedColorY = new THREE.Color(ColorUtils.hsbToRgb(model.faceColorsY[i]));
+                    const shadowedColorZ = new THREE.Color(ColorUtils.hsbToRgb(model.faceColorsZ[i]));
+                    for(const color of [shadowedColorX, shadowedColorY, shadowedColorZ]) {
+                        colors.push(color.r);
+                        colors.push(color.g);
+                        colors.push(color.b);
+                    }
+                    break;
+                case ModelFilePreviewService.FACE_DEFAULT:
+                    const colorXYZ = new THREE.Color(ColorUtils.hsbToRgb(model.faceColorsX[i]));
+                    for(const color of [colorXYZ, colorXYZ, colorXYZ]) {
+                        colors.push(color.r);
+                        colors.push(color.g);
+                        colors.push(color.b);
+                    }
+                    break;
+            }
+
+            // uvs
+            if (model.faceTextures) {
+                const u = model.faceTextureU[i];
+                const v = model.faceTextureV[i];
+                for (let l = 0; l < 3; l++) {
+                    uvs.push(u[l]);
+                    uvs.push(v[l]);
+                }
+
+                // materials
+                const textureId = model.faceTextures[i];
+                if (textureId !== -1) {
+                    materialIndex = materialIndices[textureId];
+                    if (materialIndex === undefined) {
+                        const texture = textureStore.getTexture(textureId);
+                        if (texture) {
+                            materialIndices[textureId] = materialIndex = materials.length;
+                            texture.generatePixels(fileStore.spriteStore);
+                            materials.push(this.createTextureMaterial(texture));
+                        } else {
+                            materialIndex = 0;
+                        }
+                    }
+                }
+            }
+
+            if (materialIndex !== lastMaterialIndex) {
+                lastMaterialIndex = materialIndex;
+                if (lastGroup != null) {
+                    lastGroup.count = (faceIndex * 3) - lastGroup.start;
+                    geometry.addGroup(lastGroup.start, lastGroup.count, lastGroup.materialIndex);
+                }
+                lastGroup = { start: faceIndex * 3, count: 0, materialIndex: lastMaterialIndex };
+            }
+            faceIndex++;
+        }
+
+        if (lastGroup != null) {
+            lastGroup.count = (faceIndex * 3) - lastGroup.start;
+            geometry.addGroup(lastGroup.start, lastGroup.count, lastGroup.materialIndex);
+        }
+
+        geometry.setAttribute('position', new THREE.BufferAttribute(new Float32Array(vertices), 3));
+        geometry.setAttribute('normal', new THREE.BufferAttribute(new Float32Array(normals), 3));
+        geometry.setAttribute('color', new THREE.BufferAttribute(new Float32Array(colors), 3));
+        geometry.setAttribute('uv', new THREE.BufferAttribute(new Float32Array(uvs), 2));
+
+        const mesh = new THREE.Mesh(geometry, materials);
+        mesh.rotateY(Math.PI);
+        const scale = ModelFilePreviewService.MODEL_SCALE;
+        mesh.scale.set(scale, scale, scale);
+
+        return mesh;
     }
 
     private createTextureMaterial(texture: Texture): Material {
