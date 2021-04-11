@@ -56,7 +56,7 @@ export class FilestoreService {
         if(!path) {
             return;
         }
-        this.filestore = new Filestore(path, path);
+        this.filestore = new Filestore(path, { configDir: path });
         this._filestoreLoaded = true;
     }
 
