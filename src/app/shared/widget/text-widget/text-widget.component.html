@@ -1,0 +1,17 @@
+<div class="text-container" [style]="getTextAlignmentStyle()" >
+    <div *ngFor="let text of splitTextLines(widget.text)" [style.height.px]="widget.lineHeight !== 0 ? this.widget.lineHeight + 1 : getStringHeight(text)" style="position: relative; display: flex;">
+        <!-- Text Shadow -->
+        <img
+            class="text-shadow"
+            *ngIf="widget.textShadowed"
+            [src]="getBase64Text(text, 0)"
+            [alt]="text"
+        />
+
+        <!-- Text -->
+        <img class="text"
+             [src]="getBase64Text(text, widget.textColor, widget['hoveredTextColor'])"
+             [alt]="text"
+        />
+    </div>
+</div>

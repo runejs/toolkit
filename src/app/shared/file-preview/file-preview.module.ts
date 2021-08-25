@@ -15,7 +15,10 @@ import { ModelFilePreviewComponent } from './model-file-preview/model-file-previ
 import { WidgetModule } from '../widget/widget.module';
 import { SpriteModule } from './sprite-file-preview/sprite/sprite.module';
 import { WidgetFilePreviewComponent } from './widget-file-preview/widget-file-preview.component';
-
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatCardModule } from '@angular/material/card';
+import { FormsModule } from '@angular/forms';
+import { NgxJsonViewerModule } from 'ngx-json-viewer';
 
 @NgModule({
     declarations: [
@@ -32,13 +35,17 @@ import { WidgetFilePreviewComponent } from './widget-file-preview/widget-file-pr
     ],
     imports: [
         CommonModule,
+        NgxJsonViewerModule,
         MatIconModule,
         IndexNameModule,
         MatDividerModule,
         MatTooltipModule,
         MatSliderModule,
         WidgetModule,
-        SpriteModule
+        SpriteModule,
+        MatCheckboxModule,
+        MatCardModule,
+        FormsModule
     ],
     providers: [
         FileNamePipe

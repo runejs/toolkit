@@ -20,7 +20,8 @@ export class SpriteComponent implements OnInit, AfterViewInit, OnChanges {
 
     @ViewChild('canvas') public canvasRef: ElementRef;
 
-    @Input() public spriteId: number;
+    @Input() public spritePackId: number;
+    @Input() public spriteChildId = 0;
     @Input() public sprite: Sprite;
     @Input() public zoom: number = 100;
 
@@ -38,18 +39,22 @@ export class SpriteComponent implements OnInit, AfterViewInit, OnChanges {
     }
 
     public ngOnChanges(changes: SimpleChanges): void {
-        if((changes.sprite && !changes.sprite.firstChange) || (changes.spriteId && !changes.spriteId.firstChange)) {
+        const spriteChanges =
+            (changes.sprite && !changes.sprite.firstChange)
+            || (changes.spriteId && !changes.spriteId.firstChange)
+            || (changes.spriteChildId && !changes.spriteChildId.firstChange)
+        if (spriteChanges) {
             this.render();
         }
     }
 
     public render(): void {
-        if(!this.sprite && !this.spriteId) {
+        if(!this.sprite && !this.spritePackId) {
             return;
         }
 
-        if(this.spriteId) {
-            this.sprite = this.filestoreService.filestore.spriteStore.getSpritePack(this.spriteId).decode().sprites[0];
+        if(this.spritePackId && this.spritePackId !== -1) {
+            this.sprite = this.filestoreService.filestore.spriteStore.getSpritePack(this.spritePackId).decode().sprites[this.spriteChildId];
         }
 
         if(!this.sprite) {
