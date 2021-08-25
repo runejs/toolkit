@@ -1,6 +1,7 @@
+@use '~@angular/material' as mat;
 @import 'theme';
 
-@include angular-material-theme($theme);
+@include mat.all-component-themes($theme);
 
 html, body {
     height: 100vh;
@@ -56,7 +57,7 @@ a {
             margin-right: 8px;
 
             &.rs-folder-icon {
-                color: mat-color($primary, 200);
+                color: mat.get-color-from-palette($primary, 200);
                 $s: 28px;
                 width: $s;
                 height: $s;
@@ -110,7 +111,7 @@ a {
         height: $s;
         font-size: $s;
         opacity: 0.8;
-        color: mat-color($primary, 200);
+        color: mat.get-color-from-palette($primary, 200);
     }
 
     strong {
