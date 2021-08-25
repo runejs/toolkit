@@ -29,7 +29,7 @@
         "@angular/platform-browser-dynamic": "~12.2.2",
         "@angular/router": "~12.2.2",
         "@runejs/core": "^1.4.0",
-        "@runejs/filestore": "^0.14.1",
+        "@runejs/filestore": "^0.14.2",
         "electron-context-menu": "^0.16.0",
         "jimp": "^0.16.1",
         "midicube": "^0.6.1",
