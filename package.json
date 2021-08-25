@@ -28,8 +28,8 @@
         "@angular/platform-browser": "~11.2.8",
         "@angular/platform-browser-dynamic": "~11.2.8",
         "@angular/router": "~11.2.8",
-        "@runejs/core": "^1.2.0",
-        "@runejs/filestore": "0.8.8",
+        "@runejs/core": "^1.4.0",
+        "@runejs/filestore": "^0.14.1",
         "electron-context-menu": "^0.16.0",
         "jimp": "^0.16.1",
         "midicube": "^0.6.1",
@@ -61,6 +61,6 @@
         "protractor": "~7.0.0",
         "ts-node": "^9.1.1",
         "tslint": "~6.1.0",
-        "typescript": "^4.1.5"
+        "typescript": "^4.2.3"
     }
 }
