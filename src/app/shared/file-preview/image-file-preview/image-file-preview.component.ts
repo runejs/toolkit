@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { ByteBuffer } from '@runejs/core';
+import { ByteBuffer } from '@runejs/core/buffer';
 
 @Component({
     selector: 'rs-image-file-preview',
